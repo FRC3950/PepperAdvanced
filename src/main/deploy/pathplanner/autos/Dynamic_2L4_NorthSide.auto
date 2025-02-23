@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "DynamicStart_1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1_NorthSource"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NorthSource_12"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
