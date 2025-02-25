@@ -18,6 +18,7 @@ import static frc.robot.subsystems.vision.VisionConstants.*;
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -167,14 +168,21 @@ public class RobotContainer {
     controller
         .a()
         .whileTrue(
-            
             DriveCommands.joystickDriveAtAngle(
                 drive,
                 () -> -controller.getLeftY(),
                 () -> -controller.getLeftX(),
                 () -> new Rotation2d(Math.toRadians(60 + 180))));
-                //60 as radians
-                
+    // 60 as radians
+
+    controller
+        .pov(90)
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0.5, 0))));
+
+    controller
+        .pov(270)
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
+
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -190,6 +198,8 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
+                
+
     SmartDashboard.putData("l1", elevator.setElevatorToL1Command());
     SmartDashboard.putData("l2", elevator.setElevatorToL2Command());
     SmartDashboard.putData("l3", elevator.setElevatorToL3Command());
@@ -203,6 +213,15 @@ public class RobotContainer {
                     () ->
                         Math.abs(controller.getLeftY()) < 0.5
                             && Math.abs(controller.getLeftX()) < 0.5));
+
+    controller
+        .rightBumper()
+        .whileTrue(
+            new driveToScoreCommand(drive, "right")
+                .onlyWhile(
+                    () ->
+                        Math.abs(controller.getLeftY()) < 0.5
+                            && Math.abs(controller.getLeftY()) < 0.5));
   }
 
   /**

@@ -10,6 +10,8 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -69,6 +71,11 @@ public class driveToScoreCommand extends Command {
     }
 
     targetPose = closestPose;
+    if (direction.equals("left")) {
+      targetPose = targetPose.transformBy(new Transform2d(.5, -.15, new Rotation2d()));
+    } else {
+      targetPose = targetPose.transformBy(new Transform2d(.5, .15, new Rotation2d()));
+    }
 
     pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
     pathCommand.schedule();

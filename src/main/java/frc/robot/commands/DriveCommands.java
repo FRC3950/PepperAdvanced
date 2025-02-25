@@ -109,7 +109,7 @@ public class DriveCommands {
    */
   public static Command joystickDriveAtAngle(
 
-  //Instead use the position to determine what angle to point to!
+      // Instead use the position to determine what angle to point to!
       Drive drive,
       DoubleSupplier xSupplier,
       DoubleSupplier ySupplier,
