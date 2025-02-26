@@ -35,6 +35,7 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.drive.driveToIntakeCommand;
 import frc.robot.subsystems.drive.driveToScoreCommand;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.vision.Vision;
@@ -57,6 +58,7 @@ public class RobotContainer {
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
+  private final CommandXboxController operator = new CommandXboxController(1);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -164,32 +166,21 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
 
-    // Lock to 0° when A button is held
+    controller.a().whileTrue(new driveToIntakeCommand(drive, () -> controller.getLeftY()));
+
+    // // Lock to 0° when A button is held
+    // controller
+    //     .a()
+    //     .whileTrue(
+    //         DriveCommands.joystickDriveAtAngle(
+    //             drive,
+    //             () -> -controller.getLeftY(),
+    //             () -> -controller.getLeftX(),
+    //             () -> new Rotation2d(Math.toRadians(60 + 180))));
+
+    // Reset gyro to 0° when Y button is pressed
     controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d(Math.toRadians(60 + 180))));
-    // 60 as radians
-
-    controller
-        .pov(90)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0.5, 0))));
-
-    controller
-        .pov(270)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
-
-
-    // Switch to X pattern when X button is pressed
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-    // Reset gyro to 0° when B button is pressed
-    controller
-        .b()
+        .y()
         .onTrue(
             Commands.runOnce(
                     () ->
@@ -198,16 +189,10 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-                
-
-    SmartDashboard.putData("l1", elevator.setElevatorToL1Command());
-    SmartDashboard.putData("l2", elevator.setElevatorToL2Command());
-    SmartDashboard.putData("l3", elevator.setElevatorToL3Command());
-    SmartDashboard.putData("l4", elevator.setElevatorToL4Command());
-
+    // Auto Align Scoring Elements
     controller
         .leftBumper()
-        .whileTrue(
+        .onTrue(
             new driveToScoreCommand(drive, "left")
                 .onlyWhile(
                     () ->
@@ -222,6 +207,29 @@ public class RobotContainer {
                     () ->
                         Math.abs(controller.getLeftY()) < 0.5
                             && Math.abs(controller.getLeftY()) < 0.5));
+
+    // Fine Tune Driving
+    controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0.5, 0))));
+
+    controller
+        .pov(270)
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
+
+    controller
+        .leftTrigger(0.5)
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, 0.3))));
+
+    controller
+        .rightTrigger(0.5)
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.3))));
+
+    // Maniuplator Controls
+
+    // Elevator
+    SmartDashboard.putData("l1", elevator.setElevatorToL1Command());
+    SmartDashboard.putData("l2", elevator.setElevatorToL2Command());
+    SmartDashboard.putData("l3", elevator.setElevatorToL3Command());
+    SmartDashboard.putData("l4", elevator.setElevatorToL4Command());
   }
 
   /**
