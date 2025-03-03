@@ -15,7 +15,10 @@ package frc.robot;
 
 import static frc.robot.subsystems.vision.VisionConstants.*;
 
+import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -24,6 +27,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.SubsystemConstants.elevator;
@@ -127,6 +131,16 @@ public class RobotContainer {
 
         break;
     }
+
+
+    NamedCommands.registerCommand("L4", elevator.setElevatorToL4Command());
+    NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
+    NamedCommands.registerCommand("Source", elevator.setElevatorToSourceCommand());
+
+    NamedCommands.registerCommand("Intake", new WaitCommand(1));
+    NamedCommands.registerCommand("Outake", new WaitCommand(1));
+
+    NamedCommands.registerCommand("Backward", drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))).withTimeout(0.5));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());

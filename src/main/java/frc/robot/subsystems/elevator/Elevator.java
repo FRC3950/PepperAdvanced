@@ -26,6 +26,7 @@ public class Elevator extends SubsystemBase {
   private final double L2_inMotorRotations = 20;
   private final double L3_inMotorRotations = 25;
   private final double L4_inMotorRotations = 35;
+  private final double source_inMotorRotations = 15;
 
   private final double k_intakeHeightInMotorRotations = 50;
 
@@ -155,6 +156,10 @@ public class Elevator extends SubsystemBase {
 
   public Command setElevatorToL4Command() {
     return this.setElevatorPositionCommand(L4_inMotorRotations);
+  }
+
+  public Command setElevatorToSourceCommand() {
+    return this.setElevatorPositionCommand(source_inMotorRotations);
   }
 
   public Command setElevatorToRestCommand() {
