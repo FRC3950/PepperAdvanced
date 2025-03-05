@@ -167,14 +167,12 @@ public class RobotContainer {
     controller
         .a()
         .whileTrue(
-            
             DriveCommands.joystickDriveAtAngle(
                 drive,
                 () -> -controller.getLeftY(),
                 () -> -controller.getLeftX(),
                 () -> new Rotation2d(Math.toRadians(60 + 180))));
-                //60 as radians
-                
+    // 60 as radians
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));

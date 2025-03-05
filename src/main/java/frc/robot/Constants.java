@@ -47,9 +47,9 @@ public final class Constants {
 
     public static final class mailbox {
 
-      public static final int leadMotorID = 21; // Add this line
+      public static final int angleMotor = 21; // Add this line
 
-      public static final int followMotorID = 22;
+      public static final int intakeMotor = 22;
 
       public static final String kCanbus = "canbus";
     }
