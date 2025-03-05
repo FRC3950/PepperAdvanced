@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems.elevator;
 
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -59,6 +62,9 @@ public class Elevator extends SubsystemBase {
     // Sim
 
     var talonFXConfigs = new TalonFXConfiguration();
+    var motorConfigs = new MotorOutputConfigs();
+    motorConfigs.Inverted = InvertedValue.Clockwise_Positive;
+    
 
     // Set slot 0 gains
     var slot0Configs = talonFXConfigs.Slot0;
@@ -69,7 +75,10 @@ public class Elevator extends SubsystemBase {
     slot0Configs.kI = 0; // No output for integrated error
     slot0Configs.kD = 0.1; // A velocity error of 1 rps results in 0.1 V output
 
+
     elevatorLeadMotor.getConfigurator().apply(talonFXConfigs);
+    elevatorLeadMotor.getConfigurator().apply(motorConfigs);
+    
 
     // Set the follow motor to follow the lead motor
     elevatorFollowMotor.setControl(new Follower(elevatorLeadMotor.getDeviceID(), false));

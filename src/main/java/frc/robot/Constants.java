@@ -40,7 +40,7 @@ public final class Constants {
     public static final class elevator {
       public static final int leadMotorID = 30; // Add this line
 
-      public static final int followMotorID = 31;
+      public static final int followMotorID = 35;
 
       public static final String kCanbus = "CANivore";
     }
