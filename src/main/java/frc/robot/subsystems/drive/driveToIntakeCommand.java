@@ -14,11 +14,12 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class driveToScoreCommand extends Command {
+public class driveToIntakeCommand extends Command {
   private final Drive drive;
-  private final String direction;
+  private final DoubleSupplier driveStickMoved;
   private Pose2d targetPose;
   private Command pathCommand;
   private Pose2d targetPoseToUseInAutoNavigate;
@@ -30,14 +31,14 @@ public class driveToScoreCommand extends Command {
   public static AprilTagFieldLayout aprilTagLayoutForAutoDrive =
       AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-  int[] aprilTagIdsForScoring = new int[] {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};
+  int[] aprilTagIdsForScoring = new int[] {1, 2, 12, 13};
   Pose2d[] poseForScoringIDs;
 
   /** Creates a new driveToScoreCommand. */
-  public driveToScoreCommand(Drive drive, String direction) {
+  public driveToIntakeCommand(Drive drive, DoubleSupplier driveStickMoved) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = drive;
-    this.direction = direction;
+    this.driveStickMoved = driveStickMoved;
     addRequirements(drive);
 
     poseForScoringIDs = new Pose2d[aprilTagIdsForScoring.length];
@@ -55,7 +56,7 @@ public class driveToScoreCommand extends Command {
   @Override
   public void initialize() {
 
-    System.out.println("Starting Drive!");
+    System.out.println("Starting Drive");
     // for each pose in poseForScoringIDs, find the closest one to the current pose
     Pose2d currentPose = drive.getPose();
     double minDistance = 1000.0;
@@ -71,15 +72,11 @@ public class driveToScoreCommand extends Command {
     }
 
     targetPose = closestPose;
-    if (direction.equals("left")) {
-      targetPose = targetPose.transformBy(new Transform2d(.5, -.15, new Rotation2d()));
-    } else {
-      targetPose = targetPose.transformBy(new Transform2d(.5, .15, new Rotation2d()));
-    }
+
+    targetPose = targetPose.transformBy(new Transform2d(.5, .0, new Rotation2d()));
 
     pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
-    pathCommand.schedule(); //Not in love with this - Spent way to much timme trying to lauch command straight from Autobuilder, but with AutoBuilder being static it was being weird. This is a hack to get it to work. I hate that we are 
-    // assigning a command in a command, and the schelduing it. Not sure how the drive subystem doesn't collided, but yolo. 
+    pathCommand.schedule();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -90,12 +87,14 @@ public class driveToScoreCommand extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    System.out.println("DriveToPoseCommand finished.");
+    System.out.println("Drive To Intake Finsihed");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return pathCommand == null || pathCommand.isFinished(); // Stop when PathPlanner finishes
+    return pathCommand == null
+        || pathCommand.isFinished()
+        || Math.abs(driveStickMoved.getAsDouble()) > 0.5; // Stop when PathPlanner finishes
   }
 }
