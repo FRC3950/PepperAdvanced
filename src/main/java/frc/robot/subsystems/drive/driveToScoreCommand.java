@@ -78,8 +78,12 @@ public class driveToScoreCommand extends Command {
     }
 
     pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
-    pathCommand.schedule(); //Not in love with this - Spent way to much timme trying to lauch command straight from Autobuilder, but with AutoBuilder being static it was being weird. This is a hack to get it to work. I hate that we are 
-    // assigning a command in a command, and the schelduing it. Not sure how the drive subystem doesn't collided, but yolo. 
+    pathCommand
+        .schedule(); // Not in love with this - Spent way to much timme trying to lauch command
+    // straight from Autobuilder, but with AutoBuilder being static it was being
+    // weird. This is a hack to get it to work. I hate that we are
+    // assigning a command in a command, and the schelduing it. Not sure how the drive subystem
+    // doesn't collided, but yolo.
   }
 
   // Called every time the scheduler runs while the command is scheduled.

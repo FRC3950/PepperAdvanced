@@ -13,11 +13,13 @@
 
 package frc.robot;
 
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
+import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
+import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
+import static frc.robot.subsystems.vision.VisionConstants.robotToCamera1;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -31,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.MailBox;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -41,13 +44,10 @@ import frc.robot.subsystems.drive.driveToIntakeCommand;
 import frc.robot.subsystems.drive.driveToScoreCommand;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.vision.Vision;
-import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
-import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
-import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
-import static frc.robot.subsystems.vision.VisionConstants.robotToCamera1;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -67,6 +67,7 @@ public class RobotContainer {
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
+  private final MailBox mailbox;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -132,7 +133,7 @@ public class RobotContainer {
 
         break;
     }
-
+    mailbox = new MailBox();
 
     NamedCommands.registerCommand("L4", elevator.setElevatorToL4Command());
     NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
@@ -141,11 +142,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake", new WaitCommand(1));
     NamedCommands.registerCommand("Outake", new WaitCommand(1));
 
-    NamedCommands.registerCommand("Backward", drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))).withTimeout(0.5));
+    NamedCommands.registerCommand(
+        "Backward",
+        drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))).withTimeout(0.5));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-    //test 3
+    // test 3
     // Set up SysId routines
     autoChooser.addOption(
         "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
@@ -224,11 +227,15 @@ public class RobotContainer {
                             && Math.abs(controller.getLeftY()) < 0.5));
 
     // Fine Tune Driving
-    controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0.5, 0))));
+    controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
+
+    controller.pov(270).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0.5, 0))));
+
+    controller.pov(0).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0.5, 0, 0))));
 
     controller
-        .pov(270)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
+        .pov(180)
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))));
 
     controller
         .leftTrigger(0.5)
@@ -237,6 +244,11 @@ public class RobotContainer {
     controller
         .rightTrigger(0.5)
         .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.3))));
+
+    controller
+        .b()
+        .onTrue(mailbox.MailBox_Intake_Command(-.4))
+        .onFalse(mailbox.MailBox_StopIntake_Command());
 
     // Maniuplator Controls
 

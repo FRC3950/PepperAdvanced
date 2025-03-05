@@ -38,20 +38,20 @@ public final class Constants {
   public static final class SubsystemConstants {
 
     public static final class elevator {
-      public static final int leadMotorID = 11; // Add this line
+      public static final int leadMotorID = 30; // Add this line
 
-      public static final int followMotorID = 12;
+      public static final int followMotorID = 31;
 
-      public static final String kCanbus = "canbus";
+      public static final String kCanbus = "CANivore";
     }
 
     public static final class mailbox {
 
-      public static final int angleMotor = 21; // Add this line
+      public static final int angleMotor = 13; // Add this line
 
-      public static final int intakeMotor = 22;
+      public static final int intakeMotor = 29;
 
-      public static final String kCanbus = "canbus";
+      public static final String kCanbus = "CANivore";
     }
 
     public static final class intake {
@@ -60,7 +60,7 @@ public final class Constants {
 
       public static final int followMotorID = 32;
 
-      public static final String kCanbus = "canbus";
+      public static final String kCanbus = "CANivore";
     }
 
     public static final class climber {
@@ -69,7 +69,7 @@ public final class Constants {
 
       public static final int followMotorID = 42;
 
-      public static final String kCanbus = "canbus";
+      public static final String kCanbus = "CANivore";
     }
   }
 }
