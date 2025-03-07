@@ -40,7 +40,7 @@ public final class Constants {
     public static final class elevator {
       public static final int leadMotorID = 30; // Add this line
 
-      public static final int followMotorID = 31;
+      public static final int followMotorID = 35;
 
       public static final String kCanbus = "CANivore";
     }
@@ -50,24 +50,6 @@ public final class Constants {
       public static final int angleMotor = 13; // Add this line
 
       public static final int intakeMotor = 29;
-
-      public static final String kCanbus = "CANivore";
-    }
-
-    public static final class intake {
-
-      public static final int leadMotorID = 31; // Add this line
-
-      public static final int followMotorID = 32;
-
-      public static final String kCanbus = "CANivore";
-    }
-
-    public static final class climber {
-
-      public static final int leadMotorID = 41; // Add this line
-
-      public static final int followMotorID = 42;
 
       public static final String kCanbus = "CANivore";
     }

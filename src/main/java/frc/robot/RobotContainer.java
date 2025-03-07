@@ -22,6 +22,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -43,6 +44,7 @@ import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.drive.driveToIntakeCommand;
 import frc.robot.subsystems.drive.driveToScoreCommand;
 import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.intakeOnlyWhileEmpty;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -71,6 +73,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    SmartDashboard.putNumber("seedAngle", 180);
+    SmartDashboard.putNumber("seedX", 0);
+    SmartDashboard.putNumber("seedY", 0);
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -134,6 +139,7 @@ public class RobotContainer {
         break;
     }
     mailbox = new MailBox();
+    intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
 
     NamedCommands.registerCommand("L4", elevator.setElevatorToL4Command());
     NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
@@ -150,6 +156,20 @@ public class RobotContainer {
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
     // test 3
     // Set up SysId routines
+
+    autoChooser.addOption(
+        "seedAuto",
+        Commands.runOnce(
+            () ->
+                drive.setPose(
+                    new Pose2d(
+                        new Translation2d(
+                            SmartDashboard.getNumber("seedX", 6),
+                            SmartDashboard.getNumber("seedY", 4)),
+                        new Rotation2d(
+                            Math.toRadians(SmartDashboard.getNumber("seedAngle", 180))))),
+            drive));
+
     autoChooser.addOption(
         "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
     autoChooser.addOption(
@@ -239,24 +259,61 @@ public class RobotContainer {
 
     controller
         .leftTrigger(0.5)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, 0.3))));
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, 0.6))));
 
     controller
         .rightTrigger(0.5)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.3))));
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.6))));
 
-    controller
-        .b()
-        .onTrue(mailbox.MailBox_Intake_Command(-.4))
+    operator
+        .x()
+        .onTrue(mailbox.MailBox_Outake_Command(.25))
         .onFalse(mailbox.MailBox_StopIntake_Command());
 
+    operator
+        .a()
+        .onTrue(new intakeOnlyWhileEmpty(mailbox).alongWith(elevator.setElevatorToSourceCommand()));
+
+    operator.leftBumper().onTrue(elevator.setElevatorToRestCommand());
+
+    operator
+        .b()
+        .onTrue(
+            elevator
+                .setElevatorToL1Command()
+                .alongWith(mailbox.MailBox_SetToHorizontalPosition_Command()));
+
+    operator
+        .y()
+        .onTrue(
+            elevator
+                .setElevatorToL2Command()
+                .alongWith(mailbox.MailBox_SetToL2L3_Position_Command()));
+
+    operator
+        .rightBumper()
+        .onTrue(
+            elevator
+                .setElevatorToL3Command()
+                .alongWith(mailbox.MailBox_SetToL2L3_Position_Command()));
+
+    operator
+        .rightTrigger(.5)
+        .onTrue(
+            elevator.setElevatorToL4Command().alongWith(mailbox.MailBox_SetL4_Position_Command()));
+
+    operator.pov(0).debounce(0.1).onTrue(elevator.incrementElevatorPositionCommand(1));
+    // consider - .debounce(0.1) before on true
+
+    operator.pov(180).debounce(0.1).onTrue(elevator.decrementElevatorPositionCommand(1));
+
+    operator.leftBumper().debounce(0.1).onTrue(mailbox.incrementBy6Degress_Command());
     // Maniuplator Controls
 
     // Elevator
-    SmartDashboard.putData("l1", elevator.setElevatorToL1Command());
-    SmartDashboard.putData("l2", elevator.setElevatorToL2Command());
-    SmartDashboard.putData("l3", elevator.setElevatorToL3Command());
-    SmartDashboard.putData("l4", elevator.setElevatorToL4Command());
+
+    SmartDashboard.putData("Increment", mailbox.incrementBy6Degress_Command());
+    SmartDashboard.putData("Decrement", mailbox.decrementBy6Degress_Command());
   }
 
   /**

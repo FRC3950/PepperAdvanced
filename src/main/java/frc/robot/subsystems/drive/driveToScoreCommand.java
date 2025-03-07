@@ -72,9 +72,13 @@ public class driveToScoreCommand extends Command {
 
     targetPose = closestPose;
     if (direction.equals("left")) {
-      targetPose = targetPose.transformBy(new Transform2d(.5, -.15, new Rotation2d()));
+      targetPose =
+          targetPose.transformBy(
+              new Transform2d(.5, -.15, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
     } else {
-      targetPose = targetPose.transformBy(new Transform2d(.5, .15, new Rotation2d()));
+      targetPose =
+          targetPose.transformBy(
+              new Transform2d(.5, .15, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
     }
 
     pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);

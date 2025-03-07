@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkMax;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,6 +19,7 @@ public class MailBox extends SubsystemBase {
   private final TalonFX angleMotor;
   private final double intakeSpeed = 0.5;
   private final double outakeSpeed = -0.5;
+  public final double sourceAngleEncoder = 11.5;
 
   // 60:1 gear ratio - 60 spins of the motor = 1 spin of the output shaft
   // I'm assumming we intake at 35 degrees from the horizontal
@@ -34,7 +36,7 @@ public class MailBox extends SubsystemBase {
         new SparkMax(
             Constants.SubsystemConstants.mailbox.intakeMotor, SparkMax.MotorType.kBrushless);
 
-    angleMotor = new TalonFX(Constants.SubsystemConstants.mailbox.angleMotor, "canivore");
+    angleMotor = new TalonFX(Constants.SubsystemConstants.mailbox.angleMotor, "CANivore");
 
     var talonFXConfigs = new TalonFXConfiguration();
 
@@ -55,11 +57,25 @@ public class MailBox extends SubsystemBase {
         120; // Target acceleration of 160 rps/s (0.5 seconds)
     motionMagicConfigs.MotionMagicJerk = 1200; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
-    angleMotor.getConfigurator().apply(talonFXConfigs);
+    // angleMotor.getConfigurator().apply(talonFXConfigs);
   }
 
   public void setIntakeMotor(double speed) {
+
     intakeMotor.set(speed);
+  }
+
+  public void setOutakeMotor(double speed) {
+
+    intakeMotor.set(speed);
+  }
+
+  public boolean nothingInIntake() {
+    return intakeMotor.getForwardLimitSwitch().isPressed();
+  }
+
+  public boolean somethingInIntake() {
+    return !intakeMotor.getForwardLimitSwitch().isPressed();
   }
 
   public void setAngleMotor(double motorRotations) {
@@ -87,11 +103,22 @@ public class MailBox extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    //  // This method will be called once per scheduler run
+    // System.out.println(intakeMotor.getForwardLimitSwitch().isPressed());
+    // false means we are clogged
+    SmartDashboard.putNumber("angle motor ticks ", angleMotor.getPosition().getValueAsDouble());
   }
 
   public Command MailBox_SetToIntakePosition_Command() {
-    return this.runOnce(() -> setAngleMotor(k_intakeAngleRotations));
+    return this.runOnce(() -> setAngleMotor(11.5));
+  }
+
+  public Command MailBox_SetToL2L3_Position_Command() {
+    return this.runOnce(() -> setAngleMotor(4));
+  }
+
+  public Command MailBox_SetL4_Position_Command() {
+    return this.runOnce(() -> setAngleMotor(5));
   }
 
   public Command MailBox_SetToHorizontalPosition_Command() {
@@ -99,11 +126,11 @@ public class MailBox extends SubsystemBase {
   }
 
   public Command incrementBy6Degress_Command() {
-    return this.runOnce(() -> setAngleMotor(angleMotor.getPosition().getValueAsDouble() + 1));
+    return this.runOnce(() -> setAngleMotor(angleMotor.getPosition().getValueAsDouble() + .2));
   }
 
   public Command decrementBy6Degress_Command() {
-    return this.runOnce(() -> setAngleMotor(angleMotor.getPosition().getValueAsDouble() - 1));
+    return this.runOnce(() -> setAngleMotor(angleMotor.getPosition().getValueAsDouble() - .2));
   }
 
   ///////////////////////////////////////////
@@ -113,7 +140,7 @@ public class MailBox extends SubsystemBase {
   }
 
   public Command MailBox_Outake_Command(double outakeSpeed) {
-    return this.runOnce(() -> setIntakeMotor(outakeSpeed));
+    return this.runOnce(() -> setOutakeMotor(outakeSpeed));
   }
 
   public Command MailBox_StopIntake_Command() {
