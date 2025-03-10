@@ -141,7 +141,7 @@ public class RobotContainer {
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
 
     NamedCommands.registerCommand("L4", elevator.setElevatorToL4Command());
-    NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
+    NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand(-0.1));
     NamedCommands.registerCommand("Source", elevator.setElevatorToSourceCommand());
 
     NamedCommands.registerCommand("Intake", new WaitCommand(1));
@@ -273,13 +273,13 @@ public class RobotContainer {
         .a()
         .onTrue(new intakeOnlyWhileEmpty(mailbox).alongWith(elevator.setElevatorToSourceCommand()));
 
-    operator.leftBumper().onTrue(elevator.setElevatorToRestCommand());
+    operator.leftBumper().onTrue(elevator.setElevatorToRestCommand(-0.1));
 
     operator
         .b()
         .onTrue(
             elevator
-                .setElevatorToL1Command()
+                .setElevatorToRestCommand(-0.1)
                 .alongWith(mailbox.MailBox_SetToHorizontalPosition_Command()));
 
     operator

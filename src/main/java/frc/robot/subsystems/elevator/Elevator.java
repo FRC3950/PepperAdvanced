@@ -110,6 +110,11 @@ public class Elevator extends SubsystemBase {
     elevatorLeadMotor.setControl(mm_request.withPosition(targetPositionInMotorTicks));
   }
 
+  public void setElevatorSpeed(double speed) {
+
+    elevatorLeadMotor.set(speed);
+  }
+
   // Do we target Drive Velocity for effecting how elevator rises up
 
   @Override
@@ -189,7 +194,7 @@ public class Elevator extends SubsystemBase {
   //   return this.setElevatorPositionCommand(source_inMotorRotations);
   // }
 
-  public Command setElevatorToRestCommand() {
-    return this.setElevatorPositionCommand(-1.50);
+  public Command setElevatorToRestCommand(double speed) {
+    return this.runOnce(() -> setElevatorSpeed(speed));
   }
 }
