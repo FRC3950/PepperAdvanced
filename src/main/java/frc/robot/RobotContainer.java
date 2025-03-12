@@ -28,11 +28,17 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.IntakeDuringAuto;
+import frc.robot.commands.L4DuringAuto;
+import frc.robot.commands.OutakeDuringAuto;
+import frc.robot.commands.driveToIntakeCommand;
+import frc.robot.commands.driveToScoreCommand;
+import frc.robot.commands.intakeOnlyWhileEmpty;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -40,10 +46,7 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.drive.driveToIntakeCommand;
-import frc.robot.subsystems.drive.driveToScoreCommand;
 import frc.robot.subsystems.elevator.Elevator;
-import frc.robot.subsystems.intakeOnlyWhileEmpty;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -75,6 +78,8 @@ public class RobotContainer {
     SmartDashboard.putNumber("seedAngle", 180);
     SmartDashboard.putNumber("seedX", 0);
     SmartDashboard.putNumber("seedY", 0);
+    SmartDashboard.putData("command", CommandScheduler.getInstance());
+
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -140,12 +145,15 @@ public class RobotContainer {
     mailbox = new MailBox();
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
 
-    NamedCommands.registerCommand("L4", elevator.setElevatorToL4Command());
-    NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand(-0.1));
-    NamedCommands.registerCommand("Source", elevator.setElevatorToSourceCommand());
+    NamedCommands.registerCommand(
+        "SlowlyRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 1, 1, 0));
 
-    NamedCommands.registerCommand("Intake", new WaitCommand(1));
-    NamedCommands.registerCommand("Outake", new WaitCommand(1));
+    NamedCommands.registerCommand("L4", new L4DuringAuto(elevator).withTimeout(.5)); //TODO consider a timeout for if the elevator doesn't reach
+    NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
+
+    NamedCommands.registerCommand(
+        "Intake", new IntakeDuringAuto(mailbox, elevator).andThen(new WaitCommand(.2)));
+    NamedCommands.registerCommand("Outake", new OutakeDuringAuto(mailbox).withTimeout(.5)); //TODO Remove timeout only here for sim
 
     NamedCommands.registerCommand(
         "Backward",
@@ -173,16 +181,16 @@ public class RobotContainer {
         "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
     autoChooser.addOption(
         "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Forward)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Reverse)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    // autoChooser.addOption(
+    //     "Drive SysId (Quasistatic Forward)",
+    //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    // autoChooser.addOption(
+    //     "Drive SysId (Quasistatic Reverse)",
+    //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    // autoChooser.addOption(
+    //     "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    // autoChooser.addOption(
+    //     "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -271,15 +279,16 @@ public class RobotContainer {
 
     operator
         .a()
-        .onTrue(new intakeOnlyWhileEmpty(mailbox).alongWith(elevator.setElevatorToSourceCommand()));
+        .whileTrue(
+            new intakeOnlyWhileEmpty(mailbox).alongWith(elevator.setElevatorToSourceCommand()));
 
-    operator.leftBumper().onTrue(elevator.setElevatorToRestCommand(-0.1));
+    operator.leftBumper().onTrue(elevator.setElevatorToRestCommand());
 
     operator
         .b()
         .onTrue(
             elevator
-                .setElevatorToRestCommand(-0.1)
+                .setElevatorToRestCommand()
                 .alongWith(mailbox.MailBox_SetToHorizontalPosition_Command()));
 
     operator

@@ -8,9 +8,6 @@ import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.CANdi;
 import com.ctre.phoenix6.hardware.TalonFX;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,36 +20,24 @@ public class Elevator extends SubsystemBase {
   private final DynamicMotionMagicVoltage mm_request =
       new DynamicMotionMagicVoltage(0, 60, 120, 1200);
 
-  private double L1_inMotorRotations = 0;
-  private double L2_inMotorRotations = 6.25;
-  private double L3_inMotorRotations = 11.5;
-  private double L4_inMotorRotations = 21;
-  private double source_inMotorRotations = 7;
+  public double L1_inMotorRotations = 0;
+  public double L2_inMotorRotations = 6.25;
+  public double L3_inMotorRotations = 11.5;
+  public double L4_inMotorRotations = 21;
+  public double source_inMotorRotations = 7;
 
   private final double k_intakeHeightInMotorRotations = 50;
-
-  private final Mechanism2d mech = new Mechanism2d(3, 3);
-  private final MechanismRoot2d root = mech.getRoot("elevator", 1.5, 0);
-  private final MechanismLigament2d v_elevator;
 
   private double currentPosSim = 0;
 
   /** Creates a new Elevator. */
   public Elevator() {
     myCANdi = new CANdi(17, "CANivore");
-    v_elevator = root.append(new MechanismLigament2d("elevator", 1, 90));
-    SmartDashboard.putData("Mech2d", mech);
 
     SmartDashboard.putNumber("L2", 6.25);
     SmartDashboard.putNumber("L3", 11.5);
     SmartDashboard.putNumber("L4", 21);
     SmartDashboard.putNumber("Source", 7);
-
-    // 3:1 gear ratio - 3 spins of the motor = 1 spin of the output shaft
-    // REally loose assumptin that 1 spin is 6.25 inches
-    // 110 / 6.25 = 17.6 rotations
-    // 17.6 * 3 = 52.8
-    // Let's assume 50 Rotations is the top of the elevator
 
     elevatorLeadMotor =
         new TalonFX(
@@ -63,20 +48,10 @@ public class Elevator extends SubsystemBase {
             Constants.SubsystemConstants.elevator.followMotorID,
             Constants.SubsystemConstants.elevator.kCanbus);
 
-    // Sim
-
-    // var talonFXConfigs = new TalonFXConfiguration();
-
-    // // Set slot 0 gains
-    // var slot0Configs = talonFXConfigs.Slot0;
-    // slot0Configs.kS = 0.25; // Add 0.25 V output to overcome static friction
-    // slot0Configs.kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
-    // slot0Configs.kA = 0.01; // An acceleration of 1 rps/s requires 0.01 V output
-    // slot0Configs.kP = 1.2; // A position error of 10 rotations results in 12 V output
-    // slot0Configs.kI = 0; // No output for integrated error
-    // slot0Configs.kD = 0.1; // A velocity error of 1 rps results in 0.1 V output
-
-    // elevatorLeadMotor.getConfigurator().apply(talonFXConfigs);
+    // elevatorLeadMotor.getConfigurator().apply(
+    //   new MotionMagicConfigs()
+    //   .withMotionMagicAcceleration(1)
+    //   .withMotionMagicCruiseVelocity(2));
 
     // Set the follow motor to follow the lead motor
     elevatorFollowMotor.setControl(new Follower(elevatorLeadMotor.getDeviceID(), false));
@@ -85,7 +60,6 @@ public class Elevator extends SubsystemBase {
   // Method to set the target position using Motion Magic
   public void setElevatorPosition(double targetPositionInMotorTicks) {
 
-    currentPosSim = targetPositionInMotorTicks;
     if (targetPositionInMotorTicks > elevatorLeadMotor.getPosition().getValueAsDouble()) {
 
       mm_request.Velocity = 10;
@@ -96,8 +70,14 @@ public class Elevator extends SubsystemBase {
       mm_request.Acceleration = 4;
       mm_request.Jerk = 0;
     }
+    if (targetPositionInMotorTicks == 0) {
+      elevatorLeadMotor.setControl(
+          mm_request.withPosition(targetPositionInMotorTicks).withFeedForward(-0.1));
 
-    elevatorLeadMotor.setControl(mm_request.withPosition(targetPositionInMotorTicks));
+    } else {
+
+      elevatorLeadMotor.setControl(mm_request.withPosition(targetPositionInMotorTicks));
+    }
   }
 
   public void setElevatorPosition(
@@ -113,6 +93,10 @@ public class Elevator extends SubsystemBase {
   public void setElevatorSpeed(double speed) {
 
     elevatorLeadMotor.set(speed);
+  }
+
+  public boolean isAtAcceptablePosition(double targetPosition) {
+    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < 1;
   }
 
   // Do we target Drive Velocity for effecting how elevator rises up
@@ -155,7 +139,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public Command setElevatorToL1Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L1", -1.50));
+    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L1", 0));
   }
 
   public Command setElevatorToL2Command() {
@@ -194,7 +178,7 @@ public class Elevator extends SubsystemBase {
   //   return this.setElevatorPositionCommand(source_inMotorRotations);
   // }
 
-  public Command setElevatorToRestCommand(double speed) {
-    return this.runOnce(() -> setElevatorSpeed(speed));
+  public Command setElevatorToRestCommand() {
+    return this.setElevatorPositionCommand(0);
   }
 }

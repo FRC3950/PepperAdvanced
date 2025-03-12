@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.047801886078976,
-        "y": 5.332803061080212
+        "x": 3.959904969437452,
+        "y": 5.294121640446787
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.388157894736842,
-        "y": 5.814638157894737
+        "x": 3.546427936483133,
+        "y": 5.550182904125737
       },
       "isLocked": false,
-      "linkedName": "1"
+      "linkedName": "12"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 7.033473501378722
       },
       "prevControl": {
-        "x": 2.1965656720970945,
-        "y": 6.589497956117843
+        "x": 1.8017437607175295,
+        "y": 6.696984764929288
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,13 +32,13 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.24143556280587275,
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.14681892332789562,
       "constraints": {
         "maxVelocity": 1.0,
         "maxAcceleration": 1.0,
-        "maxAngularVelocity": 540,
-        "maxAngularAcceleration": 720,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
         "unlimited": false
       }
@@ -47,22 +47,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3,
-    "maxAcceleration": 3,
-    "maxAngularVelocity": 540,
-    "maxAngularAcceleration": 720,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.58179727359582
+    "rotation": -52.98809634364368
   },
   "reversed": false,
   "folder": "North",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -59.460637952399225
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
