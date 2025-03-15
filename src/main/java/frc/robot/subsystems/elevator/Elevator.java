@@ -37,7 +37,7 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putNumber("L2", 6.25);
     SmartDashboard.putNumber("L3", 11.5);
     SmartDashboard.putNumber("L4", 21);
-    SmartDashboard.putNumber("Source", 7);
+    SmartDashboard.putNumber("Source", 0);
 
     elevatorLeadMotor =
         new TalonFX(
@@ -155,7 +155,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public Command setElevatorToSourceCommand() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("Source", 7));
+    return this.setElevatorPositionCommand(SmartDashboard.getNumber("Source", 0));
   }
 
   // public Command setElevatorToL1Command() {
