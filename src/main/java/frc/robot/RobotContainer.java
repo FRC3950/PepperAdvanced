@@ -148,12 +148,17 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "SlowlyRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 1, 1, 0));
 
-    NamedCommands.registerCommand("L4", new L4DuringAuto(elevator).withTimeout(.5)); //TODO consider a timeout for if the elevator doesn't reach
+    NamedCommands.registerCommand(
+        "L4",
+        new L4DuringAuto(elevator)
+            .withTimeout(.5)); // TODO consider a timeout for if the elevator doesn't reach
     NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
 
     NamedCommands.registerCommand(
         "Intake", new IntakeDuringAuto(mailbox, elevator).andThen(new WaitCommand(.2)));
-    NamedCommands.registerCommand("Outake", new OutakeDuringAuto(mailbox).withTimeout(.5)); //TODO Remove timeout only here for sim
+    NamedCommands.registerCommand(
+        "Outake",
+        new OutakeDuringAuto(mailbox).withTimeout(.5)); // TODO Remove timeout only here for sim
 
     NamedCommands.registerCommand(
         "Backward",
