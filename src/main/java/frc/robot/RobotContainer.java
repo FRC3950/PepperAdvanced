@@ -13,13 +13,11 @@
 
 package frc.robot;
 
-import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
-import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
-import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
-import static frc.robot.subsystems.vision.VisionConstants.robotToCamera1;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -50,10 +48,13 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.vision.Vision;
+import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
+import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
+import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
+import static frc.robot.subsystems.vision.VisionConstants.robotToCamera1;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -249,20 +250,19 @@ public class RobotContainer {
     controller
         .leftBumper()
         .onTrue(
-            new driveToScoreCommand(drive, "left")
-                .onlyWhile(
-                    () ->
-                        Math.abs(controller.getLeftY()) < 0.5
-                            && Math.abs(controller.getLeftX()) < 0.5));
+            new driveToScoreCommand(drive, "left"));
 
-    controller
-        .rightBumper()
-        .whileTrue(
-            new driveToScoreCommand(drive, "right")
-                .onlyWhile(
-                    () ->
-                        Math.abs(controller.getLeftY()) < 0.5
-                            && Math.abs(controller.getLeftY()) < 0.5));
+    // .onlyWhile(
+    //     () ->
+    //         Math.abs(controller.getLeftY()) < 0.5
+    //             && Math.abs(controller.getLeftX()) < 0.5));
+
+    controller.rightBumper().whileTrue(new driveToScoreCommand(drive, "right"));
+
+    // .onlyWhile(
+    //         () ->
+    //             Math.abs(controller.getLeftY()) < 0.5
+    //                 && Math.abs(controller.getLeftY()) < 0.5));
 
     // Fine Tune Driving
     controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
@@ -277,11 +277,11 @@ public class RobotContainer {
 
     controller
         .leftTrigger(0.5)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, 0.6))));
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, 0.7))));
 
     controller
         .rightTrigger(0.5)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.6))));
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.7))));
 
     operator
         .x()
