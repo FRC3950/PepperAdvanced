@@ -15,6 +15,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -25,6 +26,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommands;
@@ -43,6 +46,7 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.elevator.Elevator;
+import java.util.Set;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -237,20 +241,19 @@ public class RobotContainer {
     controller
         .leftBumper()
         .onTrue(
-            new driveToScoreCommand(drive, "left")
-                .onlyWhile(
-                    () ->
-                        Math.abs(controller.getLeftY()) < 0.5
-                            && Math.abs(controller.getLeftX()) < 0.5));
+            new driveToScoreCommand(drive, "left"));
 
-    controller
-        .rightBumper()
-        .whileTrue(
-            new driveToScoreCommand(drive, "right")
-                .onlyWhile(
-                    () ->
-                        Math.abs(controller.getLeftY()) < 0.5
-                            && Math.abs(controller.getLeftY()) < 0.5));
+    // .onlyWhile(
+    //     () ->
+    //         Math.abs(controller.getLeftY()) < 0.5
+    //             && Math.abs(controller.getLeftX()) < 0.5));
+
+    controller.rightBumper().whileTrue(new driveToScoreCommand(drive, "right"));
+
+    // .onlyWhile(
+    //         () ->
+    //             Math.abs(controller.getLeftY()) < 0.5
+    //                 && Math.abs(controller.getLeftY()) < 0.5));
 
     // Fine Tune Driving
     controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
@@ -265,11 +268,11 @@ public class RobotContainer {
 
     controller
         .leftTrigger(0.5)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, 0.6))));
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, 0.7))));
 
     controller
         .rightTrigger(0.5)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.6))));
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.7))));
 
     operator
         .x()
