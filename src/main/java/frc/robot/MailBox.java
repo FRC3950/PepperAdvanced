@@ -16,8 +16,8 @@ public class MailBox extends SubsystemBase {
 
   private final SparkMax intakeMotor;
   private final TalonFX angleMotor;
-  public final double intakeSpeed = 0.5;
-  public final double outakeSpeed = -0.25;
+  public final double intakeSpeed = -0.25;
+  public final double outakeSpeed = 0.25;
   public final double sourceAngleEncoder = 11.5;
 
   // 60:1 gear ratio - 60 spins of the motor = 1 spin of the output shaft

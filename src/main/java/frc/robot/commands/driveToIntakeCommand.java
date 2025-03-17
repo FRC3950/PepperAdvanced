@@ -74,7 +74,7 @@ public class driveToIntakeCommand extends Command {
 
     targetPose = closestPose;
 
-    targetPose = targetPose.transformBy(new Transform2d(.5, .0, new Rotation2d(Math.PI)));
+    targetPose = targetPose.transformBy(new Transform2d(.5, .0, new Rotation2d(0)));
 
     pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
     pathCommand.schedule();

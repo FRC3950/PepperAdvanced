@@ -34,9 +34,9 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     myCANdi = new CANdi(17, "CANivore");
 
-    SmartDashboard.putNumber("L2", 6.25);
-    SmartDashboard.putNumber("L3", 11.5);
-    SmartDashboard.putNumber("L4", 21);
+    SmartDashboard.putNumber("L2", 8);
+    SmartDashboard.putNumber("L3", 14);
+    SmartDashboard.putNumber("L4", 23.5);
     SmartDashboard.putNumber("Source", 0);
 
     elevatorLeadMotor =
@@ -62,12 +62,12 @@ public class Elevator extends SubsystemBase {
 
     if (targetPositionInMotorTicks > elevatorLeadMotor.getPosition().getValueAsDouble()) {
 
-      mm_request.Velocity = 10;
-      mm_request.Acceleration = 4;
+      mm_request.Velocity = 20;
+      mm_request.Acceleration = 40;
       mm_request.Jerk = 0;
     } else {
-      mm_request.Velocity = 10;
-      mm_request.Acceleration = 4;
+      mm_request.Velocity = 20;
+      mm_request.Acceleration = 50;
       mm_request.Jerk = 0;
     }
     if (targetPositionInMotorTicks == 0) {

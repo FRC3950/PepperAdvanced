@@ -13,7 +13,8 @@ public class intakeTeleopCommand extends Command {
   private final MailBox mailbox;
   private final Elevator elevator;
   /** Creates a new intake_teleop. */
-  public intakeTeleopCommand(MailBox mailbox, Elevator elevator) {
+  public 
+  intakeTeleopCommand(MailBox mailbox, Elevator elevator) {
 
     this.mailbox = mailbox;
     this.elevator = elevator;
