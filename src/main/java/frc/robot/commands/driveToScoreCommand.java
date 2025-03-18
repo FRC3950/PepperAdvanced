@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import java.util.Set;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -16,7 +14,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.subsystems.drive.Drive;
 
@@ -86,8 +83,10 @@ public class driveToScoreCommand extends Command {
           targetPose.transformBy(
               new Transform2d(.5, .145, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
     }
-    //pathCommand = new DeferredCommand(() ->AutoBuilder.pathfindToPose(targetPose, constraints, 0.0), Set.of(drive));
-    pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0).andThen(new PrintCommand("weird"));
+    // pathCommand = new DeferredCommand(() ->AutoBuilder.pathfindToPose(targetPose, constraints,
+    // 0.0), Set.of(drive));
+    pathCommand =
+        AutoBuilder.pathfindToPose(targetPose, constraints, 0.0).andThen(new PrintCommand("weird"));
     // .andThen(
     //     AutoBuilder.followPath(
     //         new PathPlannerPath(

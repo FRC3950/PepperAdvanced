@@ -20,11 +20,11 @@ public class Elevator extends SubsystemBase {
   private final DynamicMotionMagicVoltage mm_request =
       new DynamicMotionMagicVoltage(0, 60, 120, 1200);
 
-  public double L1_inMotorRotations = 0;
-  public double L2_inMotorRotations = 6.25;
-  public double L3_inMotorRotations = 11.5;
-  public double L4_inMotorRotations = 21;
-  public double source_inMotorRotations = 7;
+
+  public double L2_inMotorRotations = 8.1;
+  public double L3_inMotorRotations = 14.14;
+  public double L4_inMotorRotations = 23.75;
+  public double source_inMotorRotations = 0;
 
   private final double k_intakeHeightInMotorRotations = 50;
 
@@ -34,9 +34,9 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     myCANdi = new CANdi(17, "CANivore");
 
-    SmartDashboard.putNumber("L2", 8);
-    SmartDashboard.putNumber("L3", 14);
-    SmartDashboard.putNumber("L4", 23.5);
+    SmartDashboard.putNumber("L2", 8.1);
+    SmartDashboard.putNumber("L3", 14.14);
+    SmartDashboard.putNumber("L4", 23.75);
     SmartDashboard.putNumber("Source", 0);
 
     elevatorLeadMotor =
@@ -96,7 +96,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean isAtAcceptablePosition(double targetPosition) {
-    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < 1;
+    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < .75;
   }
 
   // Do we target Drive Velocity for effecting how elevator rises up
