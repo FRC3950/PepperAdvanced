@@ -35,15 +35,15 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "NorthSource_12"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NorthSource_12"
           }
         },
         {

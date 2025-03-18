@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.325315395880657,
-        "y": 6.137446177244883
+        "x": 6.907347972975447,
+        "y": 6.218749999998468
       },
       "isLocked": false,
       "linkedName": "NorthStart_CenteredWithMiddleHang"
     },
     {
       "anchor": {
-        "x": 5.047801886078976,
-        "y": 5.332803061080212
+        "x": 5.058888185019492,
+        "y": 5.376750272784574
       },
       "prevControl": {
-        "x": 5.233251771872408,
-        "y": 5.500458481091625
+        "x": 5.43496621621869,
+        "y": 6.050760135133603
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,12 +45,12 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,
@@ -62,5 +62,5 @@
     "velocity": 0,
     "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

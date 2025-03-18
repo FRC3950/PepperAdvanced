@@ -20,10 +20,9 @@ public class Elevator extends SubsystemBase {
   private final DynamicMotionMagicVoltage mm_request =
       new DynamicMotionMagicVoltage(0, 60, 120, 1200);
 
-
-  public double L2_inMotorRotations = 8.1;
-  public double L3_inMotorRotations = 14.14;
-  public double L4_inMotorRotations = 23.75;
+  public double L2_inMotorRotations = 8.5;
+  public double L3_inMotorRotations = 14.25;
+  public double L4_inMotorRotations = 22.75;
   public double source_inMotorRotations = 0;
 
   private final double k_intakeHeightInMotorRotations = 50;
@@ -34,9 +33,9 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     myCANdi = new CANdi(17, "CANivore");
 
-    SmartDashboard.putNumber("L2", 8.1);
-    SmartDashboard.putNumber("L3", 14.14);
-    SmartDashboard.putNumber("L4", 23.75);
+    SmartDashboard.putNumber("L2", 8.5);
+    SmartDashboard.putNumber("L3", 14.25);
+    SmartDashboard.putNumber("L4", 22.75);
     SmartDashboard.putNumber("Source", 0);
 
     elevatorLeadMotor =
@@ -63,7 +62,7 @@ public class Elevator extends SubsystemBase {
     if (targetPositionInMotorTicks > elevatorLeadMotor.getPosition().getValueAsDouble()) {
 
       mm_request.Velocity = 20;
-      mm_request.Acceleration = 40;
+      mm_request.Acceleration = 35;
       mm_request.Jerk = 0;
     } else {
       mm_request.Velocity = 20;
@@ -96,7 +95,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean isAtAcceptablePosition(double targetPosition) {
-    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < .75;
+    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < .520;
   }
 
   // Do we target Drive Velocity for effecting how elevator rises up
@@ -143,15 +142,15 @@ public class Elevator extends SubsystemBase {
   }
 
   public Command setElevatorToL2Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L2", 6.25));
+    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L2", L2_inMotorRotations));
   }
 
   public Command setElevatorToL3Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L3", 11.5));
+    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L3", L3_inMotorRotations));
   }
 
   public Command setElevatorToL4Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L4", 21));
+    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L4", L4_inMotorRotations));
   }
 
   public Command setElevatorToSourceCommand() {
