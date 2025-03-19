@@ -27,7 +27,7 @@ public class driveToScoreCommand extends Command {
 
   public PathConstraints constraints =
       new PathConstraints(
-          3.0, 4.0, Units.degreesToRadians(540), Units.degreesToRadians(540)); // accell was 720
+          3.0, 3.0, Units.degreesToRadians(540), Units.degreesToRadians(540)); // accell was 720
 
   // AprilTag layout
   public static AprilTagFieldLayout aprilTagLayoutForAutoDrive =
@@ -77,11 +77,11 @@ public class driveToScoreCommand extends Command {
     if (direction.equals("left")) {
       targetPose =
           targetPose.transformBy(
-              new Transform2d(.5, -.145, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
+              new Transform2d(.5, -.1645, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
     } else {
       targetPose =
           targetPose.transformBy(
-              new Transform2d(.5, .145, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
+              new Transform2d(.5, .1645, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
     }
     // pathCommand = new DeferredCommand(() ->AutoBuilder.pathfindToPose(targetPose, constraints,
     // 0.0), Set.of(drive));

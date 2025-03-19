@@ -13,11 +13,13 @@
 
 package frc.robot;
 
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
+import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
+import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
+import static frc.robot.subsystems.vision.VisionConstants.robotToCamera1;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -50,13 +52,10 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.vision.Vision;
-import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
-import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
-import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
-import static frc.robot.subsystems.vision.VisionConstants.robotToCamera1;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -302,11 +301,11 @@ public class RobotContainer {
                     new WaitUntilCommand(
                             () -> elevator.isAtAcceptablePosition(elevator.L2_inMotorRotations))
                         .withTimeout(2.25))
-                .andThen(new WaitCommand(0.2))
+                .andThen(new WaitCommand(0.1))
                 .andThen(mailbox.MailBox_Outake_Command(mailbox.outakeSpeed))
                 .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(.5))
                 .andThen(elevator.setElevatorToRestCommand())
-                .andThen(mailbox.start_stop_IntakeCommand()));
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator
         .b()
@@ -317,11 +316,11 @@ public class RobotContainer {
                     new WaitUntilCommand(
                             () -> elevator.isAtAcceptablePosition(elevator.L3_inMotorRotations))
                         .withTimeout(2.25))
-                .andThen(new WaitCommand(0.2))
+                .andThen(new WaitCommand(0.1))
                 .andThen(mailbox.MailBox_Outake_Command(mailbox.outakeSpeed))
                 .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(.5))
                 .andThen(elevator.setElevatorToRestCommand())
-                .andThen(mailbox.start_stop_IntakeCommand()));
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator
         .y()
@@ -332,11 +331,11 @@ public class RobotContainer {
                     new WaitUntilCommand(
                             () -> elevator.isAtAcceptablePosition(elevator.L4_inMotorRotations))
                         .withTimeout(2.25))
-                .andThen(new WaitCommand(0.2))
+                .andThen(new WaitCommand(0.15))
                 .andThen(mailbox.MailBox_Outake_Command(mailbox.outakeSpeed))
                 .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(1))
                 .andThen(elevator.setElevatorToRestCommand())
-                .andThen(mailbox.start_stop_IntakeCommand()));
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator.pov(0).debounce(0.1).onTrue(elevator.incrementElevatorPositionCommand(.5));
     // consider - .debounce(0.1) before on true
@@ -344,6 +343,8 @@ public class RobotContainer {
     operator.pov(180).debounce(0.1).onTrue(elevator.decrementElevatorPositionCommand(.5));
 
     operator.leftBumper().debounce(0.1).onTrue(mailbox.incrementBy6Degress_Command());
+
+    operator.x().onTrue(hopper.holdHopper_Command(.2)).onFalse(hopper.holdHopper_Command(-0.5));
 
     // Maniuplator Controls
 
