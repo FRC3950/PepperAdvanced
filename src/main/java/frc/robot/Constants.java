@@ -56,7 +56,7 @@ public final class Constants {
 
     public static final class climber {
 
-      public static final int climberMotor = 69; // Add this line
+      public static final int climberMotor = 43; // Add this line
 
       public static final String kCanbus = "CANivore";
     }

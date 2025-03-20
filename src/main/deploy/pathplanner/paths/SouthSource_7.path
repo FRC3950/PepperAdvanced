@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.00065789474136,
-        "y": 1.1865953947374976
+        "x": 1.1367613636363636,
+        "y": 1.1481960227272725
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9272814894865373,
-        "y": 3.018190567745612
+        "x": 3.3504545454545456,
+        "y": 1.7664346590909077
       },
       "isLocked": false,
       "linkedName": "SouthSource"
     },
     {
       "anchor": {
-        "x": 3.9686333523703494,
-        "y": 2.752239716716623
+        "x": 3.918835227277713,
+        "y": 2.703764204550441
       },
       "prevControl": {
-        "x": 3.1451941031745774,
-        "y": 2.093954627334326
+        "x": 3.4502302839982724,
+        "y": 1.7977318741974546
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "7"
+      "linkedName": "South 2nd L4"
     }
   ],
   "rotationTargets": [],
@@ -48,7 +48,7 @@
   "folder": "South",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.44571032752415
+    "rotation": 54.9127514467238
   },
   "useDefaultConstraints": true
 }

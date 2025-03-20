@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.9051383839213387,
-        "y": 5.35054284847618
+        "x": 3.85363804740609,
+        "y": 5.3533193418598035
       },
       "prevControl": {
-        "x": 3.3452847821142844,
-        "y": 6.364131629407613
+        "x": 3.2937844455990355,
+        "y": 6.366908122791236
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "12"
+      "linkedName": "2nd L4 North"
     }
   ],
   "rotationTargets": [],
@@ -54,13 +54,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -58.476456180491105
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "North",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -55.96604677240885
+    "rotation": -55.0
   },
   "useDefaultConstraints": false
 }

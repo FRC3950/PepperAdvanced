@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.57840909090909,
-        "y": 1.9259801136363626
+        "x": 1.1367613636363636,
+        "y": 1.1481960227272725
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.321988636363637,
-        "y": 1.9658664772727272
+        "x": 2.1367613636363636,
+        "y": 1.148196022727273
       },
       "isLocked": false,
-      "linkedName": "SouthStart_CenteredMidCage"
+      "linkedName": "SouthSource"
     },
     {
       "anchor": {
-        "x": 5.0559370119825795,
-        "y": 2.7231330650276027
+        "x": 3.6196875,
+        "y": 2.87328125
       },
       "prevControl": {
-        "x": 5.743636363636364,
-        "y": 2.2251278409090913
+        "x": 2.6424715909090906,
+        "y": 1.4573153409090913
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "South 1st L4"
+      "linkedName": "South 3rd L4"
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 122.50000000000001
+    "velocity": 0,
+    "rotation": 59.71204700933399
   },
   "reversed": false,
   "folder": "South",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.90232718260688
+    "rotation": 54.24611274556323
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

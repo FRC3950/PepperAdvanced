@@ -44,6 +44,7 @@ import frc.robot.commands.driveToScoreCommand;
 import frc.robot.commands.intakeOnlyWhileEmpty;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -69,6 +70,7 @@ public class RobotContainer {
   private final Vision vision;
   private Elevator elevator;
   private Hopper hopper;
+  private Climber climber;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -152,6 +154,7 @@ public class RobotContainer {
     }
     mailbox = new MailBox();
     hopper = new Hopper();
+    climber = new Climber();
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
     intakeIsAlwaysOnWhenAtRest =
         new Trigger(
@@ -178,6 +181,10 @@ public class RobotContainer {
         new OutakeDuringAuto(mailbox).withTimeout(.6)); // TODO Remove timeout only here for sim
 
     NamedCommands.registerCommand("Backward", new InstantCommand());
+
+    NamedCommands.registerCommand("AutoLeft", new driveToScoreCommand(drive, "left"));
+    NamedCommands.registerCommand("AutoRight", new driveToScoreCommand(drive, "right"));
+    NamedCommands.registerCommand("AutoSource", new driveToIntakeCommand(drive, () -> 0.0));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -342,9 +349,26 @@ public class RobotContainer {
 
     operator.pov(180).debounce(0.1).onTrue(elevator.decrementElevatorPositionCommand(.5));
 
-    operator.leftBumper().debounce(0.1).onTrue(mailbox.incrementBy6Degress_Command());
+    operator
+        .leftBumper()
+        .onTrue(
+            elevator
+                .setElevatorToRestCommand()
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
+    operator
+        .leftTrigger(.5)
+        .onTrue(
+            new InstantCommand(() -> climber.goToClimbInitPosition(), climber)
+                .alongWith(hopper.holdHopper_Command(-0.2)));
 
-    operator.x().onTrue(hopper.holdHopper_Command(.2)).onFalse(hopper.holdHopper_Command(-0.5));
+    operator
+        .rightTrigger(.5)
+        .onTrue(
+            Commands.runOnce(() -> climber.bringInTheClimb(), climber)
+                .onlyIf(climber::isReadyToClimb));
+    //   operator.start().
+    // operator.start().onTrue(hopper.holdHopper_Command(-.2));
+    // operator.back().onTrue(hopper.holdHopper_Command(0.25));
 
     // Maniuplator Controls
 
@@ -359,5 +383,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.get();
+  }
+
+  public Command setElevatorToZeroAndZayanTime() {
+    return new InstantCommand()
+        .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake));
   }
 }

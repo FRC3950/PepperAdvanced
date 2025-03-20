@@ -4,15 +4,17 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hopper extends SubsystemBase {
-  private final SparkMax hopperMotor;
+  private final Talon hopperMotor;
+  private boolean isHolding = true;
 
   public Hopper() {
-    hopperMotor = new SparkMax(62, SparkMax.MotorType.kBrushless);
+    hopperMotor = new Talon(0);
+    // hopperMotor.set(.25);
   }
 
   public void setIntakeSpeed(double velocity) {
@@ -21,6 +23,14 @@ public class Hopper extends SubsystemBase {
 
   public Command holdHopper_Command(double velocity) {
     return this.run(() -> setIntakeSpeed(velocity));
+  }
+
+  public void changeHoldingState() {
+    isHolding = !isHolding;
+  }
+
+  public Command changeHoldingState_Command() {
+    return this.runOnce(() -> changeHoldingState());
   }
 
   @Override

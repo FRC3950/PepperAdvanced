@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems.climber;
 
-import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -15,9 +15,7 @@ public class Climber extends SubsystemBase {
       new TalonFX(
           Constants.SubsystemConstants.climber.climberMotor,
           Constants.SubsystemConstants.climber.kCanbus);
-  private final DynamicMotionMagicVoltage mm_request = new DynamicMotionMagicVoltage(0, 20, 20, 0);
-  private final double restPosition = 0;
-  private final double climbPosition = 20; // TBD
+  private final MotionMagicVoltage mm_request = new MotionMagicVoltage(0);
 
   /** Creates a new Climber. */
   public Climber() {}
@@ -26,33 +24,23 @@ public class Climber extends SubsystemBase {
     return climberMotor.getPosition().getValueAsDouble();
   }
 
+  public boolean isReadyToClimb() {
+    return currentPosition() > 50;
+  }
+
   // TODO test bounds
   public boolean isAtAcceptablePosition(double targetPosition) {
     return Math.abs(currentPosition() - targetPosition) < 1;
   }
 
-  public void goToClimbPosition() {
-    mm_request.Velocity = 10;
-    mm_request.Acceleration = 4;
-    mm_request.Jerk = 0;
+  public void goToClimbInitPosition() {
 
-    climberMotor.setControl(mm_request.withPosition(climbPosition));
-  }
-
-  public void goToRestPosition() {
-    mm_request.Velocity = 10;
-    mm_request.Acceleration = 4;
-    mm_request.Jerk = 0;
-
-    climberMotor.setControl(mm_request.withPosition(restPosition));
+    climberMotor.setControl(mm_request.withPosition(60));
   }
 
   public void bringInTheClimb() {
-    mm_request.Velocity = 10;
-    mm_request.Acceleration = 4;
-    mm_request.Jerk = 0;
 
-    climberMotor.setControl(mm_request.withPosition(0));
+    climberMotor.setControl(mm_request.withPosition(121));
   }
 
   @Override

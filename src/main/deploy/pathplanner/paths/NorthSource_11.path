@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.6329829509770595,
-        "y": 5.201708212618439
+        "x": 3.5166966912050985,
+        "y": 5.199732651535267
       },
       "prevControl": {
-        "x": 3.2300851868512996,
-        "y": 5.865513035211703
+        "x": 3.1284430850287968,
+        "y": 5.872207623654458
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "3rd L4 North"
     }
   ],
   "rotationTargets": [],
@@ -41,8 +41,8 @@
     "unlimited": true
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -60.13049512685963
+    "velocity": 0.0,
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "North",
