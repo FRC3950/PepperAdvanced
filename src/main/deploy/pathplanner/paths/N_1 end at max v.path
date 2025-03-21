@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2780967178611593,
-        "y": 6.9961925864377
+        "x": 7.6,
+        "y": 6.164
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8799362072607917,
-        "y": 6.50209116654258
+        "x": 6.890369318176832,
+        "y": 6.263622159090909
       },
       "isLocked": false,
-      "linkedName": "NorthSource"
+      "linkedName": "NorthStart_CenteredMidCage"
     },
     {
       "anchor": {
-        "x": 3.935,
-        "y": 5.28
+        "x": 5.733664772722286,
+        "y": 6.044247159090909
       },
       "prevControl": {
-        "x": 3.3751463981929457,
-        "y": 6.293588780931433
+        "x": 6.651051136358651,
+        "y": 6.353366477272727
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "2nd L4 North"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "SlowRaise",
-      "waypointRelativePos": 0.42251223491027706,
+      "waypointRelativePos": 0.28221859706362185,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -53,14 +53,14 @@
     "unlimited": true
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -59.99999999999999
+    "velocity": 6.0,
+    "rotation": -124.82448915695672
   },
   "reversed": false,
   "folder": "North",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -55.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

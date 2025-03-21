@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8799362072607917,
-        "y": 6.50209116654258
+        "x": 1.7450284090909092,
+        "y": 7.001519886363636
       },
       "isLocked": false,
       "linkedName": "NorthSource"
     },
     {
       "anchor": {
-        "x": 3.935,
-        "y": 5.28
+        "x": 3.2108522727272732,
+        "y": 6.183849431818182
       },
       "prevControl": {
-        "x": 3.3751463981929457,
-        "y": 6.293588780931433
+        "x": 2.453011363636364,
+        "y": 7.001519886363637
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "2nd L4 North"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -53,7 +53,7 @@
     "unlimited": true
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 6.0,
     "rotation": -59.99999999999999
   },
   "reversed": false,

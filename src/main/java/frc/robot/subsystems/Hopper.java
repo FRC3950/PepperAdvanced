@@ -14,7 +14,7 @@ public class Hopper extends SubsystemBase {
 
   public Hopper() {
     hopperMotor = new Talon(0);
-    // hopperMotor.set(.25);
+    hopperMotor.set(.25);
   }
 
   public void setIntakeSpeed(double velocity) {

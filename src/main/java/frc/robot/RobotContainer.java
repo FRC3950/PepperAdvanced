@@ -374,6 +374,9 @@ public class RobotContainer {
 
     // Elevator
 
+    SmartDashboard.putData(
+        "Click To Reset Climber to Zero",
+        new InstantCommand(() -> climber.goBackToRestSmartDashboard(), climber));
   }
 
   /**

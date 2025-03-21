@@ -9,19 +9,19 @@
       "prevControl": null,
       "nextControl": {
         "x": 3.3504545454545456,
-        "y": 1.7664346590909077
+        "y": 1.7664346590909075
       },
       "isLocked": false,
       "linkedName": "SouthSource"
     },
     {
       "anchor": {
-        "x": 3.918835227277713,
-        "y": 2.703764204550441
+        "x": 3.9324316233181698,
+        "y": 2.618240178705888
       },
       "prevControl": {
-        "x": 3.4502302839982724,
-        "y": 1.7977318741974546
+        "x": 3.463826680038729,
+        "y": 1.7122078483529015
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,7 +38,7 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,

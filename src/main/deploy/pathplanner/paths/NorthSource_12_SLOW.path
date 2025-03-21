@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8799362072607917,
-        "y": 6.50209116654258
+        "x": 2.974408783783784,
+        "y": 6.278040540540539
       },
       "isLocked": false,
       "linkedName": "NorthSource"
@@ -20,8 +20,8 @@
         "y": 5.28
       },
       "prevControl": {
-        "x": 3.3751463981929457,
-        "y": 6.293588780931433
+        "x": 3.4462844050629657,
+        "y": 6.126480240882195
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,36 +31,24 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "SlowRaise",
-      "waypointRelativePos": 0.42251223491027706,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "SlowlyRaise"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "North",
+  "folder": "PathsFor2",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -55.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

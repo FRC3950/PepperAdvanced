@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.0559370119825795,
-        "y": 2.7231330650276027
+        "x": 5.112980975081578,
+        "y": 2.7094753850816655
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.080263157894737,
-        "y": 1.9755756578947363
+        "x": 5.137307120993735,
+        "y": 1.9619179779487994
       },
       "isLocked": false,
       "linkedName": "South 1st L4"
@@ -20,8 +20,8 @@
         "y": 1.1481960227272725
       },
       "prevControl": {
-        "x": 1.773014021295461,
-        "y": 1.5244193763375244
+        "x": 1.708984234454527,
+        "y": 1.8198001925496157
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,7 +38,7 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9324316233181698,
-        "y": 2.618240178705888
+        "x": 7.6,
+        "y": 6.164
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.154647532404093,
-        "y": 1.5512799514281743
+        "x": 6.613012728413253,
+        "y": 6.08833073444737
       },
       "isLocked": false,
-      "linkedName": "South 2nd L4"
+      "linkedName": "NorthStart_CenteredMidCage"
     },
     {
       "anchor": {
-        "x": 1.1367613636363636,
-        "y": 1.1481960227272725
+        "x": 5.033540446163198,
+        "y": 5.301891552683809
       },
       "prevControl": {
-        "x": 2.8119886363636364,
-        "y": 1.3177130681818177
+        "x": 5.423712706157688,
+        "y": 5.97768973069824
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SouthSource"
+      "linkedName": "Blue First L4"
     }
   ],
   "rotationTargets": [],
@@ -38,17 +38,17 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 55.09750438407523
+    "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": "South",
+  "folder": "PathsFor2",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 59.264512297848086
+    "velocity": 0.0,
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
