@@ -156,6 +156,7 @@ public class RobotContainer {
     hopper = new Hopper();
     climber = new Climber();
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
+
     intakeIsAlwaysOnWhenAtRest =
         new Trigger(
             () ->
@@ -295,6 +296,13 @@ public class RobotContainer {
         .rightTrigger(0.5)
         .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.7))));
 
+    // controller
+    //     .start()
+    //     .onTrue(
+    //         new DeferredCommand(() -> AutoBuilder.pathfindThenFollowPath(null, null),
+    // Set.of(drive))
+    //             .alongWith(new PrintCommand("Starting Auto")));
+
     // Operator Controls/////////////////////////
 
     //   intakeIsAlwaysOnWhenAtRest.whileTrue(mailbox.start_stop_IntakeCommand());
@@ -366,6 +374,9 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(() -> climber.bringInTheClimb(), climber)
                 .onlyIf(climber::isReadyToClimb));
+
+    SmartDashboard.putData(
+        "Climber Reset Button", new InstantCommand(() -> climber.goBackToRest(), climber));
     //   operator.start().
     // operator.start().onTrue(hopper.holdHopper_Command(-.2));
     // operator.back().onTrue(hopper.holdHopper_Command(0.25));

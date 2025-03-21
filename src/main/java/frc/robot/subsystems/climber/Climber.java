@@ -73,6 +73,11 @@ public class Climber extends SubsystemBase {
     climberMotor.setControl(mm_request.withPosition(0));
   }
 
+  public void goBackToRest() {
+
+    climberMotor.setControl(mm_request.withPosition(0));
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
