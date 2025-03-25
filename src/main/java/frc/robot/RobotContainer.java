@@ -308,6 +308,21 @@ public class RobotContainer {
     //   intakeIsAlwaysOnWhenAtRest.whileTrue(mailbox.start_stop_IntakeCommand());
 
     operator
+        .x()
+        .onTrue(
+            elevator
+                .setElevatorToL1Command()
+                .andThen(
+                    new WaitUntilCommand(
+                            () -> elevator.isAtAcceptablePosition(elevator.L1_inMotorRotations))
+                        .withTimeout(2.25))
+                .andThen(new WaitCommand(0.1))
+                .andThen(mailbox.MailBox_Outake_L1_Command(mailbox.outakeSpeedL1))
+                .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(.5))
+                .andThen(elevator.setElevatorToRestCommand())
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
+
+    operator
         .a()
         .onTrue(
             elevator
@@ -363,17 +378,17 @@ public class RobotContainer {
             elevator
                 .setElevatorToRestCommand()
                 .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
-    operator
-        .leftTrigger(.5)
-        .onTrue(
-            new InstantCommand(() -> climber.goToClimbInitPosition(), climber)
-                .alongWith(hopper.holdHopper_Command(-0.2)));
+    // operator
+    //     .leftTrigger(.5)
+    //     .onTrue(
+    //         new InstantCommand(() -> climber.goToClimbInitPosition(), climber)
+    //             .alongWith(hopper.holdHopper_Command(-0.2)));
 
-    operator
-        .rightTrigger(.5)
-        .onTrue(
-            Commands.runOnce(() -> climber.bringInTheClimb(), climber)
-                .onlyIf(climber::isReadyToClimb));
+    // operator
+    //     .rightTrigger(.5)
+    //     .onTrue(
+    //         Commands.runOnce(() -> climber.bringInTheClimb(), climber)
+    //             .onlyIf(climber::isReadyToClimb));
 
     SmartDashboard.putData(
         "Climber Reset Button", new InstantCommand(() -> climber.goBackToRest(), climber));

@@ -17,6 +17,7 @@ public class MailBox extends SubsystemBase {
   private final SparkMax intakeMotor;
   private final TalonFX angleMotor;
   public final double intakeSpeed = -0.15;
+  public final double outakeSpeedL1 = -0.0845;
   public final double outakeSpeed = -0.15;
   public final double sourceAngleEncoder = 11.5;
 
@@ -66,6 +67,10 @@ public class MailBox extends SubsystemBase {
 
   public void setOutakeMotor(double speed) {
 
+    intakeMotor.set(speed);
+  }
+
+  public void setOutakeMotorL1(double speed) {
     intakeMotor.set(speed);
   }
 
@@ -140,6 +145,10 @@ public class MailBox extends SubsystemBase {
 
   public Command MailBox_Outake_Command(double outakeSpeed) {
     return this.runOnce(() -> setOutakeMotor(outakeSpeed));
+  }
+
+  public Command MailBox_Outake_L1_Command(double outakeSpeedL1) {
+    return this.runOnce(() -> setOutakeMotorL1(outakeSpeedL1));
   }
 
   public Command MailBox_StopIntake_Command() {

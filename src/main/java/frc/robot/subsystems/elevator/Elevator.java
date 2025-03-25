@@ -20,6 +20,7 @@ public class Elevator extends SubsystemBase {
   private final DynamicMotionMagicVoltage mm_request =
       new DynamicMotionMagicVoltage(0, 60, 120, 1200);
 
+  public double L1_inMotorRotations = 6.5;
   public double L2_inMotorRotations = 8.5;
   public double L3_inMotorRotations = 14.25;
   public double L4_inMotorRotations = 22.75;
@@ -33,6 +34,7 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     myCANdi = new CANdi(17, "CANivore");
 
+    SmartDashboard.putNumber("L1", 6.5);
     SmartDashboard.putNumber("L2", 8.5);
     SmartDashboard.putNumber("L3", 14.25);
     SmartDashboard.putNumber("L4", 22.75);
@@ -138,7 +140,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public Command setElevatorToL1Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L1", 0));
+    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L1", L1_inMotorRotations));
   }
 
   public Command setElevatorToL2Command() {
