@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.6,
-        "y": 1.762
+        "x": 6.7443783462219224,
+        "y": 4.1944845658540375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.560669996108914,
-        "y": 1.486077949477376
+        "x": 6.065717283537851,
+        "y": 4.1944845658540375
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.909290540540541,
-        "y": 1.4755067567567561
+        "x": 5.81613556888533,
+        "y": 4.1944845658540375
       },
       "prevControl": {
-        "x": 6.947286241446556,
-        "y": 1.8176701907628137
+        "x": 6.292476303145494,
+        "y": 4.1944845658540375
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,13 +41,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 119.99999999999999
+    "velocity": 0,
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "New Folder",
+  "folder": "ForAlexControl",
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 180.0
   },
   "useDefaultConstraints": true
