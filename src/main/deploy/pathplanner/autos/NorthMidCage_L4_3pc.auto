@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -13,6 +13,12 @@
                 "data": {
                   "pathName": "N_1"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "L4"
+                }
               }
             ]
           }
@@ -24,7 +30,7 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -32,6 +38,12 @@
                 "data": {
                   "pathName": "1_NorthSource"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest"
+                }
               }
             ]
           }
@@ -43,13 +55,19 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
                   "pathName": "NorthSource_12"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "L4"
                 }
               }
             ]
@@ -62,15 +80,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Rest"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "12_NorthSource"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "12_NorthSource"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest"
+                }
+              }
+            ]
           }
         },
         {
@@ -80,21 +105,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Rest"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "NorthSource_11"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "L4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NorthSource_11"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "L4"
+                }
+              }
+            ]
           }
         },
         {
