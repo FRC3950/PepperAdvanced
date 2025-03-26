@@ -23,7 +23,7 @@ public class Elevator extends SubsystemBase {
   public double L1_inMotorRotations = 6.5;
   public double L2_inMotorRotations = 8.5;
   public double L3_inMotorRotations = 14.25;
-  public double L4_inMotorRotations = 22.75;
+  public double L4_inMotorRotations = 23.00;
   public double source_inMotorRotations = 0;
 
   private final double k_intakeHeightInMotorRotations = 50;
@@ -37,7 +37,7 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putNumber("L1", 6.5);
     SmartDashboard.putNumber("L2", 8.5);
     SmartDashboard.putNumber("L3", 14.25);
-    SmartDashboard.putNumber("L4", 22.75);
+    SmartDashboard.putNumber("L4", 23.00);
     SmartDashboard.putNumber("Source", 0);
 
     elevatorLeadMotor =

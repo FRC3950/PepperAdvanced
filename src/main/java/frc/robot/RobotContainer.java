@@ -183,9 +183,12 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Backward", new InstantCommand());
 
-    NamedCommands.registerCommand("AutoLeft", new driveToScoreCommand(drive, "left"));
-    NamedCommands.registerCommand("AutoRight", new driveToScoreCommand(drive, "right"));
-    NamedCommands.registerCommand("AutoSource", new driveToIntakeCommand(drive, () -> 0.0));
+    NamedCommands.registerCommand(
+        "AutoLeft", new driveToScoreCommand(drive, "left").withTimeout(2));
+    NamedCommands.registerCommand(
+        "AutoRight", new driveToScoreCommand(drive, "right").withTimeout(2));
+    NamedCommands.registerCommand(
+        "AutoSource", new driveToIntakeCommand(drive, () -> 0.0).withTimeout(2));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -364,6 +367,7 @@ public class RobotContainer {
                 .andThen(new WaitCommand(0.15))
                 .andThen(mailbox.MailBox_Outake_Command(mailbox.outakeSpeed))
                 .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(1))
+                .andThen(new WaitCommand(0.1))
                 .andThen(elevator.setElevatorToRestCommand())
                 .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 

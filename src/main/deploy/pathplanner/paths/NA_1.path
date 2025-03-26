@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.6,
-        "y": 6.164
+        "x": 7.0499147727272735,
+        "y": 6.512911931818182
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.613012728413253,
-        "y": 6.08833073444737
+        "x": 6.1707670454545465,
+        "y": 6.2036988636363635
       },
       "isLocked": false,
       "linkedName": "NorthStart_CenteredMidCage"
     },
     {
       "anchor": {
-        "x": 5.033540446163198,
-        "y": 5.301891552683809
+        "x": 5.029467909932432,
+        "y": 5.35578129411813
       },
       "prevControl": {
-        "x": 5.423712706157688,
-        "y": 5.97768973069824
+        "x": 5.799393372860142,
+        "y": 5.609528945979775
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "PathsFor2",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": 180.0
+    "rotation": -155.1297510760931
   },
   "useDefaultConstraints": true
 }

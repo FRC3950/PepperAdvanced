@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.6,
-        "y": 6.164
+        "x": 7.0499147727272735,
+        "y": 6.512911931818182
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.564697962446095,
-        "y": 6.4843464837580616
+        "x": 6.014612735173369,
+        "y": 6.8332584155762435
       },
       "isLocked": false,
       "linkedName": "NorthStart_CenteredMidCage"

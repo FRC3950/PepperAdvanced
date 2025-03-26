@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.935,
-        "y": 5.28
+        "x": 3.92716890203682,
+        "y": 5.360676679539422
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.603751872061919,
-        "y": 5.50384317189162
+        "x": 3.595920774098739,
+        "y": 5.5845198514310415
       },
       "isLocked": false,
       "linkedName": "2nd L4 North"
@@ -47,8 +47,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

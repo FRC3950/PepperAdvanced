@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.6,
-        "y": 6.164
+        "x": 7.0499147727272735,
+        "y": 6.512911931818182
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.932347972975441,
-        "y": 6.232749999998467
+        "x": 6.643374934467936,
+        "y": 6.299000716007827
       },
       "isLocked": false,
       "linkedName": "NorthStart_CenteredMidCage"
     },
     {
       "anchor": {
-        "x": 5.033540446163198,
-        "y": 5.301891552683809
+        "x": 5.029467909932432,
+        "y": 5.35578129411813
       },
       "prevControl": {
-        "x": 5.419456233639696,
-        "y": 5.970317304036057
+        "x": 5.929534860916842,
+        "y": 5.855171918602963
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,9 +33,9 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "SlowRaise",
-      "waypointRelativePos": 0.28221859706362185,
-      "endWaypointRelativePos": null,
+      "name": "L4",
+      "waypointRelativePos": 0.03472770323599206,
+      "endWaypointRelativePos": 1.0,
       "command": {
         "type": "named",
         "data": {
@@ -45,12 +45,12 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0.0,
@@ -60,7 +60,7 @@
   "folder": "North",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -137.17474411461015
   },
   "useDefaultConstraints": false
 }

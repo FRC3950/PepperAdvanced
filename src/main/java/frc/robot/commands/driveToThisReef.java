@@ -44,19 +44,14 @@ public class driveToThisReef extends Command {
     this.tagIdToDriveTo = tagIdToDriveTo;
     addRequirements(drive);
 
-    poseToPlanPathTo = aprilTagLayoutForAutoDrive.getTagPose(tagIdToDriveTo).orElse(new Pose3d()).toPose2d();
-
-    
-    }
-  
+    poseToPlanPathTo =
+        aprilTagLayoutForAutoDrive.getTagPose(tagIdToDriveTo).orElse(new Pose3d()).toPose2d();
+  }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-    
-
- 
     targetPose = poseToPlanPathTo;
     if (direction.equals("left")) {
       targetPose =
@@ -106,4 +101,3 @@ public class driveToThisReef extends Command {
     return pathCommand == null || pathCommand.isFinished(); // Stop when PathPlanner finishes
   }
 }
-

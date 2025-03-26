@@ -46,7 +46,7 @@ public class DriveCommands {
   private static final double FF_RAMP_RATE = 0.1; // Volts/Sec
   private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.25; // Rad/Sec
   private static final double WHEEL_RADIUS_RAMP_RATE = 0.05; // Rad/Sec^2
-  
+
   private DriveCommands() {}
 
   private static Translation2d getLinearVelocityFromJoysticks(double x, double y) {
@@ -76,7 +76,7 @@ public class DriveCommands {
           // Get linear velocity
           Translation2d linearVelocity =
               getLinearVelocityFromJoysticks(xSupplier.getAsDouble(), ySupplier.getAsDouble());
-              
+
           // Apply rotation deadband
           double omega = MathUtil.applyDeadband(omegaSupplier.getAsDouble() * .8, DEADBAND);
 

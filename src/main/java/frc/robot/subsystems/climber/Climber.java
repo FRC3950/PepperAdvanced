@@ -8,18 +8,16 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
 public class Climber extends SubsystemBase {
 
   Slot0Configs slot0 = new Slot0Configs();
   Slot1Configs slot1 = new Slot1Configs();
-  
+
   @Override
   public void addChild(String name, Sendable child) {
     super.addChild(name, child);
