@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0499147727272735,
-        "y": 6.512911931818182
+        "x": 7.0,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.643374934467936,
-        "y": 6.299000716007827
+        "x": 6.875,
+        "y": 6.783493649053891
       },
       "isLocked": false,
       "linkedName": "NorthStart_CenteredMidCage"
     },
     {
       "anchor": {
-        "x": 5.029467909932432,
-        "y": 5.35578129411813
+        "x": 5.012,
+        "y": 5.261
       },
       "prevControl": {
-        "x": 5.929534860916842,
-        "y": 5.855171918602963
+        "x": 5.369660398042064,
+        "y": 5.582618394443561
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -118.51908488020194
+    "rotation": -119.99999999999999
   },
   "reversed": false,
   "folder": "North",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -137.17474411461015
+    "rotation": -119.99999999999999
   },
   "useDefaultConstraints": false
 }

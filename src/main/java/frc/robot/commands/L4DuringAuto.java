@@ -20,13 +20,13 @@ public class L4DuringAuto extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    elevator.setElevatorPosition(elevator.L4_inMotorRotations);
+    elevator.setElevatorPosition(22.6);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.setElevatorPosition(elevator.L4_inMotorRotations);
+    // elevator.setElevatorPosition(22.75);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +36,6 @@ public class L4DuringAuto extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elevator.isAtAcceptablePosition(elevator.L4_inMotorRotations);
+    return elevator.isAtAcceptablePosition(22.6);
   }
 }

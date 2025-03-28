@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.112980975081578,
-        "y": 2.7094753850816655
+        "x": 3.966,
+        "y": 2.791
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.137307120993735,
-        "y": 1.9619179779487994
+        "x": 3.1889089764279177,
+        "y": 2.4413118132158647
       },
       "isLocked": false,
-      "linkedName": "South 1st L4"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 1.1481960227272725
       },
       "prevControl": {
-        "x": 1.708984234454527,
-        "y": 1.8198001925496157
+        "x": 1.3728796388213356,
+        "y": 1.0660488369953565
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 54.9127514467238
+    "rotation": 55.0
   },
   "reversed": false,
   "folder": "South",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 59.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

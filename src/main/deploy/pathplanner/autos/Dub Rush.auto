@@ -15,9 +15,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "L4"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -65,9 +78,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "L4"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -115,9 +141,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "L4"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -127,6 +166,12 @@
           "type": "named",
           "data": {
             "name": "Outake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest"
           }
         }
       ]

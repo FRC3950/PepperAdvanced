@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NA_1"
+            "pathName": "S_6"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "L4"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
           }
         },
         {
@@ -37,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1_NorthSource"
+            "pathName": "6_SouthSource"
           }
         },
         {
@@ -49,19 +43,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NorthSource_12_SLOW"
+            "pathName": "SouthSource_7"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "L4"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
           }
         },
         {
@@ -74,6 +68,30 @@
           "type": "named",
           "data": {
             "name": "Rest"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "7_SouthSource"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
           }
         }
       ]
