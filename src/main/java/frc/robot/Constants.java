@@ -60,5 +60,12 @@ public final class Constants {
 
       public static final String kCanbus = "CANivore";
     }
+
+    public static final class lighting {
+
+      public static final int candle = 33;
+
+      public static final String kCanbus = "CANivore";
+    }
   }
 }
