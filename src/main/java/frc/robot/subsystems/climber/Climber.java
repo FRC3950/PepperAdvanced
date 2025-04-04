@@ -41,7 +41,7 @@ public class Climber extends SubsystemBase {
 
     climberMotor.getConfigurator().apply(slot0);
 
-    SmartDashboard.putNumber("Climber Init Pos", 2.8);
+    SmartDashboard.putNumber("Climber Init Pos", 85);
   }
 
   public double currentPosition() {
@@ -49,7 +49,7 @@ public class Climber extends SubsystemBase {
   }
 
   public boolean isReadyToClimb() {
-    return currentPosition() > 50;
+    return currentPosition() > -0.7;
   }
 
   // TODO test bounds
@@ -59,14 +59,14 @@ public class Climber extends SubsystemBase {
 
   public void goToClimbInitPosition() {
 
-    climberMotor.setControl(mm_request.withPosition(85));
+    climberMotor.setControl(mm_request.withPosition(0));
   }
 
   public void bringInTheClimb() {
 
     climberMotor.getConfigurator().apply(slot1);
 
-    climberMotor.setControl(mm_request.withPosition(252));
+    climberMotor.setControl(mm_request.withPosition(360));
   }
 
   public void goBackToRestSmartDashboard() {

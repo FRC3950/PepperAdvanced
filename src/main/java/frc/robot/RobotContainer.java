@@ -14,9 +14,7 @@
 package frc.robot;
 
 import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
-import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
 import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
-import static frc.robot.subsystems.vision.VisionConstants.robotToCamera1;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -101,9 +99,10 @@ public class RobotContainer {
 
         vision =
             new Vision(
-                drive::addVisionMeasurement,
-                new VisionIOLimelight(camera0Name, drive::getRotation),
-                new VisionIOLimelight(camera1Name, drive::getRotation));
+                drive::addVisionMeasurement, new VisionIOLimelight(camera0Name, drive::getRotation)
+                // ,
+                // new VisionIOLimelight(camera1Name, drive::getRotation)
+                );
 
         // Don't uncomment
         // vision =
@@ -129,8 +128,10 @@ public class RobotContainer {
         vision =
             new Vision(
                 drive::addVisionMeasurement,
-                new VisionIOPhotonVisionSim(camera0Name, robotToCamera0, drive::getPose),
-                new VisionIOPhotonVisionSim(camera1Name, robotToCamera1, drive::getPose));
+                new VisionIOPhotonVisionSim(camera0Name, robotToCamera0, drive::getPose)
+                // ,
+                // new VisionIOPhotonVisionSim(camera1Name, robotToCamera1, drive::getPose)
+                );
 
         elevator = new Elevator();
 
