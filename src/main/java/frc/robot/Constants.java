@@ -63,9 +63,9 @@ public final class Constants {
 
     public static final class lighting {
 
-      public static final int candle = 33;
+      public static final int candle = 21;
 
-      public static final String kCanbus = "CANivore";
+      public static final String kCanbus = "rio";
     }
   }
 }
