@@ -19,11 +19,11 @@ import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LightsSubsystem extends SubsystemBase {
+public class Color extends SubsystemBase {
   private static final CANdle candle = new CANdle(10);
   
     public static final Color orange = new Color(255, 25, 0);
-    public static final Color black = new LightsSubsystem.Color(0, 0, 0);
+    public static final Color black = new Color.Color(0, 0, 0);
     public static final Color yellow = new Color(242, 60, 0);
     public static final Color purple = new Color(184, 0, 185);
     public static final Color white = new Color(255, 230, 220);
@@ -31,7 +31,7 @@ public class LightsSubsystem extends SubsystemBase {
     public static final Color blue = new Color(8, 32, 255);
     public static final Color red = new Color(255, 0, 0);
   
-    public LightsSubsystem() {
+    public Color() {
       CANdleConfiguration candleConfiguration = new CANdleConfiguration();
       candleConfiguration.statusLedOffWhenActive = true;
       candleConfiguration.disableWhenLOS = false;
