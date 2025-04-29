@@ -4,8 +4,6 @@ import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.*;
-import com.ctre.phoenix.led.CANdle.LEDStripType;
-import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.ColorFlowAnimation;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
@@ -19,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LightsSubsystem extends SubsystemBase {
-  private static final CANdle candle = new CANdle(10);
+  public static final CANdle candle = new CANdle(10, "CANivore");
 
   public static final Color orange = new Color(255, 25, 0);
   public static final Color black = new Color(0, 0, 0);
@@ -32,14 +30,11 @@ public class LightsSubsystem extends SubsystemBase {
 
   public LightsSubsystem() {
     CANdleConfiguration candleConfiguration = new CANdleConfiguration();
-    candleConfiguration.statusLedOffWhenActive = true;
-    candleConfiguration.disableWhenLOS = false;
-    candleConfiguration.v5Enabled = true;
-    candleConfiguration.stripType = LEDStripType.RGB;
-    candleConfiguration.brightnessScalar = 1.0;
-    candleConfiguration.vBatOutputMode = VBatOutputMode.Modulated;
-    candle.configAllSettings(candleConfiguration, 100);
-
+    LightsSubsystem.candle.configLEDType(CANdle.LEDStripType.GRB);
+    LightsSubsystem.candle.configV5Enabled(true);
+    LightsSubsystem.LEDSegment.MainStrip.startIndex = 0;
+    LightsSubsystem.LEDSegment.MainStrip.segmentSize = 55;
+    LightsSubsystem.LEDSegment.MainStrip.animationSlot = 2;
     setDefaultCommand(defaultCommand());
   }
 
@@ -51,15 +46,7 @@ public class LightsSubsystem extends SubsystemBase {
     return runOnce(
         () -> {
           LEDSegment.MainStrip.fullClear();
-          LEDSegment.InternalLEDs.fullClear();
-          LEDSegment.BatteryIndicator.fullClear();
-          LEDSegment.PressureIndicator.fullClear();
-          LEDSegment.MastEncoderIndicator.fullClear();
-          LEDSegment.BoomEncoderIndicator.fullClear();
-          LEDSegment.WristEncoderIndicator.fullClear();
-
           LEDSegment.MainStrip.setColor(orange);
-          LEDSegment.InternalLEDs.setColor(purple);
         });
   }
 
@@ -72,17 +59,11 @@ public class LightsSubsystem extends SubsystemBase {
   }
 
   public static enum LEDSegment {
-    BatteryIndicator(0, 2, 0),
-    PressureIndicator(2, 2, 1),
-    MastEncoderIndicator(4, 1, -1),
-    BoomEncoderIndicator(5, 1, -1),
-    WristEncoderIndicator(6, 1, -1),
-    DriverStationIndicator(7, 1, -1),
-    MainStrip(8, 300, 2);
+    MainStrip(0, 80, 2);
 
-    public final int startIndex;
-    public final int segmentSize;
-    public final int animationSlot;
+    public int startIndex = 0;
+    public int segmentSize = 80;
+    public int animationSlot = 2;
 
     private LEDSegment(int startIndex, int segmentSize, int animationSlot) {
       this.startIndex = startIndex;
