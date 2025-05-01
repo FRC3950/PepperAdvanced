@@ -71,6 +71,7 @@ public class RobotContainer {
   private Elevator elevator;
   private Hopper hopper;
   private Climber climber;
+  private LightsSubsystem lightsSubsystem;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -426,10 +427,13 @@ public class RobotContainer {
         .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake));
   }
 
+  RainbowAnimation RainbowAnimation(double speed, double brightness, int length) {
+    return new RainbowAnimation(speed, brightness, length);
+  }
+
   public Command ledSetter() {
     if (Robot.isTeleop) {
-      return new InstantCommand(
-          () -> LightsSubsystem.candle.animate(RainbowAnimation(0.5, 0.5, 0.5)));
+      return new InstantCommand(() -> LightsSubsystem.candle.animate(RainbowAnimation(1, 0.5, 64)));
     }
     // return a default command if not teleop, or throw an exception if appropriate
     return new InstantCommand(() -> {});

@@ -42,6 +42,10 @@ public class LightsSubsystem extends SubsystemBase {
     candle.configBrightnessScalar(percent, 100);
   }
 
+  RainbowAnimation RainbowAnimation(double speed, double brightness, int length) {
+    return new RainbowAnimation(speed, brightness, length);
+  }
+
   public Command defaultCommand() {
     return runOnce(
         () -> {
