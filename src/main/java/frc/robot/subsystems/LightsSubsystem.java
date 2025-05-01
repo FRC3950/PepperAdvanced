@@ -46,7 +46,7 @@ public class LightsSubsystem extends SubsystemBase {
     return runOnce(
         () -> {
           LEDSegment.MainStrip.fullClear();
-          LEDSegment.MainStrip.setColor(orange);
+          candle.animate(RainbowAnimation(1, 0.5, 64));
         });
   }
 

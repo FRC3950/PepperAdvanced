@@ -16,6 +16,7 @@ package frc.robot;
 import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
 import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
 
+import com.ctre.phoenix.led.RainbowAnimation;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -42,6 +43,7 @@ import frc.robot.commands.driveToScoreCommand;
 import frc.robot.commands.intakeOnlyWhileEmpty;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -424,8 +426,12 @@ public class RobotContainer {
         .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake));
   }
 
-  if(Robot.isTeleop=true){
-    public Command
+  public Command ledSetter() {
+    if (Robot.isTeleop) {
+      return new InstantCommand(
+          () -> LightsSubsystem.candle.animate(RainbowAnimation(0.5, 0.5, 0.5)));
+    }
+    // return a default command if not teleop, or throw an exception if appropriate
+    return new InstantCommand(() -> {});
   }
-
 }
