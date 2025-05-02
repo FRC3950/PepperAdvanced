@@ -50,7 +50,7 @@ public class LightsSubsystem extends SubsystemBase {
     return runOnce(
         () -> {
           LEDSegment.MainStrip.fullClear();
-          candle.animate(RainbowAnimation(1, 0.5, 64));
+          LEDSegment.MainStrip.setAnimation(RainbowAnimation(1, 0.5, 64));
         });
   }
 
