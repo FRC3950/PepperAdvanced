@@ -35,7 +35,6 @@ public class LightsSubsystem extends SubsystemBase {
     LightsSubsystem.LEDSegment.MainStrip.startIndex = 0;
     LightsSubsystem.LEDSegment.MainStrip.segmentSize = 55;
     LightsSubsystem.LEDSegment.MainStrip.animationSlot = 2;
-    setDefaultCommand(defaultCommand());
   }
 
   public void setBrightness(double percent) {
