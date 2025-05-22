@@ -16,7 +16,6 @@ package frc.robot;
 import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
 import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
 
-import com.ctre.phoenix.led.RainbowAnimation;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -162,8 +161,6 @@ public class RobotContainer {
     lightsSubsystem = new LightsSubsystem();
 
     lightsSubsystem.setDefaultCommand(lightsSubsystem.defaultCommand());
-        
-   
 
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
 
@@ -433,15 +430,16 @@ public class RobotContainer {
         .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake));
   }
 
-//   RainbowAnimation RainbowAnimation(double speed, double brightness, int length) {
-//     return new RainbowAnimation(speed, brightness, length);
-//   }
+  //   RainbowAnimation RainbowAnimation(double speed, double brightness, int length) {
+  //     return new RainbowAnimation(speed, brightness, length);
+  //   }
 
-//   public Command ledSetter() {
-//     if (Robot.isTeleop) {
-//       return new InstantCommand(() -> LightsSubsystem.candle.animate(RainbowAnimation(1, 0.5, 64)));
-//     }
-//     // return a default command if not teleop, or throw an exception if appropriate
-//     return new InstantCommand(() -> {});
-//   }
+  //   public Command ledSetter() {
+  //     if (Robot.isTeleop) {
+  //       return new InstantCommand(() -> LightsSubsystem.candle.animate(RainbowAnimation(1, 0.5,
+  // 64)));
+  //     }
+  //     // return a default command if not teleop, or throw an exception if appropriate
+  //     return new InstantCommand(() -> {});
+  //   }
 }

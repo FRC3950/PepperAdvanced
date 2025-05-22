@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
@@ -15,6 +16,7 @@ import com.ctre.phoenix.led.StrobeAnimation;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Mailbox;
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
@@ -27,13 +29,18 @@ public class LightsSubsystem extends SubsystemBase {
   public static final Color green = new Color(56, 209, 0);
   public static final Color blue = new Color(8, 32, 255);
   public static final Color red = new Color(255, 0, 0);
+  public static final Color maroon = new Color(128, 0, 0);
 
-  public LightsSubsystem() {
+  private final Mailbox mailbox;
+
+  // Update constructor to receive Mailbox
+  public LightsSubsystem(Mailbox mailbox) {
+    this.mailbox = mailbox;
     CANdleConfiguration candleConfiguration = new CANdleConfiguration();
     LightsSubsystem.candle.configLEDType(CANdle.LEDStripType.GRB);
     LightsSubsystem.candle.configV5Enabled(true);
     LightsSubsystem.LEDSegment.MainStrip.startIndex = 0;
-    LightsSubsystem.LEDSegment.MainStrip.segmentSize = 55;
+    LightsSubsystem.LEDSegment.MainStrip.segmentSize = 50;
     LightsSubsystem.LEDSegment.MainStrip.animationSlot = 2;
   }
 
@@ -41,15 +48,15 @@ public class LightsSubsystem extends SubsystemBase {
     candle.configBrightnessScalar(percent, 100);
   }
 
-  RainbowAnimation RainbowAnimation(double speed, double brightness, int length) {
-    return new RainbowAnimation(speed, brightness, length);
-  }
-
   public Command defaultCommand() {
-    return runOnce(
+    return run(
         () -> {
           LEDSegment.MainStrip.fullClear();
-          LEDSegment.MainStrip.setAnimation(RainbowAnimation(1, 0.5, 64));
+          if (Mailbox.getSomethingInIntake()) {
+            LEDSegment.MainStrip.setColor(green);
+          } else {
+            LEDSegment.MainStrip.setColor(maroon);
+          }
         });
   }
 
@@ -62,10 +69,10 @@ public class LightsSubsystem extends SubsystemBase {
   }
 
   public static enum LEDSegment {
-    MainStrip(0, 80, 2);
+    MainStrip(0, 50, 2);
 
     public int startIndex = 0;
-    public int segmentSize = 80;
+    public int segmentSize = 50;
     public int animationSlot = 2;
 
     private LEDSegment(int startIndex, int segmentSize, int animationSlot) {
