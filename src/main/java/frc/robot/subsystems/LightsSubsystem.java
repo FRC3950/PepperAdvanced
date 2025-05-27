@@ -51,7 +51,7 @@ public class LightsSubsystem extends SubsystemBase {
     return run(
         () -> {
           LEDSegment.MainStrip.fullClear();
-          if (mailbox.somethingInIntake()) {
+          if (Mailbox.getSomethingInIntake()) {
             LEDSegment.MainStrip.setColor(green);
           } else {
             LEDSegment.MainStrip.setRainbowAnimation(2);
