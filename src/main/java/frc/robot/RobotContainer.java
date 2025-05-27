@@ -158,7 +158,7 @@ public class RobotContainer {
     mailbox = new MailBox();
     hopper = new Hopper();
     climber = new Climber();
-    lightsSubsystem = new LightsSubsystem();
+    lightsSubsystem = new LightsSubsystem(mailbox);
 
     lightsSubsystem.setDefaultCommand(lightsSubsystem.defaultCommand());
 

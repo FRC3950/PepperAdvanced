@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
@@ -16,7 +15,7 @@ import com.ctre.phoenix.led.StrobeAnimation;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Mailbox;
+import frc.robot.MailBox;
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
@@ -31,10 +30,10 @@ public class LightsSubsystem extends SubsystemBase {
   public static final Color red = new Color(255, 0, 0);
   public static final Color maroon = new Color(128, 0, 0);
 
-  private final Mailbox mailbox;
+  private final MailBox mailbox;
 
   // Update constructor to receive Mailbox
-  public LightsSubsystem(Mailbox mailbox) {
+  public LightsSubsystem(MailBox mailbox) {
     this.mailbox = mailbox;
     CANdleConfiguration candleConfiguration = new CANdleConfiguration();
     LightsSubsystem.candle.configLEDType(CANdle.LEDStripType.GRB);
@@ -52,10 +51,10 @@ public class LightsSubsystem extends SubsystemBase {
     return run(
         () -> {
           LEDSegment.MainStrip.fullClear();
-          if (Mailbox.getSomethingInIntake()) {
+          if (mailbox.somethingInIntake()) {
             LEDSegment.MainStrip.setColor(green);
           } else {
-            LEDSegment.MainStrip.setColor(maroon);
+            LEDSegment.MainStrip.setRainbowAnimation(2);
           }
         });
   }
