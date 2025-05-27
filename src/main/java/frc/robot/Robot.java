@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.LightsSubsystem.LEDSegment;
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -104,6 +105,7 @@ public class Robot extends LoggedRobot {
     // and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
     restBeforeZayanTeleCommoand = robotContainer.setElevatorToZeroAndZayanTime();
+    LEDSegment.MainStrip.setRainbowAnimation(0.5);
   }
 
   /** This function is called periodically during all modes. */
@@ -125,7 +127,9 @@ public class Robot extends LoggedRobot {
 
   /** This function is called once when the robot is disabled. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    LEDSegment.MainStrip.setRainbowAnimation(0.5);
+  }
 
   /** This function is called periodically when disabled. */
   @Override

@@ -162,6 +162,10 @@ public class RobotContainer {
 
     lightsSubsystem.setDefaultCommand(lightsSubsystem.defaultCommand());
 
+    new InstantCommand(()-> LightsSubsystem.LEDSegment.MainStrip.setColor(green));
+        
+    }
+
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
 
     intakeIsAlwaysOnWhenAtRest =
