@@ -32,7 +32,9 @@ public class IntakeDuringAuto extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    mailbox.setIntakeMotor(mailbox.intakeSpeed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

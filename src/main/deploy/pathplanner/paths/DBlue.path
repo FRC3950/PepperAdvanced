@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.514289772727272,
-        "y": 6.50294034090909
+        "x": 3.4581722118943934,
+        "y": 1.9105018996260343
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.514289772727271,
-        "y": 6.50294034090909
+        "x": 3.902021527544452,
+        "y": 2.6792714652366123
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.205170454545455,
-        "y": 5.675298295454545
+        "x": 3.971,
+        "y": 2.7892
       },
       "prevControl": {
-        "x": 4.205170454545455,
-        "y": 5.675298295454545
+        "x": 3.8307033676669926,
+        "y": 2.5461991046684207
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": null,
+  "folder": "ForAlexControl",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3504545454545456,
-        "y": 1.7664346590909075
+        "x": 1.790133303600034,
+        "y": 1.6104837294793346
       },
       "isLocked": false,
       "linkedName": "SouthSource"
     },
     {
       "anchor": {
-        "x": 3.9663,
-        "y": 2.791
+        "x": 3.6814,
+        "y": 2.9555
       },
       "prevControl": {
-        "x": 3.497695056720559,
-        "y": 1.8849676696470135
+        "x": 2.7913749868894504,
+        "y": 2.2803775844127907
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "South 2nd L4"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,21 @@
   },
   "goalEndState": {
     "velocity": 0,
+<<<<<<< HEAD:src/main/deploy/pathplanner/paths/6_Source.path
+    "rotation": -125.44571032752415
+=======
     "rotation": 59.99999999999999
+>>>>>>> Prototype:src/main/deploy/pathplanner/paths/SouthSource_8.path
   },
   "reversed": false,
   "folder": "South",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 54.9127514467238
+<<<<<<< HEAD:src/main/deploy/pathplanner/paths/6_Source.path
+    "rotation": 122.50000000000001
+=======
+    "rotation": 56.3099324740202
+>>>>>>> Prototype:src/main/deploy/pathplanner/paths/SouthSource_8.path
   },
   "useDefaultConstraints": false
 }

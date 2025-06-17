@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.029971590909091,
-        "y": 1.0
+        "x": 2.3433238636344265,
+        "y": 4.19
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.199455796143664,
-        "y": 1.7308326434877808
+        "x": 3.2207062800534816,
+        "y": 4.2272852870766915
       },
       "isLocked": false,
-      "linkedName": "SouthStart_CenteredMidCage"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.0122,
-        "y": 2.791
+        "x": 3.16,
+        "y": 4.19
       },
       "prevControl": {
-        "x": 5.471104502212644,
-        "y": 2.4056515777701466
+        "x": 2.1939557418951763,
+        "y": 4.186557703322174
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "South 1st L4"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 119.99999999999999
+    "velocity": 0,
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "South",
+  "folder": "ForAlexControl",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.15818543980826
+    "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

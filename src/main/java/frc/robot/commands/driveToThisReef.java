@@ -18,62 +18,41 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.subsystems.drive.Drive;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class driveToScoreCommand extends Command {
+public class driveToThisReef extends Command {
   private final Drive drive;
   private final String direction;
   private Pose2d targetPose;
   private Command pathCommand;
   private Pose2d targetPoseToUseInAutoNavigate;
+  private int tagIdToDriveTo;
 
   public PathConstraints constraints =
       new PathConstraints(
-          3.0, 3.0, Units.degreesToRadians(540), Units.degreesToRadians(540)); // accell was 720
+          4.25, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(540)); // accell was 720
 
   // AprilTag layout
   public static AprilTagFieldLayout aprilTagLayoutForAutoDrive =
       AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-  int[] aprilTagIdsForScoring = new int[] {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};
-  Pose2d[] poseForScoringIDs;
+  Pose2d poseToPlanPathTo;
 
   /** Creates a new driveToScoreCommand. */
-  public driveToScoreCommand(Drive drive, String direction) {
+  public driveToThisReef(Drive drive, String direction, int tagIdToDriveTo) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = drive;
     this.direction = direction;
+    this.tagIdToDriveTo = tagIdToDriveTo;
     addRequirements(drive);
 
-    poseForScoringIDs = new Pose2d[aprilTagIdsForScoring.length];
-
-    for (int i = 0; i < aprilTagIdsForScoring.length; i++) {
-      poseForScoringIDs[i] =
-          aprilTagLayoutForAutoDrive
-              .getTagPose(aprilTagIdsForScoring[i])
-              .orElse(new Pose3d())
-              .toPose2d();
-    }
+    poseToPlanPathTo =
+        aprilTagLayoutForAutoDrive.getTagPose(tagIdToDriveTo).orElse(new Pose3d()).toPose2d();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-    System.out.println("Starting Drive!");
-    // for each pose in poseForScoringIDs, find the closest one to the current pose
-    Pose2d currentPose = drive.getPose();
-    double minDistance = 1000.0;
-    Pose2d closestPose = new Pose2d();
-
-    for (Pose2d pose : poseForScoringIDs) {
-
-      double distance = pose.getTranslation().getDistance(currentPose.getTranslation());
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestPose = pose;
-      }
-    }
-
-    targetPose = closestPose;
+    targetPose = poseToPlanPathTo;
     if (direction.equals("left")) {
       targetPose =
           targetPose.transformBy(

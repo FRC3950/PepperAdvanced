@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.029971590909091,
-        "y": 1.0
+        "x": 5.044154058167282,
+        "y": 5.360228408168187
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.199455796143664,
-        "y": 1.7308326434877808
+        "x": 5.397779605263157,
+        "y": 6.122532894736842
       },
       "isLocked": false,
-      "linkedName": "SouthStart_CenteredMidCage"
+      "linkedName": "J"
     },
     {
       "anchor": {
-        "x": 5.0122,
-        "y": 2.791
+        "x": 1.2780967178611593,
+        "y": 6.9961925864377
       },
       "prevControl": {
-        "x": 5.471104502212644,
-        "y": 2.4056515777701466
+        "x": 1.7896381578947367,
+        "y": 6.324588815789473
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "South 1st L4"
+      "linkedName": "NorthSource"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 119.99999999999999
+    "rotation": -55.0
   },
   "reversed": false,
-  "folder": "South",
+  "folder": "Three Piece North",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.15818543980826
+    "rotation": -119.61312461850878
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

@@ -16,8 +16,9 @@ public class MailBox extends SubsystemBase {
 
   private final SparkMax intakeMotor;
   private final TalonFX angleMotor;
-  public final double intakeSpeed = -0.25;
-  public final double outakeSpeed = 0.25;
+  public final double intakeSpeed = -0.15;
+  public final double outakeSpeedL1 = -0.0845;
+  public final double outakeSpeed = -0.15;
   public final double sourceAngleEncoder = 11.5;
 
   // 60:1 gear ratio - 60 spins of the motor = 1 spin of the output shaft
@@ -69,12 +70,16 @@ public class MailBox extends SubsystemBase {
     intakeMotor.set(speed);
   }
 
+  public void setOutakeMotorL1(double speed) {
+    intakeMotor.set(speed);
+  }
+
   public boolean nothingInIntake() {
-    return intakeMotor.getForwardLimitSwitch().isPressed();
+    return !intakeMotor.getForwardLimitSwitch().isPressed();
   }
 
   public boolean somethingInIntake() {
-    return !intakeMotor.getForwardLimitSwitch().isPressed();
+    return intakeMotor.getForwardLimitSwitch().isPressed();
   }
 
   public void setAngleMotor(double motorRotations) {
@@ -142,7 +147,15 @@ public class MailBox extends SubsystemBase {
     return this.runOnce(() -> setOutakeMotor(outakeSpeed));
   }
 
+  public Command MailBox_Outake_L1_Command(double outakeSpeedL1) {
+    return this.runOnce(() -> setOutakeMotorL1(outakeSpeedL1));
+  }
+
   public Command MailBox_StopIntake_Command() {
     return this.runOnce(() -> setIntakeMotor(0));
+  }
+
+  public Command start_stop_IntakeCommand() {
+    return this.startEnd(() -> setIntakeMotor(intakeSpeed), () -> setIntakeMotor(0));
   }
 }

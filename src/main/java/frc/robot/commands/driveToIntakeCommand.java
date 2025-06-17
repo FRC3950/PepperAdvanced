@@ -26,7 +26,7 @@ public class driveToIntakeCommand extends Command {
   private Pose2d targetPoseToUseInAutoNavigate;
 
   public PathConstraints constraints =
-      new PathConstraints(3.0, 4.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
+      new PathConstraints(3.0, 3.0, Units.degreesToRadians(540), Units.degreesToRadians(540));
 
   // AprilTag layout
   public static AprilTagFieldLayout aprilTagLayoutForAutoDrive =
