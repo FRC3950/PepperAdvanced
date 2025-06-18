@@ -14,13 +14,10 @@
 package frc.robot;
 
 import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
-<<<<<<< HEAD
 import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
 import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
 import static frc.robot.subsystems.vision.VisionConstants.robotToCamera1;
-=======
 import static frc.robot.subsystems.vision.VisionConstants.robotToCamera0;
->>>>>>> Prototype
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
