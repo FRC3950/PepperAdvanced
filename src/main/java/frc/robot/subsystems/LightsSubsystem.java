@@ -8,15 +8,16 @@ import com.ctre.phoenix6.controls.EmptyAnimation;
 import com.ctre.phoenix6.controls.LarsonAnimation;
 import com.ctre.phoenix6.controls.RainbowAnimation;
 import com.ctre.phoenix6.controls.SingleFadeAnimation;
+import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.controls.StrobeAnimation;
 import com.ctre.phoenix6.hardware.*;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
 import edu.wpi.first.wpilibj2.command.*;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MailBox;
+import frc.robot.subsystems.elevator.*;
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
@@ -51,10 +52,14 @@ public class LightsSubsystem extends SubsystemBase {
   }
 
   private final MailBox mailbox;
+  private final Elevator elevator;
+  private boolean wasSomethingInIntake = false;
+  private boolean wasElevatorActive = false;
 
   // Update constructor to receive Mailbox
-  public LightsSubsystem(MailBox mailbox) {
+  public LightsSubsystem(MailBox mailbox, Elevator elevator) {
     this.mailbox = mailbox;
+    this.elevator = elevator;
     CANdleConfiguration candleConfiguration = new CANdleConfiguration();
     candleConfiguration.LED.StripType = StripTypeValue.GRB;
     candleConfiguration.LED.BrightnessScalar = 0.75;
@@ -64,19 +69,13 @@ public class LightsSubsystem extends SubsystemBase {
 
   StrobeAnimation greenStrobe =
       createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 10.0);
+  RainbowAnimation rainbow =
+      createRainbowAnimation(kSlot0StartIdx, kSlot0EndIdx, 0, 10.0);
   EmptyAnimation fullClear = new EmptyAnimation(0);
+  SolidColor solidGreen = new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kGreen);
+  SolidColor solidRed = new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kRed);
 
-  public Command defaultCommand() {
-    return run(
-        () -> {
-          candle.setControl(fullClear);
-          if (mailbox.somethingInIntake()) {
-            candle.setControl(greenStrobe);
-          } else {
-
-          }
-        });
-  }
+  
 
   public StrobeAnimation createStrobeAnimation(
       RGBWColor color, int startIdx, int endIdx, int slot, double frameRate) {
@@ -126,4 +125,29 @@ public class LightsSubsystem extends SubsystemBase {
         .withSlot(slot)
         .withFrameRate(frameRate);
   }
+
+  @Override
+  public void periodic() {
+    boolean intakeState = mailbox.somethingInIntake();
+    boolean elevatorActive = elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0;
+
+    // Only update when a condition changes
+    if (intakeState != wasSomethingInIntake || elevatorActive != wasElevatorActive) {
+      if (intakeState) {
+        // If something is in intake, use strobe animation when elevator goes up.
+        if (elevatorActive) {
+          candle.setControl(greenStrobe);
+        } else {
+          candle.setControl(solidGreen);
+        }
+      } else {
+        candle.setControl(solidRed);
+      }
+      wasSomethingInIntake = intakeState;
+      wasElevatorActive = elevatorActive;
+    }
+  }
 }
+
+
+

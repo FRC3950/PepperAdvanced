@@ -15,7 +15,7 @@ import frc.robot.Constants;
 
 public class Elevator extends SubsystemBase {
   private final CANdi myCANdi;
-  private final TalonFX elevatorLeadMotor;
+  public final TalonFX elevatorLeadMotor;
   private final TalonFX elevatorFollowMotor;
   private final DynamicMotionMagicVoltage mm_request =
       new DynamicMotionMagicVoltage(0, 60, 120, 1200);
@@ -25,8 +25,6 @@ public class Elevator extends SubsystemBase {
   public double L3_inMotorRotations = 14.25;
   public double L4_inMotorRotations = 23.00;
   public double source_inMotorRotations = 0;
-
-  private final double k_intakeHeightInMotorRotations = 50;
 
   private double currentPosSim = 0;
 

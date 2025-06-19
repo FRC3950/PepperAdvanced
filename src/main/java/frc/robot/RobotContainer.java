@@ -158,9 +158,7 @@ public class RobotContainer {
     mailbox = new MailBox();
     hopper = new Hopper();
     climber = new Climber();
-    lightsSubsystem = new LightsSubsystem(mailbox);
-
-    lightsSubsystem.setDefaultCommand(lightsSubsystem.defaultCommand());
+    lightsSubsystem = new LightsSubsystem(mailbox, elevator);
 
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
 
