@@ -1,17 +1,18 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.led.*;
-import com.ctre.phoenix.led.Animation;
-import com.ctre.phoenix.led.CANdle;
-import com.ctre.phoenix.led.CANdle.*;
-import com.ctre.phoenix.led.CANdleConfiguration;
-import com.ctre.phoenix.led.ColorFlowAnimation;
-import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
-import com.ctre.phoenix.led.LarsonAnimation;
-import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
-import com.ctre.phoenix.led.RainbowAnimation;
-import com.ctre.phoenix.led.SingleFadeAnimation;
-import com.ctre.phoenix.led.StrobeAnimation;
+import static edu.wpi.first.units.Units.*;
+
+import com.ctre.phoenix6.configs.CANdleConfiguration;
+import com.ctre.phoenix6.controls.ColorFlowAnimation;
+import com.ctre.phoenix6.controls.EmptyAnimation;
+import com.ctre.phoenix6.controls.LarsonAnimation;
+import com.ctre.phoenix6.controls.RainbowAnimation;
+import com.ctre.phoenix6.controls.SingleFadeAnimation;
+import com.ctre.phoenix6.controls.StrobeAnimation;
+import com.ctre.phoenix6.hardware.*;
+import com.ctre.phoenix6.signals.RGBWColor;
+import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
+import com.ctre.phoenix6.signals.StripTypeValue;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,15 +21,34 @@ import frc.robot.MailBox;
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
 
-  public static final Color orange = new Color(255, 25, 0);
-  public static final Color black = new Color(0, 0, 0);
-  public static final Color yellow = new Color(242, 60, 0);
-  public static final Color purple = new Color(184, 0, 185);
-  public static final Color white = new Color(255, 230, 220);
-  public static final Color green = new Color(56, 209, 0);
-  public static final Color blue = new Color(8, 32, 255);
-  public static final Color red = new Color(255, 0, 0);
-  public static final Color maroon = new Color(128, 0, 0);
+  private static final RGBWColor kViolet = RGBWColor.fromHSV(Degrees.of(270), 0.9, 0.8);
+  private static final RGBWColor kGreen = RGBWColor.fromHSV(Degrees.of(120), 0.9, 0.8);
+  private static final RGBWColor kRed = RGBWColor.fromHSV(Degrees.of(0), 0.9, 0.9);
+  private static final RGBWColor kBlue = RGBWColor.fromHSV(Degrees.of(240), 0.9, 0.8);
+  private static final RGBWColor kWhite = RGBWColor.fromHSV(Degrees.of(0), 0, 1);
+  private static final RGBWColor kBlack = RGBWColor.fromHSV(Degrees.of(0), 0, 0);
+  private static final RGBWColor kYellow = RGBWColor.fromHSV(Degrees.of(60), 0.9, 0.8);
+  private static final RGBWColor kPink = RGBWColor.fromHSV(Degrees.of(300), 0.9, 0.8);
+  private static final RGBWColor kOrange = RGBWColor.fromHSV(Degrees.of(30), 0.9, 0.8);
+  private static final RGBWColor kCyan = RGBWColor.fromHSV(Degrees.of(180), 0.9, 0.8);
+  private static final RGBWColor kGold = RGBWColor.fromHSV(Degrees.of(50), 0.9, 0.8);
+  private static final RGBWColor kBrown = RGBWColor.fromHSV(Degrees.of(30), 0.5, 0.4);
+
+  private static final int kSlot0StartIdx = 8;
+  private static final int kSlot0EndIdx = 37;
+
+  private enum AnimationType {
+    None,
+    ColorFlow,
+    Fire,
+    Larson,
+    Rainbow,
+    RgbFade,
+    SingleFade,
+    Strobe,
+    Twinkle,
+    TwinkleOff,
+  }
 
   private final MailBox mailbox;
 
@@ -36,125 +56,74 @@ public class LightsSubsystem extends SubsystemBase {
   public LightsSubsystem(MailBox mailbox) {
     this.mailbox = mailbox;
     CANdleConfiguration candleConfiguration = new CANdleConfiguration();
-    LightsSubsystem.candle.configLEDType(CANdle.LEDStripType.GRB);
-    LightsSubsystem.candle.configV5Enabled(true);
-    LightsSubsystem.LEDSegment.MainStrip.startIndex = 0;
-    LightsSubsystem.LEDSegment.MainStrip.segmentSize = 50;
-    LightsSubsystem.LEDSegment.MainStrip.animationSlot = 2;
+    candleConfiguration.LED.StripType = StripTypeValue.GRB;
+    candleConfiguration.LED.BrightnessScalar = 0.75;
+    candleConfiguration.CANdleFeatures.StatusLedWhenActive = StatusLedWhenActiveValue.Disabled;
+    candle.getConfigurator().apply(candleConfiguration);
   }
 
-  public void setBrightness(double percent) {
-    candle.configBrightnessScalar(percent, 100);
-  }
+  StrobeAnimation greenStrobe =
+      createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 10.0);
+  EmptyAnimation fullClear = new EmptyAnimation(0);
 
   public Command defaultCommand() {
     return run(
         () -> {
-          LEDSegment.MainStrip.fullClear();
+          candle.setControl(fullClear);
           if (mailbox.somethingInIntake()) {
-            LEDSegment.MainStrip.setColor(green);
+            candle.setControl(greenStrobe);
           } else {
-            LEDSegment.MainStrip.setRainbowAnimation(2);
+
           }
         });
   }
 
-  public Command clearSegmentCommand(LEDSegment segment) {
-    return runOnce(
-        () -> {
-          segment.clearAnimation();
-          segment.disableLEDs();
-        });
+  public StrobeAnimation createStrobeAnimation(
+      RGBWColor color, int startIdx, int endIdx, int slot, double frameRate) {
+    return new StrobeAnimation(slot, slot)
+        .withColor(color)
+        .withLEDStartIndex(startIdx)
+        .withLEDEndIndex(endIdx)
+        .withSlot(slot)
+        .withFrameRate(frameRate);
   }
 
-  public static enum LEDSegment {
-    MainStrip(0, 50, 2);
-
-    public int startIndex = 0;
-    public int segmentSize = 50;
-    public int animationSlot = 2;
-
-    private LEDSegment(int startIndex, int segmentSize, int animationSlot) {
-      this.startIndex = startIndex;
-      this.segmentSize = segmentSize;
-      this.animationSlot = animationSlot;
-    }
-
-    public void setColor(Color color) {
-      clearAnimation();
-      candle.setLEDs(color.red, color.green, color.blue, 0, startIndex, segmentSize);
-    }
-
-    private void setAnimation(Animation animation) {
-      candle.animate(animation, animationSlot);
-    }
-
-    public void fullClear() {
-      clearAnimation();
-      disableLEDs();
-    }
-
-    public void clearAnimation() {
-      candle.clearAnimation(animationSlot);
-    }
-
-    public void disableLEDs() {
-      setColor(black);
-    }
-
-    public void setFlowAnimation(Color color, double speed) {
-      setAnimation(
-          new ColorFlowAnimation(
-              color.red,
-              color.green,
-              color.blue,
-              0,
-              speed,
-              segmentSize,
-              Direction.Forward,
-              startIndex));
-    }
-
-    public void setFadeAnimation(Color color, double speed) {
-      setAnimation(
-          new SingleFadeAnimation(
-              color.red, color.green, color.blue, 0, speed, segmentSize, startIndex));
-    }
-
-    public void setBandAnimation(Color color, double speed) {
-      setAnimation(
-          new LarsonAnimation(
-              color.red,
-              color.green,
-              color.blue,
-              0,
-              speed,
-              segmentSize,
-              BounceMode.Front,
-              3,
-              startIndex));
-    }
-
-    public void setStrobeAnimation(Color color, double speed) {
-      setAnimation(
-          new StrobeAnimation(
-              color.red, color.green, color.blue, 0, speed, segmentSize, startIndex));
-    }
-
-    public void setRainbowAnimation(double speed) {
-      setAnimation(new RainbowAnimation(1, speed, segmentSize, false, startIndex));
-    }
+  public ColorFlowAnimation createColorFlowAnimation(
+      RGBWColor color, int startIdx, int endIdx, int slot, double frameRate) {
+    return new ColorFlowAnimation(slot, slot)
+        .withColor(color)
+        .withLEDStartIndex(startIdx)
+        .withLEDEndIndex(endIdx)
+        .withSlot(slot)
+        .withFrameRate(frameRate);
   }
 
-  public static class Color {
-    public int red;
-    public int green;
-    public int blue;
+  public LarsonAnimation createLarsonAnimation(
+      RGBWColor color, int startIdx, int endIdx, int slot, double frameRate) {
+    return new LarsonAnimation(slot, slot)
+        .withColor(color)
+        .withLEDStartIndex(startIdx)
+        .withLEDEndIndex(endIdx)
+        .withSlot(slot)
+        .withFrameRate(frameRate);
+  }
 
-    public Color(int red, int green, int blue) {
-      this.red = red;
-      this.green = green;
-      this.blue = blue;
-    }
+  public RainbowAnimation createRainbowAnimation(
+      int startIdx, int endIdx, int slot, double frameRate) {
+    return new RainbowAnimation(slot, slot)
+        .withLEDStartIndex(startIdx)
+        .withLEDEndIndex(endIdx)
+        .withSlot(slot)
+        .withFrameRate(frameRate);
+  }
+
+  public SingleFadeAnimation createSingleFadeAnimation(
+      RGBWColor color, int startIdx, int endIdx, int slot, double frameRate) {
+    return new SingleFadeAnimation(slot, slot)
+        .withColor(color)
+        .withLEDStartIndex(startIdx)
+        .withLEDEndIndex(endIdx)
+        .withSlot(slot)
+        .withFrameRate(frameRate);
   }
 }
