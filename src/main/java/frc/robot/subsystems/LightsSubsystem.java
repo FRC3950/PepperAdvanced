@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.*;
+
 import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.controls.ColorFlowAnimation;
 import com.ctre.phoenix6.controls.EmptyAnimation;
@@ -14,18 +16,15 @@ import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DriverStation;
-import static edu.wpi.first.units.Units.*;
 import frc.robot.MailBox;
 import frc.robot.subsystems.elevator.*;
-
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
 
   private static final RGBWColor kViolet = RGBWColor.fromHSV(Degrees.of(270), 0.9, 0.8);
-  private static final RGBWColor kGreen = RGBWColor.fromHSV(Degrees.of(120), 0.9, 0.8);
-  private static final RGBWColor kRed = RGBWColor.fromHSV(Degrees.of(0), 0.9, 0.9);
+  private static final RGBWColor kGreen = RGBWColor.fromHSV(Degrees.of(125), 1, 0.40);
+  private static final RGBWColor kRed = RGBWColor.fromHSV(Degrees.of(0), 1, 0.75);
   private static final RGBWColor kBlue = RGBWColor.fromHSV(Degrees.of(240), 0.9, 0.8);
   private static final RGBWColor kWhite = RGBWColor.fromHSV(Degrees.of(0), 0, 1);
   private static final RGBWColor kBlack = RGBWColor.fromHSV(Degrees.of(0), 0, 0);
@@ -37,7 +36,7 @@ public class LightsSubsystem extends SubsystemBase {
   private static final RGBWColor kBrown = RGBWColor.fromHSV(Degrees.of(30), 0.5, 0.4);
 
   private static final int kSlot0StartIdx = 8;
-  private static final int kSlot0EndIdx = 37;
+  private static final int kSlot0EndIdx = 92;
 
   public enum AnimationType {
     None,
@@ -76,13 +75,13 @@ public class LightsSubsystem extends SubsystemBase {
     candleConfiguration.CANdleFeatures.StatusLedWhenActive = StatusLedWhenActiveValue.Disabled;
     candle.getConfigurator().apply(candleConfiguration);
 
-    candle.setControl(rainbow);
-    rainbowActive = true;
+    // candle.setControl(rainbow);
+    // rainbowActive = true;
   }
 
-  StrobeAnimation greenStrobe = createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 5);
-  StrobeAnimation whiteStrobe = createStrobeAnimation(kWhite, kSlot0StartIdx, kSlot0EndIdx, 0, 6);
-  RainbowAnimation rainbow = createRainbowAnimation(kSlot0StartIdx, kSlot0EndIdx, 0, 10.0);
+  StrobeAnimation greenStrobe = createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 3, 5);
+  StrobeAnimation whiteStrobe = createStrobeAnimation(kWhite, kSlot0StartIdx, kSlot0EndIdx, 2, 6);
+  // RainbowAnimation rainbow = createRainbowAnimation(kSlot0StartIdx, kSlot0EndIdx, 1, 18.0);
   EmptyAnimation fullClear = new EmptyAnimation(0);
   SolidColor solidGreen = new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kGreen);
   SolidColor solidRed = new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kRed);
@@ -139,16 +138,16 @@ public class LightsSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
 
-    if (DriverStation.isDisabled()) {
-      if (!rainbowActive) {
-        candle.setControl(rainbow);
-        rainbowActive = true;
-      }
-      return;
-    } else {
-      // When robot becomes enabled, turn off the forced rainbow mode.
-      rainbowActive = false;
-    }
+    // if (DriverStation.isDisabled()) {
+    //   if (!rainbowActive) {
+    //     candle.setControl(rainbow);
+    //     rainbowActive = true;
+    //   }
+    //   return;
+    // } else {
+    //   // When robot becomes enabled, turn off the forced rainbow mode.
+    //   rainbowActive = false;
+    // }
 
     if (overrideActive) {
       return;
@@ -162,7 +161,9 @@ public class LightsSubsystem extends SubsystemBase {
       if (intakeState) {
         // If something is in intake, use strobe animation when elevator goes up.
         if (elevatorActive) {
-          candle.setControl(greenStrobe);
+          while (elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0) {
+            candle.setControl(greenStrobe);
+          }
         } else {
           candle.setControl(solidGreen);
         }
