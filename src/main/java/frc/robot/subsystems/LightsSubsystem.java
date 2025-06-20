@@ -57,6 +57,7 @@ public class LightsSubsystem extends SubsystemBase {
   private boolean wasElevatorActive = false;
   private boolean overrideActive = false;
   private boolean rainbowActive = false;
+  private AnimationType currentAnimationType = AnimationType.None;
 
   public void setLEDOverride(boolean override, AnimationType animation) {
     overrideActive = override;
@@ -137,18 +138,6 @@ public class LightsSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-
-    // if (DriverStation.isDisabled()) {
-    //   if (!rainbowActive) {
-    //     candle.setControl(rainbow);
-    //     rainbowActive = true;
-    //   }
-    //   return;
-    // } else {
-    //   // When robot becomes enabled, turn off the forced rainbow mode.
-    //   rainbowActive = false;
-    // }
-
     if (overrideActive) {
       return;
     }
@@ -156,22 +145,48 @@ public class LightsSubsystem extends SubsystemBase {
     boolean intakeState = mailbox.somethingInIntake();
     boolean elevatorActive = elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0;
 
-    // Only update when a condition changes
-    if (intakeState != wasSomethingInIntake || elevatorActive != wasElevatorActive) {
-      if (intakeState) {
-        // If something is in intake, use strobe animation when elevator goes up.
-        if (elevatorActive) {
-          while (elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0) {
-            candle.setControl(greenStrobe);
-          }
-        } else {
-          candle.setControl(solidGreen);
-        }
-      } else {
-        candle.setControl(solidRed);
-      }
-      wasSomethingInIntake = intakeState;
-      wasElevatorActive = elevatorActive;
+    AnimationType desiredType;
+    if (!intakeState) {
+      desiredType = AnimationType.Fire; // maps to red
+    } else if (intakeState && elevatorActive) {
+      desiredType = AnimationType.Strobe; // maps to green strobe
+    } else {
+      desiredType = AnimationType.RgbFade; // maps to solid green
     }
+
+    // Instead of caching and reusing the animation instance, create a new one each time.
+    switch (desiredType) {
+      case Fire:
+        candle.setControl(createSolidRedAnimation());
+        break;
+      case Strobe:
+        candle.setControl(createGreenStrobeAnimation());
+        break;
+      case RgbFade:
+        candle.setControl(createSolidGreenAnimation());
+        break;
+      default:
+        candle.setControl(fullClear);
+        break;
+    }
+
+    wasSomethingInIntake = intakeState;
+    wasElevatorActive = elevatorActive;
+  }
+
+  // Create new animation instances each time to reset state:
+  private SolidColor createSolidRedAnimation() {
+    // Return a new instance of a solid red animation; adjust parameters as needed.
+    return new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kRed);
+  }
+
+  private StrobeAnimation createGreenStrobeAnimation() {
+    // Create a fresh green strobe animation instance with desired parameters.
+    return createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 3, 5);
+  }
+
+  private SolidColor createSolidGreenAnimation() {
+    // Return a new instance of a solid green animation.
+    return new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kGreen);
   }
 }
