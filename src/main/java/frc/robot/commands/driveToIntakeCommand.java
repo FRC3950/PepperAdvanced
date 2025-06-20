@@ -14,11 +14,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.LightsSubsystem;
+import frc.robot.subsystems.LightsSubsystem.AnimationType;
 import frc.robot.subsystems.drive.Drive;
 import java.util.function.DoubleSupplier;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class driveToIntakeCommand extends Command {
+  private final LightsSubsystem lights;
   private final Drive drive;
   private final DoubleSupplier driveStickMoved;
   private Pose2d targetPose;
@@ -36,11 +39,12 @@ public class driveToIntakeCommand extends Command {
   Pose2d[] poseForScoringIDs;
 
   /** Creates a new driveToScoreCommand. */
-  public driveToIntakeCommand(Drive drive, DoubleSupplier driveStickMoved) {
+  public driveToIntakeCommand(Drive drive, LightsSubsystem lights, DoubleSupplier driveStickMoved) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.lights = lights;
     this.drive = drive;
     this.driveStickMoved = driveStickMoved;
-    addRequirements(drive);
+    addRequirements(drive, lights);
 
     poseForScoringIDs = new Pose2d[aprilTagIdsForScoring.length];
 
@@ -56,7 +60,7 @@ public class driveToIntakeCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    lights.setLEDOverride(true, AnimationType.Strobe);
     System.out.println("Starting Drive");
     // for each pose in poseForScoringIDs, find the closest one to the current pose
     Pose2d currentPose = drive.getPose();
@@ -87,8 +91,8 @@ public class driveToIntakeCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-    System.out.println("Drive To Intake Finsihed");
+    lights.setLEDOverride(false, null);
+    System.out.println("Drive To Intake Finished");
   }
 
   // Returns true when the command should end.

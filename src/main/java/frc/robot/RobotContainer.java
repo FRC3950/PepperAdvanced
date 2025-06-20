@@ -189,11 +189,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("Backward", new InstantCommand());
 
     NamedCommands.registerCommand(
-        "AutoLeft", new driveToScoreCommand(drive, "left").withTimeout(2));
+        "AutoLeft", new driveToScoreCommand(drive, lightsSubsystem, "left").withTimeout(2));
     NamedCommands.registerCommand(
-        "AutoRight", new driveToScoreCommand(drive, "right").withTimeout(2));
+        "AutoRight", new driveToScoreCommand(drive, lightsSubsystem, "right").withTimeout(2));
     NamedCommands.registerCommand(
-        "AutoSource", new driveToIntakeCommand(drive, () -> 0.0).withTimeout(2));
+        "AutoSource", new driveToIntakeCommand(drive, lightsSubsystem, () -> 0.0).withTimeout(2));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -247,8 +247,6 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
 
-    controller.a().whileTrue(new driveToIntakeCommand(drive, () -> controller.getLeftY()));
-
     // // Lock to 0° when A button is held
     // controller
     //     .a()
@@ -271,19 +269,23 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     // Auto Align Scoring Elements
-    controller.leftBumper().onTrue(new driveToScoreCommand(drive, "left"));
+    controller.leftBumper().onTrue(new driveToScoreCommand(drive, lightsSubsystem, "left"));
 
     // .onlyWhile(
     //     () ->
     //         Math.abs(controller.getLeftY()) < 0.5
     //             && Math.abs(controller.getLeftX()) < 0.5));
 
-    controller.rightBumper().whileTrue(new driveToScoreCommand(drive, "right"));
+    controller.rightBumper().whileTrue(new driveToScoreCommand(drive, lightsSubsystem, "right"));
 
     // .onlyWhile(
     //         () ->
     //             Math.abs(controller.getLeftY()) < 0.5
     //                 && Math.abs(controller.getLeftY()) < 0.5));
+
+    controller
+        .a()
+        .whileTrue(new driveToIntakeCommand(drive, lightsSubsystem, () -> controller.getLeftY()));
 
     // Fine Tune Driving
     controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));

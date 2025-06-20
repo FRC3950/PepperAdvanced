@@ -15,10 +15,13 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import frc.robot.subsystems.LightsSubsystem;
+import frc.robot.subsystems.LightsSubsystem.AnimationType;
 import frc.robot.subsystems.drive.Drive;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class driveToScoreCommand extends Command {
+  private final LightsSubsystem lights;
   private final Drive drive;
   private final String direction;
   private Pose2d targetPose;
@@ -37,11 +40,12 @@ public class driveToScoreCommand extends Command {
   Pose2d[] poseForScoringIDs;
 
   /** Creates a new driveToScoreCommand. */
-  public driveToScoreCommand(Drive drive, String direction) {
+  public driveToScoreCommand(Drive drive, LightsSubsystem lights, String direction) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drive = drive;
+    this.lights = lights;
     this.direction = direction;
-    addRequirements(drive);
+    addRequirements(drive, lights);
 
     poseForScoringIDs = new Pose2d[aprilTagIdsForScoring.length];
 
@@ -57,7 +61,7 @@ public class driveToScoreCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    lights.setLEDOverride(true, AnimationType.Strobe);
     System.out.println("Starting Drive!");
     // for each pose in poseForScoringIDs, find the closest one to the current pose
     Pose2d currentPose = drive.getPose();
@@ -112,7 +116,7 @@ public class driveToScoreCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    lights.setLEDOverride(false, null);
     System.out.println("DriveToPoseCommand finished.");
   }
 

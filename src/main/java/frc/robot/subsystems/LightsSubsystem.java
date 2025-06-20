@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.*;
-
 import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.controls.ColorFlowAnimation;
 import com.ctre.phoenix6.controls.EmptyAnimation;
@@ -16,8 +14,11 @@ import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DriverStation;
+import static edu.wpi.first.units.Units.*;
 import frc.robot.MailBox;
 import frc.robot.subsystems.elevator.*;
+
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
@@ -38,7 +39,7 @@ public class LightsSubsystem extends SubsystemBase {
   private static final int kSlot0StartIdx = 8;
   private static final int kSlot0EndIdx = 37;
 
-  private enum AnimationType {
+  public enum AnimationType {
     None,
     ColorFlow,
     Fire,
@@ -55,6 +56,15 @@ public class LightsSubsystem extends SubsystemBase {
   private final Elevator elevator;
   private boolean wasSomethingInIntake = false;
   private boolean wasElevatorActive = false;
+  private boolean overrideActive = false;
+  private boolean rainbowActive = false;
+
+  public void setLEDOverride(boolean override, AnimationType animation) {
+    overrideActive = override;
+    if (override && animation != null) {
+      candle.setControl(whiteStrobe);
+    }
+  }
 
   // Update constructor to receive Mailbox
   public LightsSubsystem(MailBox mailbox, Elevator elevator) {
@@ -65,17 +75,17 @@ public class LightsSubsystem extends SubsystemBase {
     candleConfiguration.LED.BrightnessScalar = 0.75;
     candleConfiguration.CANdleFeatures.StatusLedWhenActive = StatusLedWhenActiveValue.Disabled;
     candle.getConfigurator().apply(candleConfiguration);
+
+    candle.setControl(rainbow);
+    rainbowActive = true;
   }
 
-  StrobeAnimation greenStrobe =
-      createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 10.0);
-  RainbowAnimation rainbow =
-      createRainbowAnimation(kSlot0StartIdx, kSlot0EndIdx, 0, 10.0);
+  StrobeAnimation greenStrobe = createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 5);
+  StrobeAnimation whiteStrobe = createStrobeAnimation(kWhite, kSlot0StartIdx, kSlot0EndIdx, 0, 6);
+  RainbowAnimation rainbow = createRainbowAnimation(kSlot0StartIdx, kSlot0EndIdx, 0, 10.0);
   EmptyAnimation fullClear = new EmptyAnimation(0);
   SolidColor solidGreen = new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kGreen);
   SolidColor solidRed = new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kRed);
-
-  
 
   public StrobeAnimation createStrobeAnimation(
       RGBWColor color, int startIdx, int endIdx, int slot, double frameRate) {
@@ -128,6 +138,22 @@ public class LightsSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    if (DriverStation.isDisabled()) {
+      if (!rainbowActive) {
+        candle.setControl(rainbow);
+        rainbowActive = true;
+      }
+      return;
+    } else {
+      // When robot becomes enabled, turn off the forced rainbow mode.
+      rainbowActive = false;
+    }
+
+    if (overrideActive) {
+      return;
+    }
+
     boolean intakeState = mailbox.somethingInIntake();
     boolean elevatorActive = elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0;
 
@@ -148,6 +174,3 @@ public class LightsSubsystem extends SubsystemBase {
     }
   }
 }
-
-
-
