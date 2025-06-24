@@ -59,12 +59,12 @@ public class LightsSubsystem extends SubsystemBase {
   private boolean rainbowActive = false;
   private AnimationType currentAnimationType = AnimationType.None;
 
-  public void setLEDOverride(boolean override, AnimationType animation) {
-    overrideActive = override;
-    if (override && animation != null) {
-      candle.setControl(whiteStrobe);
-    }
-  }
+  // public void setLEDOverride(boolean override, AnimationType animation) {
+  //   overrideActive = override;
+  //   if (override && animation != null) {
+  //     candle.setControl(whiteStrobe);
+  //   }
+  // }
 
   // Update constructor to receive Mailbox
   public LightsSubsystem(MailBox mailbox, Elevator elevator) {
@@ -80,10 +80,12 @@ public class LightsSubsystem extends SubsystemBase {
     // rainbowActive = true;
   }
 
-  StrobeAnimation greenStrobe = createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 3, 5);
-  StrobeAnimation whiteStrobe = createStrobeAnimation(kWhite, kSlot0StartIdx, kSlot0EndIdx, 2, 6);
-  // RainbowAnimation rainbow = createRainbowAnimation(kSlot0StartIdx, kSlot0EndIdx, 1, 18.0);
-  EmptyAnimation fullClear = new EmptyAnimation(0);
+  StrobeAnimation greenStrobe = createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 5);
+  StrobeAnimation whiteStrobe = createStrobeAnimation(kWhite, kSlot0StartIdx, kSlot0EndIdx, 1, 6);
+  RainbowAnimation rainbow = createRainbowAnimation(kSlot0StartIdx, kSlot0EndIdx, 2, 10.0);
+  EmptyAnimation fullClear0 = new EmptyAnimation(0);
+  EmptyAnimation fullClear1 = new EmptyAnimation(1);
+  EmptyAnimation fullClear2 = new EmptyAnimation(2);
   SolidColor solidGreen = new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kGreen);
   SolidColor solidRed = new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kRed);
 
@@ -138,55 +140,34 @@ public class LightsSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (overrideActive) {
-      return;
-    }
+    // if (overrideActive) {
+    //   return;
+    // }
 
     boolean intakeState = mailbox.somethingInIntake();
     boolean elevatorActive = elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0;
 
-    AnimationType desiredType;
-    if (!intakeState) {
-      desiredType = AnimationType.Fire; // maps to red
-    } else if (intakeState && elevatorActive) {
-      desiredType = AnimationType.Strobe; // maps to green strobe
-    } else {
-      desiredType = AnimationType.RgbFade; // maps to solid green
+    // Only update when a condition changes
+    if (intakeState != wasSomethingInIntake || elevatorActive != wasElevatorActive) {
+      if (intakeState) {
+        // If something is in intake, use strobe animation when elevator goes up.
+        if (elevatorActive) {
+          candle.setControl(greenStrobe);
+        } else {
+          candle.setControl(new EmptyAnimation(0));
+          candle.setControl(solidGreen);
+        }
+      } else {
+        candle.setControl(new EmptyAnimation(0));
+        candle.setControl(solidRed);
+      }
+      wasSomethingInIntake = intakeState;
+      wasElevatorActive = elevatorActive;
     }
 
-    // Instead of caching and reusing the animation instance, create a new one each time.
-    switch (desiredType) {
-      case Fire:
-        candle.setControl(createSolidRedAnimation());
-        break;
-      case Strobe:
-        candle.setControl(createGreenStrobeAnimation());
-        break;
-      case RgbFade:
-        candle.setControl(createSolidGreenAnimation());
-        break;
-      default:
-        candle.setControl(fullClear);
-        break;
-    }
+    // Instead of caching and reusing the animation instance, create a new one each tim
 
     wasSomethingInIntake = intakeState;
     wasElevatorActive = elevatorActive;
-  }
-
-  // Create new animation instances each time to reset state:
-  private SolidColor createSolidRedAnimation() {
-    // Return a new instance of a solid red animation; adjust parameters as needed.
-    return new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kRed);
-  }
-
-  private StrobeAnimation createGreenStrobeAnimation() {
-    // Create a fresh green strobe animation instance with desired parameters.
-    return createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 3, 5);
-  }
-
-  private SolidColor createSolidGreenAnimation() {
-    // Return a new instance of a solid green animation.
-    return new SolidColor(kSlot0StartIdx, kSlot0EndIdx).withColor(kGreen);
   }
 }

@@ -15,7 +15,6 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LightsSubsystem;
-import frc.robot.subsystems.LightsSubsystem.AnimationType;
 import frc.robot.subsystems.drive.Drive;
 import java.util.function.DoubleSupplier;
 
@@ -60,7 +59,7 @@ public class driveToIntakeCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    lights.setLEDOverride(true, AnimationType.Strobe);
+    // lights.setLEDOverride(true, AnimationType.Strobe);
     System.out.println("Starting Drive");
     // for each pose in poseForScoringIDs, find the closest one to the current pose
     Pose2d currentPose = drive.getPose();
@@ -91,7 +90,7 @@ public class driveToIntakeCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    lights.setLEDOverride(false, null);
+    // lights.setLEDOverride(false, null);
     System.out.println("Drive To Intake Finished");
   }
 
