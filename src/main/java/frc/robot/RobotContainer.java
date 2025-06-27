@@ -258,6 +258,9 @@ public class RobotContainer {
     //             () -> new Rotation2d(Math.toRadians(60 + 180))));
 
     // Reset gyro to 0° when Y button is pressed
+
+    // Driver/Controller Button Layout: https://www.padcrafter.com/index.php?templates=Pepper+2025+-+Driver&yButton=Reset+Field-Centric+Gyro+State&col=%23D3D3D3%2C%233E4B50%2C%23FFFFFF&leftBumper=Auto+Alight+Closest+Reef+Face+-+Left&rightBumper=Auto+Alight+Closest+Reef+Face+-+Right&aButton=Auto+Align+Closest+Coral+Station&dpadUp=Robot-Centric+Fine+Driving+-+Forward&dpadDown=Robot-Centric+Fine+Driving+-+Backwards&dpadRight=Robot-Centric+Fine+Driving+-+Right&dpadLeft=Robot-Centric+Fine+Driving+-+Left&leftStick=Drive+Stick&rightStick=Rotation+Stick&bButton=Auto+Align+Closest+Reef+Face+-+Center
+
     controller
         .y()
         .onTrue(
@@ -316,6 +319,8 @@ public class RobotContainer {
     // Operator Controls/////////////////////////
 
     //   intakeIsAlwaysOnWhenAtRest.whileTrue(mailbox.start_stop_IntakeCommand());
+
+    // Manipulator/Operator Button Layout: https://www.padcrafter.com/index.php?templates=Pepper+2025+-+Driver%7CPepper+2025+-+Manipulator&yButton=Reset+Field-Centric+Gyro+State%7CL4+Score+Command+Set&col=%23A82C28%2C%23322127%2C%23FFFFFF&leftBumper=Auto+Alight+Closest+Reef+Face+-+Left%7CZero+Elevator+and+Restart+Mailbox&rightBumper=Auto+Alight+Closest+Reef+Face+-+Right%7COuttake+Algae+and+Zero+Elevator&aButton=Auto+Align+Closest+Coral+Station%7CL2+Score+Command+Set&dpadUp=Robot-Centric+Fine+Driving+-+Forward%7CAlgae+Removal+Command+Set+-+Top&dpadDown=Robot-Centric+Fine+Driving+-+Backwards%7CAlgae+Removal+Command+Set+-+Bottom&dpadRight=Robot-Centric+Fine+Driving+-+Right%7CSmall+Increment+Increase+Elevator+Position&dpadLeft=Robot-Centric+Fine+Driving+-+Left%7CSmall+Increment+Decrease+Elevator+Position&leftStick=Drive+Stick&rightStick=Rotation+Stick&bButton=Auto+Align+Closest+Reef+Face+-+Center%7CL3+Score+Command+Set&plat=%7C%7C0&xButton=%7CL1+Score+Command+Set+%28Buggy+and+Inaccurate%29&leftTrigger=%7CAlgae+Processor+Scoring+Sequence&rightTrigger=%7CBarge%3F%3F%3F%3F%3F&startButton=%7CManual+Coral+Outake&backButton=%7CManual+Algae+Outake
 
     operator
         .x()

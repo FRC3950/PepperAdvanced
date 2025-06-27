@@ -61,7 +61,6 @@ public class driveToScoreCommand extends Command {
   @Override
   public void initialize() {
     // lights.setLEDOverride(true, AnimationType.Strobe);
-    System.out.println("Starting Drive!");
     // for each pose in poseForScoringIDs, find the closest one to the current pose
     Pose2d currentPose = drive.getPose();
     double minDistance = 1000.0;
@@ -116,7 +115,6 @@ public class driveToScoreCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     // lights.setLEDOverride(false, null);
-    System.out.println("DriveToPoseCommand finished.");
   }
 
   // Returns true when the command should end.

@@ -92,7 +92,6 @@ public class driveToThisReef extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    System.out.println("DriveToPoseCommand finished.");
   }
 
   // Returns true when the command should end.
