@@ -56,6 +56,7 @@ import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import frc.robot.subsystems.algae.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -71,6 +72,7 @@ public class RobotContainer {
   private Hopper hopper;
   private Climber climber;
   private LightsSubsystem lightsSubsystem;
+  private final Algae algae;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -159,6 +161,7 @@ public class RobotContainer {
     hopper = new Hopper();
     climber = new Climber();
     lightsSubsystem = new LightsSubsystem(mailbox, elevator);
+    algae = new Algae();
 
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
 
@@ -405,6 +408,10 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(() -> climber.bringInTheClimb(), climber)
                 .onlyIf(climber::isReadyToClimb));
+
+    operator
+        .start()
+        .onTrue(algae.simpleAlgaeRemove());
 
     SmartDashboard.putData(
         "Climber Reset Button", new InstantCommand(() -> climber.goBackToRest(), climber));
