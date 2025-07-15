@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.02,
-        "y": 7.091264204545454
+        "x": 7.027339612023305,
+        "y": 7.223202049126059
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.531392045454544,
-        "y": 6.4530823863636355
+        "x": 6.53873165747785,
+        "y": 6.585020230944241
       },
       "isLocked": false,
-      "linkedName": "NorthStart_CenteredMidCage"
+      "linkedName": "PoofStart"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
     "unlimited": true
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 1.5,
     "rotation": -124.82448915695672
   },
   "reversed": false,

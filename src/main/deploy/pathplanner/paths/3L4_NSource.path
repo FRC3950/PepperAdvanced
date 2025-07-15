@@ -12,7 +12,7 @@
         "y": 5.583142033120432
       },
       "isLocked": false,
-      "linkedName": "2nd L4 North"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NorthSource"
+      "linkedName": "NSourceCenter"
     }
   ],
   "rotationTargets": [],
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.5,
     "rotation": -55.0
   },
   "reversed": false,

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.648743710275423,
-        "y": 6.426786364539194
+        "x": 4.391141395508823,
+        "y": 5.642543146756307
       },
       "isLocked": false,
       "linkedName": null
@@ -20,12 +20,12 @@
         "y": 6.9961925864377
       },
       "prevControl": {
-        "x": 2.2764969760709013,
-        "y": 6.541194738185581
+        "x": 2.2501966377301574,
+        "y": 6.578022347348843
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NorthSource"
+      "linkedName": "NSourceCenter"
     }
   ],
   "rotationTargets": [],
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 2.0,
+    "velocity": 0.5,
     "rotation": -55.0
   },
   "reversed": false,

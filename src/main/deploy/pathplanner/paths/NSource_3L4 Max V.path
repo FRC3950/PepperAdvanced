@@ -12,7 +12,7 @@
         "y": 6.512818624205509
       },
       "isLocked": false,
-      "linkedName": "NorthSource"
+      "linkedName": "NSourceCenter"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 2.0,
+    "velocity": 1.5,
     "rotation": -59.81475905427452
   },
   "reversed": false,
