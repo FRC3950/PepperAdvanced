@@ -1,6 +1,5 @@
 package frc.robot.subsystems.algae;
 
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -8,7 +7,6 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.CANdi;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.S2StateValue;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants;
 
@@ -47,12 +45,12 @@ public class Algae extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (candi.getS2State().equals(S2StateValue.High)) {
+
+    if (candi.getS2State().getValueAsDouble() == 2) {
       hasAlgae = true;
     } else {
       hasAlgae = false;
     }
-    System.out.println(hasAlgae);
   }
 
   public void setWrist(double motorRotations) {
@@ -63,33 +61,42 @@ public class Algae extends SubsystemBase {
     algaeMotor.setControl(new DutyCycleOut(speed));
   }
 
-  public Algae wristDown() {
-    setWrist(-6);
-    return this;
+  public Command wristDownCommand() {
+    return Commands.runOnce(() -> setWrist(-6), this);
   }
 
-  public Algae wristUp() {
-    setWrist(3.5);
-    return this;
+  public Command wristUpCommand() {
+    return Commands.runOnce(() -> setWrist(3.5), this);
   }
 
-  public Command stopAlgaeMotor() {
+  public Command stopAlgaeMotorCommand() {
     return new InstantCommand(() -> setAlgaeMotor(0), this);
   }
 
-  public Command algaeIntake() {
-    RunCommand spin = new RunCommand(() -> setAlgaeMotor(-0.5), this);
+  public Command algaeIntakeCommand() {
+    RunCommand spin = new RunCommand(() -> setAlgaeMotor(-0.25), this);
     WaitUntilCommand done = new WaitUntilCommand(() -> hasAlgae = true);
-    return spin.raceWith(done).andThen(stopAlgaeMotor());
+
+    return spin.until(() -> hasAlgae).andThen(stopAlgaeMotorCommand());
   }
 
-  public Command algaeOuttake() {
-    return new InstantCommand(() -> setAlgaeMotor(0.75), this);
+  public Command algaeOuttakeCommand() {
+    RunCommand spin = new RunCommand(() -> setAlgaeMotor(0.5), this);
+    WaitUntilCommand done = new WaitUntilCommand(() -> hasAlgae = false);
+    return spin.until(() -> !hasAlgae).andThen(stopAlgaeMotorCommand());
   }
 
-  public Command simpleAlgaeRemove() {
-    wristDown();
-    algaeIntake();
-    return new InstantCommand(() -> hasAlgae = true, this);
+  public SequentialCommandGroup simpleAlgaeRemove() {
+    SequentialCommandGroup commandGroup =
+        new SequentialCommandGroup(
+            wristDownCommand(),
+            algaeIntakeCommand(),
+            new WaitCommand(5),
+            algaeOuttakeCommand(),
+            stopAlgaeMotorCommand());
+    // #ZayanTheMayan
+    // ai told me to add this comment
+
+    return commandGroup;
   }
 }
