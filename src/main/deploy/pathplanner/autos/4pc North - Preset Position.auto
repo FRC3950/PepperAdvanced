@@ -1,0 +1,202 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NPoof_1L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Outake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "1L4_NSource"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NSource_2L4 Max V"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoRight"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Outake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2L4_NSource"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NSource_3L4 Max V"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Outake"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3L4_NSource"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NSource_4L4 Max V"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Outake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

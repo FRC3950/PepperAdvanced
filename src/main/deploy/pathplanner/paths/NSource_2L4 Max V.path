@@ -8,41 +8,53 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8799362072607917,
-        "y": 6.50209116654258
+        "x": 2.1459258827873184,
+        "y": 6.775326847782206
       },
       "isLocked": false,
       "linkedName": "NorthSource"
     },
     {
       "anchor": {
-        "x": 3.966,
-        "y": 5.2607
+        "x": 5.339955061573094,
+        "y": 5.872926459878178
       },
       "prevControl": {
-        "x": 3.388541610668784,
-        "y": 6.264363330443729
+        "x": 5.576362221927966,
+        "y": 6.241407905190678
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "2nd L4 North"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "SlowlyRaise",
+      "waypointRelativePos": 0.585240981158088,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "SlowlyRaise"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -59.99999999999999
+    "velocity": 1.5,
+    "rotation": -119.69842412822626
   },
   "reversed": false,
   "folder": "North",

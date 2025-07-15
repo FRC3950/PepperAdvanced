@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.301956740249966,
-        "y": 5.739762530002067
+        "x": 1.2780967178611593,
+        "y": 6.9961925864377
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.735352342533431,
-        "y": 5.0846548585408105
+        "x": 1.7001755231350861,
+        "y": 6.692872886068093
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "NorthSource"
     },
     {
       "anchor": {
-        "x": 3.625200521627322,
-        "y": 5.187171553073284
+        "x": 3.2305428197828387,
+        "y": 5.82359226032839
       },
       "prevControl": {
-        "x": 3.475282370847378,
-        "y": 5.418563823494338
+        "x": 1.8581345755490966,
+        "y": 6.751695453941659
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,14 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "SlowlyRaise",
+      "waypointRelativePos": 0.7512278837316179,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 3.5,
@@ -41,14 +48,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -59.99999999999999
+    "velocity": 1.5,
+    "rotation": -58.76141341182403
   },
   "reversed": false,
-  "folder": "ForAlexControl",
+  "folder": "North",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": -55.0
   },
   "useDefaultConstraints": true
 }

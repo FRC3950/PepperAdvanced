@@ -3,12 +3,7 @@
   "robotLength": 0.933,
   "holonomicMode": true,
   "pathFolders": [
-    "ForAlexControl",
-    "Three Piece North",
-    "New New Folder",
-    "North",
-    "PathsFor2",
-    "South"
+    "North"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.5,
