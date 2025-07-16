@@ -183,7 +183,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand(
         "Intake",
-        new IntakeDuringAuto(mailbox, elevator)
+        new IntakeDuringAuto(mailbox)
             .andThen(new WaitUntilCommand(() -> mailbox.somethingInIntake())));
     NamedCommands.registerCommand(
         "Outake",
