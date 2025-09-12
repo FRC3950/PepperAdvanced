@@ -43,7 +43,6 @@ import frc.robot.commands.intakeOnlyWhileEmpty;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LightsSubsystem;
-import frc.robot.subsystems.algae.*;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -72,7 +71,6 @@ public class RobotContainer {
   private Hopper hopper;
   private Climber climber;
   private LightsSubsystem lightsSubsystem;
-  private final Algae algae;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -161,7 +159,6 @@ public class RobotContainer {
     hopper = new Hopper();
     climber = new Climber();
     lightsSubsystem = new LightsSubsystem(mailbox, elevator);
-    algae = new Algae();
 
     intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
 
@@ -410,8 +407,6 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(() -> climber.bringInTheClimb(), climber)
                 .onlyIf(climber::isReadyToClimb));
-
-    operator.start().onTrue(algae.simpleAlgaeRemove());
 
     SmartDashboard.putData(
         "Climber Reset Button", new InstantCommand(() -> climber.goBackToRest(), climber));

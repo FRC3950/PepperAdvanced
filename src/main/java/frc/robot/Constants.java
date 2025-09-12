@@ -47,8 +47,6 @@ public final class Constants {
 
     public static final class mailbox {
 
-      public static final int angleMotor = 13; // Add this line
-
       public static final int intakeMotor = 29;
 
       public static final String kCanbus = "CANivore";
@@ -66,13 +64,6 @@ public final class Constants {
       public static final int candle = 21;
 
       public static final String kCanbus = "rio";
-    }
-
-    public static final class algae {
-
-      public static final int algaeMotor = 59;
-
-      public static final String kCanbus = "CANivore";
     }
   }
 }

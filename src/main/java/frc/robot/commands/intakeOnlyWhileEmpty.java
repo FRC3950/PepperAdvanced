@@ -22,7 +22,6 @@ public class intakeOnlyWhileEmpty extends Command {
   public void initialize() {
     mailbox.setIntakeMotor(0);
     // mailbox.MailBox_SetToIntakePosition_Command();
-    mailbox.setAngleMotor(11.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
