@@ -24,7 +24,6 @@ public class Elevator extends SubsystemBase {
   public double L2_inMotorRotations = 8.5;
   public double L3_inMotorRotations = 14.25;
   public double L4_inMotorRotations = 23.00;
-  public double source_inMotorRotations = 0;
 
   private double currentPosSim = 0;
 
@@ -36,7 +35,6 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putNumber("L2", 8.5);
     SmartDashboard.putNumber("L3", 14.25);
     SmartDashboard.putNumber("L4", 23.00);
-    SmartDashboard.putNumber("Source", 0);
 
     elevatorLeadMotor =
         new TalonFX(
@@ -95,7 +93,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean isAtAcceptablePosition(double targetPosition) {
-    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < .520;
+    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < .5;
   }
 
   // Do we target Drive Velocity for effecting how elevator rises up
@@ -151,10 +149,6 @@ public class Elevator extends SubsystemBase {
 
   public Command setElevatorToL4Command() {
     return this.setElevatorPositionCommand(SmartDashboard.getNumber("L4", L4_inMotorRotations));
-  }
-
-  public Command setElevatorToSourceCommand() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("Source", 0));
   }
 
   // public Command setElevatorToL1Command() {
