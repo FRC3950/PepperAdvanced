@@ -34,12 +34,11 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.IntakeDuringAuto;
-import frc.robot.commands.L4DuringAuto;
-import frc.robot.commands.OutakeDuringAuto;
+import frc.robot.commands.IntakeInAuto;
+import frc.robot.commands.L4InAuto;
+import frc.robot.commands.OutakeInAuto;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
-import frc.robot.commands.intakeOnlyWhileEmpty;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.LightsSubsystem;
@@ -160,8 +159,6 @@ public class RobotContainer {
     climber = new Climber();
     lightsSubsystem = new LightsSubsystem(mailbox, elevator);
 
-    intakeOnlyWhileEmpty intakeCommandforSource = new intakeOnlyWhileEmpty(mailbox);
-
     intakeIsAlwaysOnWhenAtRest =
         new Trigger(
             () ->
@@ -174,19 +171,21 @@ public class RobotContainer {
 
     NamedCommands.registerCommand(
         "L4",
-        new L4DuringAuto(elevator)
+        new L4InAuto(elevator)
             .withTimeout(2)); // TODO consider a timeout for if the elevator doesn't reach
     NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
-
+    
     NamedCommands.registerCommand(
-        "Intake",
-        new IntakeDuringAuto(mailbox)
+        "IntakeWait",
+        new IntakeInAuto(mailbox)
             .andThen(new WaitUntilCommand(() -> mailbox.somethingInIntake())));
     NamedCommands.registerCommand(
+        "Intake",
+        new IntakeInAuto(mailbox));
+    NamedCommands.registerCommand(
         "Outake",
-        new OutakeDuringAuto(mailbox).withTimeout(.6)); // TODO Remove timeout only here for sim
+        new OutakeInAuto(mailbox).withTimeout(.6)); // TODO Remove timeout only here for sim
 
-    NamedCommands.registerCommand("Backward", new InstantCommand());
 
     NamedCommands.registerCommand(
         "AutoLeft", new driveToScoreCommand(drive, lightsSubsystem, "left").withTimeout(2));
@@ -197,9 +196,8 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-    // test 3
-    // Set up SysId routines
 
+    // Set up SysId routines
     autoChooser.addOption(
         "seedAuto",
         Commands.runOnce(
