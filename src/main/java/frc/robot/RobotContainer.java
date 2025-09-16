@@ -174,18 +174,14 @@ public class RobotContainer {
         new L4InAuto(elevator)
             .withTimeout(2)); // TODO consider a timeout for if the elevator doesn't reach
     NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
-    
+
     NamedCommands.registerCommand(
         "IntakeWait",
-        new IntakeInAuto(mailbox)
-            .andThen(new WaitUntilCommand(() -> mailbox.somethingInIntake())));
-    NamedCommands.registerCommand(
-        "Intake",
-        new IntakeInAuto(mailbox));
+        new IntakeInAuto(mailbox).andThen(new WaitUntilCommand(() -> mailbox.somethingInIntake())));
+    NamedCommands.registerCommand("Intake", new IntakeInAuto(mailbox));
     NamedCommands.registerCommand(
         "Outake",
         new OutakeInAuto(mailbox).withTimeout(.6)); // TODO Remove timeout only here for sim
-
 
     NamedCommands.registerCommand(
         "AutoLeft", new driveToScoreCommand(drive, lightsSubsystem, "left"));

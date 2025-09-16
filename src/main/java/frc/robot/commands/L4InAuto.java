@@ -5,7 +5,7 @@ import frc.robot.subsystems.elevator.Elevator;
 
 public class L4InAuto extends Command {
   private final Elevator elevator;
-  
+
   public L4InAuto(Elevator elevator) {
     this.elevator = elevator;
     addRequirements(elevator);
