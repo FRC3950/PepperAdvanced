@@ -188,14 +188,14 @@ public class RobotContainer {
 
 
     NamedCommands.registerCommand(
-        "AutoLeft", new driveToScoreCommand(drive, lightsSubsystem, "left").withTimeout(2));
+        "AutoLeft", new driveToScoreCommand(drive, lightsSubsystem, "left"));
     NamedCommands.registerCommand(
-        "AutoRight", new driveToScoreCommand(drive, lightsSubsystem, "right").withTimeout(2));
+        "AutoRight", new driveToScoreCommand(drive, lightsSubsystem, "right"));
     NamedCommands.registerCommand(
-        "AutoSource", new driveToIntakeCommand(drive, lightsSubsystem, () -> 0.0).withTimeout(2));
+        "AutoSource", new driveToIntakeCommand(drive, lightsSubsystem, () -> 0.0));
 
     // Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices:", AutoBuilder.buildAutoChooser());
 
     // Set up SysId routines
     autoChooser.addOption(
@@ -278,7 +278,7 @@ public class RobotContainer {
     //         Math.abs(controller.getLeftY()) < 0.5
     //             && Math.abs(controller.getLeftX()) < 0.5));
 
-    controller.rightBumper().whileTrue(new driveToScoreCommand(drive, lightsSubsystem, "right"));
+    controller.rightBumper().onTrue(new driveToScoreCommand(drive, lightsSubsystem, "right"));
 
     // .onlyWhile(
     //         () ->
@@ -287,7 +287,7 @@ public class RobotContainer {
 
     controller
         .a()
-        .whileTrue(new driveToIntakeCommand(drive, lightsSubsystem, () -> controller.getLeftY()));
+        .onTrue(new driveToIntakeCommand(drive, lightsSubsystem, () -> controller.getLeftY()));
 
     // Fine Tune Driving
     controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
