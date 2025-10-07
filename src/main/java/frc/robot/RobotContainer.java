@@ -166,6 +166,8 @@ public class RobotContainer {
                     && elevator.isAtAcceptablePosition(0)
                     && Robot.isTeleop == true);
 
+    SmartDashboard.putBoolean("Intake State", mailbox.somethingInIntake());
+
     NamedCommands.registerCommand(
         "SlowlyRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 3, 6, 0));
 

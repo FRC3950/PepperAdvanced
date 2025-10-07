@@ -17,8 +17,7 @@ public class Elevator extends SubsystemBase {
   private final CANdi myCANdi;
   public final TalonFX elevatorLeadMotor;
   private final TalonFX elevatorFollowMotor;
-  private final DynamicMotionMagicVoltage mm_request =
-      new DynamicMotionMagicVoltage(0, 60, 120, 1200);
+  private final DynamicMotionMagicVoltage mm_request = new DynamicMotionMagicVoltage(0, 135, 90, 0);
 
   public double L1_inMotorRotations = 6.5;
   public double L2_inMotorRotations = 8.5;
@@ -56,17 +55,6 @@ public class Elevator extends SubsystemBase {
 
   // Method to set the target position using Motion Magic
   public void setElevatorPosition(double targetPositionInMotorTicks) {
-
-    if (targetPositionInMotorTicks > elevatorLeadMotor.getPosition().getValueAsDouble()) {
-
-      mm_request.Velocity = 20;
-      mm_request.Acceleration = 35;
-      mm_request.Jerk = 0;
-    } else {
-      mm_request.Velocity = 20;
-      mm_request.Acceleration = 50;
-      mm_request.Jerk = 0;
-    }
     if (targetPositionInMotorTicks == 0) {
       elevatorLeadMotor.setControl(
           mm_request.withPosition(targetPositionInMotorTicks).withFeedForward(-0.1));
