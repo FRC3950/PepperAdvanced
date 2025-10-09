@@ -25,6 +25,7 @@ public class driveToIntakeCommand extends Command {
   private final int[] aprilTagIdsForScoring = new int[] {1, 2, 12, 13};
   private final Pose2d[] poseForScoringIDs;
   private Command pathCommand;
+  public boolean goingIntake;
 
   public driveToIntakeCommand(Drive drive, LightsSubsystem lights, DoubleSupplier driveStickMoved) {
     this.lights = lights;
@@ -65,6 +66,7 @@ public class driveToIntakeCommand extends Command {
   public void execute() {
     if (pathCommand != null) {
       pathCommand.execute();
+      goingIntake = true;
     }
   }
 
@@ -72,6 +74,7 @@ public class driveToIntakeCommand extends Command {
   public void end(boolean interrupted) {
     if (pathCommand != null) {
       pathCommand.end(interrupted);
+      goingIntake = false;
     }
     // Optionally: lights.setLEDOverride(false, null);
   }
