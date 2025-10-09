@@ -34,8 +34,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeInAuto;
-import frc.robot.commands.L4InAuto;
-import frc.robot.commands.OutakeInAuto;
 import frc.robot.commands.ScoreCommand;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
@@ -171,8 +169,10 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "SlowlyRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 3, 6, 0));
 
-    NamedCommands.registerCommand("Score_L4", new ScoreCommand(
-        elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed));
+    NamedCommands.registerCommand(
+        "Score_L4",
+        new ScoreCommand(
+            elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed));
     // NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
 
     NamedCommands.registerCommand(
@@ -185,8 +185,7 @@ public class RobotContainer {
     //     "Outake",
     //     new OutakeInAuto(mailbox).withTimeout(.6)); // TODO Remove timeout only here for sim
 
-
-    //Auto Align Commands
+    // Auto Align Commands
     NamedCommands.registerCommand(
         "AutoLeft", new driveToScoreCommand(drive, lightsSubsystem, "left"));
     NamedCommands.registerCommand(

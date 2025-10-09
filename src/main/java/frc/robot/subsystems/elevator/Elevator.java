@@ -52,7 +52,8 @@ public class Elevator extends SubsystemBase {
     }
   }
 
-  public void setElevatorPosition(double targetPositionInMotorTicks, double velocity, double acceleration, double jerk) {
+  public void setElevatorPosition(
+      double targetPositionInMotorTicks, double velocity, double acceleration, double jerk) {
     currentPosSim = targetPositionInMotorTicks;
     mm_request.Velocity = velocity;
     mm_request.Acceleration = acceleration;
