@@ -18,6 +18,7 @@ public class driveToScoreCommand extends Command {
   private final LightsSubsystem lights;
   private final String direction;
   private Command pathCommand;
+  public boolean aligning;
 
   public driveToScoreCommand(Drive drive, LightsSubsystem lights, String direction) {
     this.drive = drive;
@@ -82,6 +83,7 @@ public class driveToScoreCommand extends Command {
   public void execute() {
     if (pathCommand != null) {
       pathCommand.execute();
+      aligning = true;
     }
   }
 
@@ -89,6 +91,7 @@ public class driveToScoreCommand extends Command {
   public void end(boolean interrupted) {
     if (pathCommand != null) {
       pathCommand.end(interrupted);
+      aligning = false;
     }
   }
 
