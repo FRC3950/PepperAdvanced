@@ -17,6 +17,8 @@ import com.ctre.phoenix6.signals.StripTypeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MailBox;
 import frc.robot.subsystems.elevator.*;
+import frc.robot.commands.driveToIntakeCommand;
+import frc.robot.commands.driveToScoreCommand;
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
@@ -54,7 +56,7 @@ public class LightsSubsystem extends SubsystemBase {
   private final Elevator elevator;
   private boolean wasSomethingInIntake = false;
   private boolean wasElevatorActive = false;
-  private boolean overrideActive = false;
+  private boolean wasAligning = false;
   private boolean rainbowActive = false;
   private AnimationType currentAnimationType = AnimationType.None;
 
@@ -138,35 +140,33 @@ public class LightsSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    // if (overrideActive) {
-    //   return;
-    // }
-
+public void periodic() {
+    // Update states
     boolean intakeState = mailbox.somethingInIntake();
     boolean elevatorActive = elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0;
+    boolean driveToScoreActive = driveToScoreCommand.aligning;
+    boolean driveToIntakeActive = driveToIntakeCommand.goingIntake;
+    boolean aligningActive = driveToScoreActive || driveToIntakeActive;
 
-    // Only update when a condition changes
-    if (intakeState != wasSomethingInIntake || elevatorActive != wasElevatorActive) {
-      if (intakeState) {
-        // If something is in intake, use strobe animation when elevator goes up.
-        if (elevatorActive) {
-          candle.setControl(greenStrobe);
-        } else {
-          candle.setControl(new EmptyAnimation(0));
-          candle.setControl(solidGreen);
-        }
+    // White strobe logic takes precedence
+    if (aligningActive) {
+      candle.setControl(whiteStrobe);
+    } else if (intakeState) {
+      if (elevatorActive) {
+        candle.setControl(greenStrobe);
       } else {
-        candle.setControl(new EmptyAnimation(0));
-        candle.setControl(solidRed);
+        candle.setControl(new EmptyAnimation(0)); 
+        candle.setControl(solidGreen);
       }
-      wasSomethingInIntake = intakeState;
-      wasElevatorActive = elevatorActive;
+    } else {
+      candle.setControl(new EmptyAnimation(0));
+      candle.setControl(solidRed);
     }
 
-    // Instead of caching and reusing the animation instance, create a new one each tim
-
+    // Cache state variables
     wasSomethingInIntake = intakeState;
     wasElevatorActive = elevatorActive;
-  }
+    wasAligning = aligningActive;
+}
+
 }

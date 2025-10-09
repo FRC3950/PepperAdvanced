@@ -25,7 +25,7 @@ public class driveToIntakeCommand extends Command {
   private final int[] aprilTagIdsForScoring = new int[] {1, 2, 12, 13};
   private final Pose2d[] poseForScoringIDs;
   private Command pathCommand;
-  public boolean goingIntake;
+  public static boolean goingIntake;
 
   public driveToIntakeCommand(Drive drive, LightsSubsystem lights, DoubleSupplier driveStickMoved) {
     this.lights = lights;

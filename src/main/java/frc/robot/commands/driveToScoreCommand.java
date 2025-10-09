@@ -18,7 +18,7 @@ public class driveToScoreCommand extends Command {
   private final LightsSubsystem lights;
   private final String direction;
   private Command pathCommand;
-  public boolean aligning;
+  public static boolean aligning;
 
   public driveToScoreCommand(Drive drive, LightsSubsystem lights, String direction) {
     this.drive = drive;
