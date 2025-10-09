@@ -325,25 +325,29 @@ public class RobotContainer {
         .x()
         .onTrue(
             new ScoreCommand(
-                elevator, mailbox, elevator.L1_inMotorRotations, 0.95, mailbox.outakeSpeedL1));
+                    elevator, mailbox, elevator.L1_inMotorRotations, 0.95, mailbox.outakeSpeedL1)
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator
         .a()
         .onTrue(
             new ScoreCommand(
-                elevator, mailbox, elevator.L2_inMotorRotations, 0.925, mailbox.outakeSpeed));
+                    elevator, mailbox, elevator.L2_inMotorRotations, 0.9, mailbox.outakeSpeed)
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator
         .b()
         .onTrue(
             new ScoreCommand(
-                elevator, mailbox, elevator.L3_inMotorRotations, 0.925, mailbox.outakeSpeed));
+                    elevator, mailbox, elevator.L3_inMotorRotations, 0.915, mailbox.outakeSpeed)
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator
         .y()
         .onTrue(
             new ScoreCommand(
-                elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed));
+                    elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed)
+                .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator.pov(0).debounce(0.1).onTrue(elevator.incrementElevatorPositionCommand(.5));
     // consider - .debounce(0.1) before on true

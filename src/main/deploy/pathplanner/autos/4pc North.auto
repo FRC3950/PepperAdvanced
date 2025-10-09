@@ -11,7 +11,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -21,22 +21,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L4"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Outake"
-                      }
-                    }
-                  ]
+                  "name": "Score_L4"
                 }
               }
             ]
@@ -46,12 +33,6 @@
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Rest"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -70,7 +51,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -80,7 +61,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -90,22 +71,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L4"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Outake"
-                      }
-                    }
-                  ]
+                  "name": "Score_L4"
                 }
               }
             ]
@@ -115,12 +83,6 @@
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Rest"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -139,7 +101,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -149,7 +111,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -159,22 +121,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L4"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Outake"
-                      }
-                    }
-                  ]
+                  "name": "Score_L4"
                 }
               }
             ]
@@ -184,12 +133,6 @@
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Rest"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -208,7 +151,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -218,7 +161,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -228,22 +171,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L4"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Outake"
-                      }
-                    }
-                  ]
+                  "name": "Score_L4"
                 }
               }
             ]
@@ -253,12 +183,6 @@
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Rest"
-                }
-              },
               {
                 "type": "named",
                 "data": {
