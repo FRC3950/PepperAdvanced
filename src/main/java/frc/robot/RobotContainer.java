@@ -29,14 +29,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeInAuto;
-import frc.robot.commands.L4InAuto;
-import frc.robot.commands.OutakeInAuto;
+import frc.robot.commands.ScoreCommand;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
 import frc.robot.generated.TunerConstants;
@@ -172,19 +170,22 @@ public class RobotContainer {
         "SlowlyRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 3, 6, 0));
 
     NamedCommands.registerCommand(
-        "L4",
-        new L4InAuto(elevator)
-            .withTimeout(2)); // TODO consider a timeout for if the elevator doesn't reach
-    NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
+        "Score_L4",
+        new ScoreCommand(
+            elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed));
+    // NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
 
     NamedCommands.registerCommand(
         "IntakeWait",
         new IntakeInAuto(mailbox).andThen(new WaitUntilCommand(() -> mailbox.somethingInIntake())));
-    NamedCommands.registerCommand("Intake", new IntakeInAuto(mailbox));
-    NamedCommands.registerCommand(
-        "Outake",
-        new OutakeInAuto(mailbox).withTimeout(.6)); // TODO Remove timeout only here for sim
 
+    NamedCommands.registerCommand("Intake", new IntakeInAuto(mailbox));
+
+    // NamedCommands.registerCommand(
+    //     "Outake",
+    //     new OutakeInAuto(mailbox).withTimeout(.6)); // TODO Remove timeout only here for sim
+
+    // Auto Align Commands
     NamedCommands.registerCommand(
         "AutoLeft", new driveToScoreCommand(drive, lightsSubsystem, "left"));
     NamedCommands.registerCommand(
@@ -323,62 +324,29 @@ public class RobotContainer {
     operator
         .x()
         .onTrue(
-            elevator
-                .setElevatorToL1Command()
-                .andThen(
-                    new WaitUntilCommand(
-                            () -> elevator.isAtAcceptablePosition(elevator.L1_inMotorRotations))
-                        .withTimeout(2.25))
-                .andThen(new WaitCommand(0.1))
-                .andThen(mailbox.MailBox_Outake_L1_Command(mailbox.outakeSpeedL1))
-                .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(.5))
-                .andThen(elevator.setElevatorToRestCommand())
+            new ScoreCommand(
+                    elevator, mailbox, elevator.L1_inMotorRotations, 0.95, mailbox.outakeSpeedL1)
                 .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator
         .a()
         .onTrue(
-            elevator
-                .setElevatorToL2Command()
-                .andThen(
-                    new WaitUntilCommand(
-                            () -> elevator.isAtAcceptablePosition(elevator.L2_inMotorRotations))
-                        .withTimeout(2.25))
-                .andThen(new WaitCommand(0.1))
-                .andThen(mailbox.MailBox_Outake_Command(mailbox.outakeSpeed))
-                .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(.5))
-                .andThen(elevator.setElevatorToRestCommand())
+            new ScoreCommand(
+                    elevator, mailbox, elevator.L2_inMotorRotations, 0.9, mailbox.outakeSpeed)
                 .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator
         .b()
         .onTrue(
-            elevator
-                .setElevatorToL3Command()
-                .andThen(
-                    new WaitUntilCommand(
-                            () -> elevator.isAtAcceptablePosition(elevator.L3_inMotorRotations))
-                        .withTimeout(2.25))
-                .andThen(new WaitCommand(0.1))
-                .andThen(mailbox.MailBox_Outake_Command(mailbox.outakeSpeed))
-                .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(.5))
-                .andThen(elevator.setElevatorToRestCommand())
+            new ScoreCommand(
+                    elevator, mailbox, elevator.L3_inMotorRotations, 0.915, mailbox.outakeSpeed)
                 .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator
         .y()
         .onTrue(
-            elevator
-                .setElevatorToL4Command()
-                .andThen(
-                    new WaitUntilCommand(
-                            () -> elevator.isAtAcceptablePosition(elevator.L4_inMotorRotations))
-                        .withTimeout(2.25))
-                .andThen(new WaitCommand(0.15))
-                .andThen(mailbox.MailBox_Outake_Command(mailbox.outakeSpeed))
-                .andThen(new WaitUntilCommand(mailbox::nothingInIntake).withTimeout(1))
-                .andThen(new WaitCommand(0.1))
-                .andThen(elevator.setElevatorToRestCommand())
+            new ScoreCommand(
+                    elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed)
                 .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
 
     operator.pov(0).debounce(0.1).onTrue(elevator.incrementElevatorPositionCommand(.5));

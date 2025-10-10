@@ -8,7 +8,6 @@ import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.CANdi;
 import com.ctre.phoenix6.hardware.TalonFX;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -30,11 +29,6 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     myCANdi = new CANdi(17, "CANivore");
 
-    SmartDashboard.putNumber("L1", 6.5);
-    SmartDashboard.putNumber("L2", 8.5);
-    SmartDashboard.putNumber("L3", 14.25);
-    SmartDashboard.putNumber("L4", 23.00);
-
     elevatorLeadMotor =
         new TalonFX(
             Constants.SubsystemConstants.elevator.leadMotorID,
@@ -43,11 +37,6 @@ public class Elevator extends SubsystemBase {
         new TalonFX(
             Constants.SubsystemConstants.elevator.followMotorID,
             Constants.SubsystemConstants.elevator.kCanbus);
-
-    // elevatorLeadMotor.getConfigurator().apply(
-    //   new MotionMagicConfigs()
-    //   .withMotionMagicAcceleration(1)
-    //   .withMotionMagicCruiseVelocity(2));
 
     // Set the follow motor to follow the lead motor
     elevatorFollowMotor.setControl(new Follower(elevatorLeadMotor.getDeviceID(), false));
@@ -58,9 +47,7 @@ public class Elevator extends SubsystemBase {
     if (targetPositionInMotorTicks == 0) {
       elevatorLeadMotor.setControl(
           mm_request.withPosition(targetPositionInMotorTicks).withFeedForward(-0.1));
-
     } else {
-
       elevatorLeadMotor.setControl(mm_request.withPosition(targetPositionInMotorTicks));
     }
   }
@@ -81,7 +68,11 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean isAtAcceptablePosition(double targetPosition) {
-    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < .5;
+    return Math.abs(elevatorLeadMotor.getPosition().getValueAsDouble() - targetPosition) < .25;
+  }
+
+  public double getPosition() {
+    return elevatorLeadMotor.getPosition().getValueAsDouble();
   }
 
   // Do we target Drive Velocity for effecting how elevator rises up
@@ -122,42 +113,6 @@ public class Elevator extends SubsystemBase {
             setElevatorPosition(
                 elevatorLeadMotor.getPosition().getValueAsDouble() - decrementInMotorTicks));
   }
-
-  public Command setElevatorToL1Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L1", L1_inMotorRotations));
-  }
-
-  public Command setElevatorToL2Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L2", L2_inMotorRotations));
-  }
-
-  public Command setElevatorToL3Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L3", L3_inMotorRotations));
-  }
-
-  public Command setElevatorToL4Command() {
-    return this.setElevatorPositionCommand(SmartDashboard.getNumber("L4", L4_inMotorRotations));
-  }
-
-  // public Command setElevatorToL1Command() {
-  //   return this.setElevatorPositionCommand(L1_inMotorRotations);
-  // }
-
-  // public Command setElevatorToL2Command() {
-  //   return this.setElevatorPositionCommand(L2_inMotorRotations);
-  // }
-
-  // public Command setElevatorToL3Command() {
-  //   return this.setElevatorPositionCommand(L3_inMotorRotations);
-  // }
-
-  // public Command setElevatorToL4Command() {
-  //   return this.setElevatorPositionCommand(L4_inMotorRotations);
-  // }
-
-  // public Command setElevatorToSourceCommand() {
-  //   return this.setElevatorPositionCommand(source_inMotorRotations);
-  // }
 
   public Command setElevatorToRestCommand() {
     return this.setElevatorPositionCommand(0);
