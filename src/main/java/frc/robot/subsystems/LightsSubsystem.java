@@ -16,9 +16,9 @@ import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MailBox;
-import frc.robot.subsystems.elevator.*;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
+import frc.robot.subsystems.elevator.*;
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
@@ -140,7 +140,7 @@ public class LightsSubsystem extends SubsystemBase {
   }
 
   @Override
-public void periodic() {
+  public void periodic() {
     // Update states
     boolean intakeState = mailbox.somethingInIntake();
     boolean elevatorActive = elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0;
@@ -152,10 +152,11 @@ public void periodic() {
     if (aligningActive) {
       candle.setControl(whiteStrobe);
     } else if (intakeState) {
+      candle.setControl(new EmptyAnimation(0));
       if (elevatorActive) {
         candle.setControl(greenStrobe);
       } else {
-        candle.setControl(new EmptyAnimation(0)); 
+        candle.setControl(new EmptyAnimation(0));
         candle.setControl(solidGreen);
       }
     } else {
@@ -167,6 +168,5 @@ public void periodic() {
     wasSomethingInIntake = intakeState;
     wasElevatorActive = elevatorActive;
     wasAligning = aligningActive;
-}
-
+  }
 }
