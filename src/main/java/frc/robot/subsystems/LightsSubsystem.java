@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Degrees;
 
 import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.controls.ColorFlowAnimation;
@@ -10,7 +10,7 @@ import com.ctre.phoenix6.controls.RainbowAnimation;
 import com.ctre.phoenix6.controls.SingleFadeAnimation;
 import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.controls.StrobeAnimation;
-import com.ctre.phoenix6.hardware.*;
+import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MailBox;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
-import frc.robot.subsystems.elevator.*;
+import frc.robot.subsystems.elevator.Elevator;
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
@@ -82,7 +82,7 @@ public class LightsSubsystem extends SubsystemBase {
   }
 
   StrobeAnimation greenStrobe = createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 5);
-  StrobeAnimation whiteStrobe = createStrobeAnimation(kWhite, kSlot0StartIdx, kSlot0EndIdx, 1, 6);
+  StrobeAnimation whiteStrobe = createStrobeAnimation(kWhite, kSlot0StartIdx, kSlot0EndIdx, 0, 6);
   RainbowAnimation rainbow = createRainbowAnimation(kSlot0StartIdx, kSlot0EndIdx, 2, 10.0);
   EmptyAnimation fullClear0 = new EmptyAnimation(0);
   EmptyAnimation fullClear1 = new EmptyAnimation(1);
