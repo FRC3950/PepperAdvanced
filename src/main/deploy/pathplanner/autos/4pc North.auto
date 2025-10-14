@@ -21,9 +21,16 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "Score_L4"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Score_L4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -59,9 +66,16 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "Score_L4"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Score_L4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -97,9 +111,16 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "Score_L4"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Score_L4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -121,7 +142,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NSource_4L4 Max V"
+            "pathName": "NSource_3L4 Max V"
           }
         },
         {
@@ -135,9 +156,16 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "Score_L4"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Score_L4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
