@@ -29,11 +29,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.IntakeInAuto;
 import frc.robot.commands.ScoreCommand;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
@@ -158,18 +156,16 @@ public class RobotContainer {
     climber = new Climber();
     lightsSubsystem = new LightsSubsystem(mailbox, elevator);
 
-    //Mailbox Triggers
+    // Mailbox Triggers
     intakeIsAlwaysOnWhenAtRest =
         new Trigger(
             () ->
                 mailbox.nothingInIntake()
                     && elevator.isAtAcceptablePosition(0)
                     && Robot.isTeleop == true);
-    intakeIsAlwaysOnWhenAtRest.onTrue(new InstantCommand(() -> mailbox.setIntakeMotor(mailbox.intakeSpeed)));
-    intakeStopsWhenCoral =
-        new Trigger(
-            () ->
-                mailbox.somethingInIntake());
+    intakeIsAlwaysOnWhenAtRest.onTrue(
+        new InstantCommand(() -> mailbox.setIntakeMotor(mailbox.intakeSpeed)));
+    intakeStopsWhenCoral = new Trigger(() -> mailbox.somethingInIntake());
     intakeStopsWhenCoral.onTrue(new InstantCommand(() -> mailbox.setIntakeMotor(0)));
 
     SmartDashboard.putBoolean("Intake State", mailbox.somethingInIntake());
@@ -184,8 +180,7 @@ public class RobotContainer {
     // NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
 
     NamedCommands.registerCommand(
-        "IntakeWait",
-        new IntakeInAuto(mailbox).andThen(new WaitUntilCommand(() -> mailbox.somethingInIntake())));
+        "IntakeWait", new InstantCommand(() -> mailbox.setIntakeMotor(mailbox.intakeSpeed)));
 
     // Auto Align Commands
     NamedCommands.registerCommand(
@@ -318,7 +313,6 @@ public class RobotContainer {
 
     // Operator Controls/////////////////////////
 
-
     // Manipulator/Operator Button Layout:
     // https://www.padcrafter.com/index.php?templates=Pepper+2025+-+Driver%7CPepper+2025+-+Manipulator&yButton=Reset+Field-Centric+Gyro+State%7CL4+Score+Command+Set&col=%23A82C28%2C%23322127%2C%23FFFFFF&leftBumper=Auto+Alight+Closest+Reef+Face+-+Left%7CZero+Elevator+and+Restart+Mailbox&rightBumper=Auto+Alight+Closest+Reef+Face+-+Right%7COuttake+Algae+and+Zero+Elevator&aButton=Auto+Align+Closest+Coral+Station%7CL2+Score+Command+Set&dpadUp=Robot-Centric+Fine+Driving+-+Forward%7CAlgae+Removal+Command+Set+-+Top&dpadDown=Robot-Centric+Fine+Driving+-+Backwards%7CAlgae+Removal+Command+Set+-+Bottom&dpadRight=Robot-Centric+Fine+Driving+-+Right%7CSmall+Increment+Increase+Elevator+Position&dpadLeft=Robot-Centric+Fine+Driving+-+Left%7CSmall+Increment+Decrease+Elevator+Position&leftStick=Drive+Stick&rightStick=Rotation+Stick&bButton=Auto+Align+Closest+Reef+Face+-+Center%7CL3+Score+Command+Set&plat=%7C%7C0&xButton=%7CL1+Score+Command+Set+%28Buggy+and+Inaccurate%29&leftTrigger=%7CAlgae+Processor+Scoring+Sequence&rightTrigger=%7CBarge%3F%3F%3F%3F%3F&startButton=%7CManual+Coral+Outake&backButton=%7CManual+Algae+Outake
 
@@ -326,25 +320,25 @@ public class RobotContainer {
         .x()
         .onTrue(
             new ScoreCommand(
-                    elevator, mailbox, elevator.L1_inMotorRotations, 0.95, mailbox.outakeSpeedL1));
+                elevator, mailbox, elevator.L1_inMotorRotations, 0.95, mailbox.outakeSpeedL1));
 
     operator
         .a()
         .onTrue(
             new ScoreCommand(
-                    elevator, mailbox, elevator.L2_inMotorRotations, 0.9, mailbox.outakeSpeed));
+                elevator, mailbox, elevator.L2_inMotorRotations, 0.9, mailbox.outakeSpeed));
 
     operator
         .b()
         .onTrue(
             new ScoreCommand(
-                    elevator, mailbox, elevator.L3_inMotorRotations, 0.915, mailbox.outakeSpeed));
+                elevator, mailbox, elevator.L3_inMotorRotations, 0.915, mailbox.outakeSpeed));
 
     operator
         .y()
         .onTrue(
             new ScoreCommand(
-                    elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed));
+                elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed));
 
     operator.pov(0).debounce(0.1).onTrue(elevator.incrementElevatorPositionCommand(.5));
     // consider - .debounce(0.1) before on true
