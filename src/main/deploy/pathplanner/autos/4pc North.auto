@@ -38,12 +38,6 @@
                 "data": {
                   "name": "AutoSource"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
               }
             ]
           }
@@ -81,12 +75,6 @@
                 "type": "named",
                 "data": {
                   "name": "AutoSource"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
                 }
               }
             ]
@@ -126,12 +114,6 @@
                 "data": {
                   "name": "AutoSource"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
               }
             ]
           }
@@ -169,12 +151,6 @@
                 "type": "named",
                 "data": {
                   "name": "AutoSource"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
                 }
               }
             ]
