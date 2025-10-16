@@ -152,7 +152,6 @@ public class LightsSubsystem extends SubsystemBase {
     if (aligningActive) {
       candle.setControl(whiteStrobe);
     } else if (intakeState) {
-      candle.setControl(new EmptyAnimation(0));
       if (elevatorActive) {
         candle.setControl(greenStrobe);
       } else {
