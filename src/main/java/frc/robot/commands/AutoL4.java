@@ -8,9 +8,7 @@ public class AutoL4 extends Command {
   private final Elevator elevator;
   private final MailBox mailbox;
 
-  public AutoL4(
-      Elevator elevator,
-      MailBox mailbox) {
+  public AutoL4(Elevator elevator, MailBox mailbox) {
     this.elevator = elevator;
     this.mailbox = mailbox;
     addRequirements(elevator, mailbox);
@@ -24,7 +22,7 @@ public class AutoL4 extends Command {
   @Override
   public void execute() {
     double currentPos = elevator.getPosition();
-    if (currentPos >= elevator.L4_inMotorRotations * 0.975){
+    if (currentPos >= elevator.L4_inMotorRotations * 0.975) {
       mailbox.setOutakeMotor(mailbox.outakeSpeed);
     }
   }
@@ -33,6 +31,7 @@ public class AutoL4 extends Command {
   public boolean isFinished() {
     return mailbox.nothingInIntake();
   }
+
   @Override
   public void end(boolean interrupted) {}
 }

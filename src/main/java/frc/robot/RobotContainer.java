@@ -170,15 +170,15 @@ public class RobotContainer {
     intakeStopsWhenCoral.onTrue(new InstantCommand(() -> mailbox.setIntakeMotor(0)));
 
     SmartDashboard.putBoolean("Intake State", mailbox.somethingInIntake());
-    SmartDashboard.putBoolean("Elevator@Zero", elevator.getPosition()==0);
+    SmartDashboard.putBoolean("Elevator@Zero", elevator.getPosition() == 0);
 
     NamedCommands.registerCommand(
-        "SlowlyRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 40, 10, 0));
+        "SlowlyRaise",
+        elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 40, 10, 0));
     NamedCommands.registerCommand(
-        "HalfRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations/2, 80, 40, 0));
-    NamedCommands.registerCommand(
-        "AutoL4",
-        new AutoL4(elevator, mailbox));
+        "HalfRaise",
+        elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations / 2, 80, 40, 0));
+    NamedCommands.registerCommand("AutoL4", new AutoL4(elevator, mailbox));
     NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
 
     NamedCommands.registerCommand(

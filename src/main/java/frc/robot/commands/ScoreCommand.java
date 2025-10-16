@@ -47,7 +47,7 @@ public class ScoreCommand extends Command {
     // mailbox.nothingInIntake())
     if (mailboxStarted && mailbox.nothingInIntake()) {
       scored = true;
-      elevator.setElevatorPosition(0); // Go back down
+      elevator.setElevatorToRestCommand(); // Go back down
     }
   }
 
