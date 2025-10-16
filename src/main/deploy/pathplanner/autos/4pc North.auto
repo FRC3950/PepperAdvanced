@@ -27,7 +27,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Score_L4"
+                        "name": "AutoL4"
                       }
                     }
                   ]
@@ -44,51 +44,12 @@
                 "type": "named",
                 "data": {
                   "name": "AutoSource"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "NSource_2L4 Max V"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoRight"
                 }
               },
               {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Score_L4"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
                 "type": "named",
                 "data": {
-                  "name": "AutoSource"
+                  "name": "Rest"
                 }
               }
             ]
@@ -97,7 +58,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NSource_3L4 Max V"
+            "pathName": "NSource_2+3L4 Max V"
           }
         },
         {
@@ -117,7 +78,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Score_L4"
+                        "name": "AutoL4"
                       }
                     }
                   ]
@@ -135,6 +96,12 @@
                 "data": {
                   "name": "AutoSource"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest"
+                }
               }
             ]
           }
@@ -142,7 +109,58 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NSource_3L4 Max V"
+            "pathName": "NSource_2+3L4 Max V"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoLeft"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoL4"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoSource"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NSource_4L4 Max V"
           }
         },
         {

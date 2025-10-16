@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AutoL4;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.ScoreCommand;
 import frc.robot.commands.driveToIntakeCommand;
@@ -169,15 +170,16 @@ public class RobotContainer {
     intakeStopsWhenCoral.onTrue(new InstantCommand(() -> mailbox.setIntakeMotor(0)));
 
     SmartDashboard.putBoolean("Intake State", mailbox.somethingInIntake());
+    SmartDashboard.putBoolean("Elevator@Zero", elevator.getPosition()==0);
 
     NamedCommands.registerCommand(
-        "SlowlyRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 3, 6, 0));
-
+        "SlowlyRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 40, 10, 0));
     NamedCommands.registerCommand(
-        "Score_L4",
-        new ScoreCommand(
-            elevator, mailbox, elevator.L4_inMotorRotations, 0.95, mailbox.outakeSpeed));
-    // NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
+        "HalfRaise", elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations/2, 80, 40, 0));
+    NamedCommands.registerCommand(
+        "AutoL4",
+        new AutoL4(elevator, mailbox));
+    NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
 
     NamedCommands.registerCommand(
         "IntakeWait", new InstantCommand(() -> mailbox.setIntakeMotor(mailbox.intakeSpeed)));

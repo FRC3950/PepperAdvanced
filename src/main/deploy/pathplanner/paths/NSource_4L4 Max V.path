@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7001755231350861,
-        "y": 6.692872886068093
+        "x": 2.1459258827873184,
+        "y": 6.775326847782206
       },
       "isLocked": false,
       "linkedName": "NSourceCenter"
     },
     {
       "anchor": {
-        "x": 3.2305428197828387,
-        "y": 5.82359226032839
+        "x": 4.856164772727273,
+        "y": 6.143963068181818
       },
       "prevControl": {
-        "x": 1.8581345755490966,
-        "y": 6.751695453941659
+        "x": 4.846193181818182,
+        "y": 6.981576704545454
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,18 +31,25 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "SlowlyRaise",
+      "waypointRelativePos": 0.5619294241573043,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
-    "velocity": 0.75,
-    "rotation": -58.76141341182403
+    "velocity": 0.3,
+    "rotation": -98.53076560994815
   },
   "reversed": false,
   "folder": "North",
@@ -50,5 +57,5 @@
     "velocity": 0,
     "rotation": -55.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
