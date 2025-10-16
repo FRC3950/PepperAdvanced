@@ -9,6 +9,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.CANdi;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import java.util.function.BooleanSupplier;
@@ -83,7 +84,6 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // v_elevator.setLength(1+elevatorLeadMotor.getPosition().getValueAsDouble()*3*0.165);
-
   }
 
   @Override
@@ -117,7 +117,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public Command elevatorBellowZeroCommand() {
-    return this.setElevatorPositionCommand(-1);
+    return new RunCommand(() -> setElevatorPosition(-0.5), this);
   }
 
   public Command setElevatorToRestCommand() {
