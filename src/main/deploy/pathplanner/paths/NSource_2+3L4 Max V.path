@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "HalfRaise",
-      "waypointRelativePos": 0.37663857677902457,
+      "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -48,7 +48,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 1.75,
     "rotation": -55.603007071007404
   },
   "reversed": false,

@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.MailBox;
 import frc.robot.subsystems.elevator.Elevator;
 
@@ -47,7 +48,7 @@ public class ScoreCommand extends Command {
     // mailbox.nothingInIntake())
     if (mailboxStarted && mailbox.nothingInIntake()) {
       scored = true;
-      elevator.setElevatorToRestCommand(); // Go back down
+      CommandScheduler.getInstance().schedule(elevator.setElevatorToRestCommand()); // Go back down
     }
   }
 

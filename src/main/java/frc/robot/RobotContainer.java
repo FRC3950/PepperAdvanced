@@ -175,10 +175,10 @@ public class RobotContainer {
 
     NamedCommands.registerCommand(
         "SlowlyRaise",
-        elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 40, 10, 0));
+        elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 200, 135, 0));
     NamedCommands.registerCommand(
         "HalfRaise",
-        elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations / 2, 80, 40, 0));
+        elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations / 2, 200, 135, 0));
     NamedCommands.registerCommand("AutoL4", new AutoL4(elevator, mailbox));
     NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
 
@@ -365,7 +365,7 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(() -> climber.bringInTheClimb(), climber)
                 .onlyIf(climber::isReadyToClimb));
-    
+
     SmartDashboard.putData(
         "Climber Reset Button", new InstantCommand(() -> climber.goBackToRest(), climber));
     //   operator.start().
