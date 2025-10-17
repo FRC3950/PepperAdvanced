@@ -14,11 +14,15 @@ import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
+
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MailBox;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
 import frc.robot.subsystems.elevator.Elevator;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class LightsSubsystem extends SubsystemBase {
   public static final CANdle candle = new CANdle(10, "CANivore");
@@ -76,9 +80,10 @@ public class LightsSubsystem extends SubsystemBase {
     candleConfiguration.LED.BrightnessScalar = 0.75;
     candleConfiguration.CANdleFeatures.StatusLedWhenActive = StatusLedWhenActiveValue.Disabled;
     candle.getConfigurator().apply(candleConfiguration);
-
-    // candle.setControl(rainbow);
-    // rainbowActive = true;
+    Trigger enabledTrigger = new Trigger(() -> !DriverStation.isDisabled());
+    Trigger disabledTrigger = new Trigger(() -> DriverStation.isDisabled());
+    enabledTrigger.onTrue(Commands.runOnce(() -> candle.setControl(new EmptyAnimation(0))));
+    disabledTrigger.onTrue(Commands.runOnce(() -> candle.setControl(rainbow)));
   }
 
   StrobeAnimation greenStrobe = createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 5);
@@ -141,6 +146,9 @@ public class LightsSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (DriverStation.isDisabled()) {
+      return;
+    }
     // Update states
     boolean intakeState = mailbox.somethingInIntake();
     boolean elevatorActive = elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0;
