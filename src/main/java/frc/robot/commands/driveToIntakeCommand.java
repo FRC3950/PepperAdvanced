@@ -10,12 +10,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import java.util.function.DoubleSupplier;
 
 public class driveToIntakeCommand extends Command {
-  private final LightsSubsystem lights;
   private final Drive drive;
   private final DoubleSupplier driveStickMoved;
   private final PathConstraints constraints =
@@ -27,11 +25,10 @@ public class driveToIntakeCommand extends Command {
   private Command pathCommand;
   public static boolean goingIntake;
 
-  public driveToIntakeCommand(Drive drive, LightsSubsystem lights, DoubleSupplier driveStickMoved) {
-    this.lights = lights;
+  public driveToIntakeCommand(Drive drive, DoubleSupplier driveStickMoved) {
     this.drive = drive;
     this.driveStickMoved = driveStickMoved;
-    addRequirements(drive, lights);
+    addRequirements(drive);
     poseForScoringIDs = new Pose2d[aprilTagIdsForScoring.length];
     for (int i = 0; i < aprilTagIdsForScoring.length; i++) {
       poseForScoringIDs[i] =
@@ -59,7 +56,6 @@ public class driveToIntakeCommand extends Command {
     // Compose the path following command (do NOT schedule!)
     pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
     pathCommand.initialize();
-    // Optionally: lights.setLEDOverride(true, AnimationType.Strobe);
   }
 
   @Override
@@ -76,7 +72,6 @@ public class driveToIntakeCommand extends Command {
       pathCommand.end(interrupted);
       goingIntake = false;
     }
-    // Optionally: lights.setLEDOverride(false, null);
   }
 
   @Override

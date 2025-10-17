@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,9 +19,6 @@ public class MailBox extends SubsystemBase {
   // 60:1 gear ratio - 60 spins of the motor = 1 spin of the output shaft
   // I'm assumming we intake at 35 degrees from the horizontal
   // 35/360 * 60
-
-  private final MotionMagicVoltage mm_request = new MotionMagicVoltage(0);
-  private double voltageToHoldHorizontal = 0;
 
   /** Creates a new MailBox. */
   public MailBox() {

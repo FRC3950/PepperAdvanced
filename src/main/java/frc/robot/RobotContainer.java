@@ -186,11 +186,11 @@ public class RobotContainer {
 
     // Auto Align Commands
     NamedCommands.registerCommand(
-        "AutoLeft", new driveToScoreCommand(drive, lightsSubsystem, "left"));
+        "AutoLeft", new driveToScoreCommand(drive, "left"));
     NamedCommands.registerCommand(
-        "AutoRight", new driveToScoreCommand(drive, lightsSubsystem, "right"));
+        "AutoRight", new driveToScoreCommand(drive, "right"));
     NamedCommands.registerCommand(
-        "AutoSource", new driveToIntakeCommand(drive, lightsSubsystem, () -> 0.0));
+        "AutoSource", new driveToIntakeCommand(drive, () -> 0.0));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices:", AutoBuilder.buildAutoChooser());
@@ -269,14 +269,14 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     // Auto Align Scoring Elements
-    controller.leftBumper().onTrue(new driveToScoreCommand(drive, lightsSubsystem, "left"));
+    controller.leftBumper().onTrue(new driveToScoreCommand(drive, "left"));
 
     // .onlyWhile(
     //     () ->
     //         Math.abs(controller.getLeftY()) < 0.5
     //             && Math.abs(controller.getLeftX()) < 0.5));
 
-    controller.rightBumper().onTrue(new driveToScoreCommand(drive, lightsSubsystem, "right"));
+    controller.rightBumper().onTrue(new driveToScoreCommand(drive, "right"));
 
     // .onlyWhile(
     //         () ->
@@ -285,7 +285,7 @@ public class RobotContainer {
 
     controller
         .a()
-        .onTrue(new driveToIntakeCommand(drive, lightsSubsystem, () -> controller.getLeftY()));
+        .onTrue(new driveToIntakeCommand(drive, () -> controller.getLeftY()));
 
     // Fine Tune Driving
     controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));

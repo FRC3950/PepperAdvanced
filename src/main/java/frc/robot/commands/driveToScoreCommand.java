@@ -10,21 +10,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.drive.Drive;
 
 public class driveToScoreCommand extends Command {
   private final Drive drive;
-  private final LightsSubsystem lights;
   private final String direction;
   private Command pathCommand;
   public static boolean aligning;
 
-  public driveToScoreCommand(Drive drive, LightsSubsystem lights, String direction) {
+  public driveToScoreCommand(Drive drive, String direction) {
     this.drive = drive;
-    this.lights = lights;
     this.direction = direction;
-    addRequirements(drive, lights);
+    addRequirements(drive);
   }
 
   @Override
@@ -65,15 +62,8 @@ public class driveToScoreCommand extends Command {
 
     // Compose the actual movement command (DO NOT schedule!)
     pathCommand =
-        AutoBuilder.pathfindToPose(targetPose, constraints, 0.0)
-            .beforeStarting(
-                () -> {
-                  /*lights.setLEDOverride(true, AnimationType.Strobe);*/
-                })
-            .finallyDo(
-                (interrupted) -> {
-                  /*lights.setLEDOverride(false, null);*/
-                });
+        AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
+
 
     // Initialize the internal command
     pathCommand.initialize();
