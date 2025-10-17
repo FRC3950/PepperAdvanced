@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.636789772727273,
-        "y": 6.004360795454545
+        "x": 4.902192713850636,
+        "y": 5.878784593485169
       },
       "prevControl": {
-        "x": 4.626818181818182,
-        "y": 6.841974431818182
+        "x": 4.892221122941545,
+        "y": 6.716398229848806
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,14 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "SlowlyRaise",
-      "waypointRelativePos": 0.5619294241573043,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 4.0,
@@ -48,7 +41,7 @@
     "unlimited": true
   },
   "goalEndState": {
-    "velocity": 0.3,
+    "velocity": 0.15,
     "rotation": -98.53076560994815
   },
   "reversed": false,

@@ -5,78 +5,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "NPoof_1L4 Max V"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "SlowlyRaise"
+                  "pathName": "NPoof_1L4 Max V"
                 }
               },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoLeft"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoL4"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoSource"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Rest"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "NSource_2+3L4 Max V"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
               {
                 "type": "named",
                 "data": {
                   "name": "HalfRaise"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoLeft"
-                }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoLeft"
           }
         },
         {
@@ -105,28 +55,28 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "NSource_2+3L4 Max V"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NSource_2L4 Max V"
+                }
+              },
               {
                 "type": "named",
                 "data": {
                   "name": "HalfRaise"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoRight"
-                }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoRight"
           }
         },
         {
@@ -155,28 +105,78 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "NSource_4L4 Max V"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NSource_3L4 Max V"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "HalfRaise"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoL4"
           }
         },
         {
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoSource"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NSource_4L4 Max V"
+                }
+              },
               {
                 "type": "named",
                 "data": {
                   "name": "SlowlyRaise"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoRight"
-                }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoRight"
           }
         },
         {
@@ -192,13 +192,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoSource"
+                  "name": "Rest"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Rest"
+                  "name": "AutoSource"
                 }
               }
             ]
