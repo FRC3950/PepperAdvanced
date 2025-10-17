@@ -163,7 +163,7 @@ public class RobotContainer {
             () ->
                 mailbox.nothingInIntake()
                     && elevator.isAtAcceptablePosition(0)
-                    && Robot.isTeleop == true);
+                    && (Robot.isAuto || Robot.isTeleop) == true);
     intakeIsAlwaysOnWhenAtRest.onTrue(
         new InstantCommand(() -> mailbox.setIntakeMotor(mailbox.intakeSpeed)));
     intakeStopsWhenCoral = new Trigger(() -> mailbox.somethingInIntake());
@@ -294,9 +294,7 @@ public class RobotContainer {
 
     controller.pov(0).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0.5, 0, 0))));
 
-    controller
-        .pov(180)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))));
+    controller.pov(180).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))));
 
     controller
         .leftTrigger(0.5)
@@ -306,12 +304,6 @@ public class RobotContainer {
         .rightTrigger(0.5)
         .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.7))));
 
-    // controller
-    //     .start()
-    //     .onTrue(
-    //         new DeferredCommand(() -> AutoBuilder.pathfindThenFollowPath(null, null),
-    // Set.of(drive))
-    //             .alongWith(new PrintCommand("Starting Auto")));
 
     // Operator Controls/////////////////////////
 
@@ -353,17 +345,17 @@ public class RobotContainer {
             elevator
                 .setElevatorToRestCommand()
                 .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake)));
-    operator
-        .leftTrigger(.5)
-        .onTrue(
-            new InstantCommand(() -> climber.goToClimbInitPosition(), climber)
-                .alongWith(hopper.holdHopper_Command(-0.2)));
+    // operator
+    //     .leftTrigger(.5)
+    //     .onTrue(
+    //         new InstantCommand(() -> climber.goToClimbInitPosition(), climber)
+    //             .alongWith(hopper.holdHopper_Command(-0.2)));
 
-    operator
-        .rightTrigger(.5)
-        .onTrue(
-            Commands.runOnce(() -> climber.bringInTheClimb(), climber)
-                .onlyIf(climber::isReadyToClimb));
+    // operator
+    //     .rightTrigger(.5)
+    //     .onTrue(
+    //         Commands.runOnce(() -> climber.bringInTheClimb(), climber)
+    //             .onlyIf(climber::isReadyToClimb));
 
     SmartDashboard.putData(
         "Climber Reset Button", new InstantCommand(() -> climber.goBackToRest(), climber));
@@ -388,12 +380,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return autoChooser.get();
   }
-
-  public Command setElevatorToZeroAndZayanTime() {
-    return new InstantCommand()
-        .andThen(mailbox.start_stop_IntakeCommand().until(mailbox::somethingInIntake));
-  }
-
   //   RainbowAnimation RainbowAnimation(double speed, double brightness, int length) {
   //     return new RainbowAnimation(speed, brightness, length);
   //   }

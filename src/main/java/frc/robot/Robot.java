@@ -36,8 +36,8 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
  */
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
-  private Command restBeforeZayanTeleCommoand;
   public static boolean isTeleop = false;
+  public static boolean isAuto = false;
   private RobotContainer robotContainer;
 
   public Robot() {
@@ -103,7 +103,6 @@ public class Robot extends LoggedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
-    restBeforeZayanTeleCommoand = robotContainer.setElevatorToZeroAndZayanTime();
   }
 
   /** This function is called periodically during all modes. */
@@ -134,6 +133,7 @@ public class Robot extends LoggedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    isAuto = true;
     autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -158,7 +158,6 @@ public class Robot extends LoggedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-    restBeforeZayanTeleCommoand.schedule();
   }
 
   /** This function is called periodically during operator control. */
