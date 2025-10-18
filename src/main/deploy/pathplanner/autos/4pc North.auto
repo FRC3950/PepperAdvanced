@@ -9,15 +9,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "NPoof_1L4 Max V"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "HalfRaise"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NPoof_1L4 Max V"
                 }
               }
             ]
@@ -59,15 +59,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "NSource_2L4 Max V"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "HalfRaise"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NSource_2L4 Max V"
                 }
               }
             ]
@@ -109,15 +109,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "NSource_3L4 Max V"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "HalfRaise"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NSource_3L4 Max V"
                 }
               }
             ]
@@ -159,15 +159,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "NSource_4L4 Max V"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "SlowlyRaise"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NSource_4L4 Max V"
                 }
               }
             ]
