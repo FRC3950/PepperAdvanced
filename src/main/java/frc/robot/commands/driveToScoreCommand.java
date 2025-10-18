@@ -61,9 +61,7 @@ public class driveToScoreCommand extends Command {
     }
 
     // Compose the actual movement command (DO NOT schedule!)
-    pathCommand =
-        AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
-
+    pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
 
     // Initialize the internal command
     pathCommand.initialize();

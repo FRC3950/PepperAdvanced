@@ -185,12 +185,9 @@ public class RobotContainer {
         "IntakeWait", new InstantCommand(() -> mailbox.setIntakeMotor(mailbox.intakeSpeed)));
 
     // Auto Align Commands
-    NamedCommands.registerCommand(
-        "AutoLeft", new driveToScoreCommand(drive, "left"));
-    NamedCommands.registerCommand(
-        "AutoRight", new driveToScoreCommand(drive, "right"));
-    NamedCommands.registerCommand(
-        "AutoSource", new driveToIntakeCommand(drive, () -> 0.0));
+    NamedCommands.registerCommand("AutoLeft", new driveToScoreCommand(drive, "left"));
+    NamedCommands.registerCommand("AutoRight", new driveToScoreCommand(drive, "right"));
+    NamedCommands.registerCommand("AutoSource", new driveToIntakeCommand(drive, () -> 0.0));
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices:", AutoBuilder.buildAutoChooser());
@@ -283,9 +280,7 @@ public class RobotContainer {
     //             Math.abs(controller.getLeftY()) < 0.5
     //                 && Math.abs(controller.getLeftY()) < 0.5));
 
-    controller
-        .a()
-        .onTrue(new driveToIntakeCommand(drive, () -> controller.getLeftY()));
+    controller.a().onTrue(new driveToIntakeCommand(drive, () -> controller.getLeftY()));
 
     // Fine Tune Driving
     controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
@@ -294,7 +289,9 @@ public class RobotContainer {
 
     controller.pov(0).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0.5, 0, 0))));
 
-    controller.pov(180).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))));
+    controller
+        .pov(180)
+        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))));
 
     controller
         .leftTrigger(0.5)
@@ -303,7 +300,6 @@ public class RobotContainer {
     controller
         .rightTrigger(0.5)
         .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.7))));
-
 
     // Operator Controls/////////////////////////
 
