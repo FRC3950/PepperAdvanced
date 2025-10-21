@@ -14,11 +14,8 @@ import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.MailBox;
-import frc.robot.Robot;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
 import frc.robot.subsystems.elevator.Elevator;
@@ -79,10 +76,10 @@ public class LightsSubsystem extends SubsystemBase {
     candleConfiguration.LED.BrightnessScalar = 0.75;
     candleConfiguration.CANdleFeatures.StatusLedWhenActive = StatusLedWhenActiveValue.Disabled;
     candle.getConfigurator().apply(candleConfiguration);
-    Trigger enabledTrigger = new Trigger(() -> (Robot.isTeleop || Robot.isAuto));
-    Trigger disabledTrigger = new Trigger(() -> !(Robot.isTeleop || Robot.isAuto));
-    enabledTrigger.onTrue(Commands.runOnce(() -> candle.setControl(new EmptyAnimation(0))));
-    disabledTrigger.onTrue(Commands.runOnce(() -> candle.setControl(rainbow)));
+    // Trigger enabledTrigger = new Trigger(() -> (Robot.isTeleop || Robot.isAuto));
+    // Trigger disabledTrigger = new Trigger(() -> !(Robot.isTeleop || Robot.isAuto));
+    // enabledTrigger.onTrue(Commands.runOnce(() -> candle.setControl(new EmptyAnimation(0))));
+    // disabledTrigger.onTrue(Commands.runOnce(() -> candle.setControl(rainbow)));
   }
 
   StrobeAnimation greenStrobe = createStrobeAnimation(kGreen, kSlot0StartIdx, kSlot0EndIdx, 0, 5);
@@ -145,9 +142,9 @@ public class LightsSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (!(Robot.isTeleop || Robot.isAuto)) {
-      return;
-    }
+    // if (!(Robot.isTeleop || Robot.isAuto)) {
+    //   return;
+    // }
     // Update states
     boolean intakeState = mailbox.somethingInIntake();
     boolean elevatorActive = elevator.elevatorLeadMotor.getPosition().getValueAsDouble() > 0;
