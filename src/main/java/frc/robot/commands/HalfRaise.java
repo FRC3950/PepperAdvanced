@@ -1,15 +1,17 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.MailBox;
+import frc.robot.subsystems.elevator.Elevator;
 
 public class HalfRaise extends Command {
-  /** Creates a new HalfRaise. */
-  public HalfRaise() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private final Elevator elevator;
+  private final MailBox mailbox;
+
+  public HalfRaise(Elevator elevator, MailBox mailbox) {
+    this.elevator = elevator;
+    this.mailbox = mailbox;
+    addRequirements(elevator, mailbox);
   }
 
   // Called when the command is initially scheduled.
@@ -18,7 +20,12 @@ public class HalfRaise extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    boolean hasCoral = mailbox.somethingInIntake();
+    if (hasCoral) {
+      elevator.setElevatorPosition(elevator.L4_inMotorRotations / 2, 120, 75, 0);
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -27,6 +34,6 @@ public class HalfRaise extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return elevator.isAtAcceptablePosition(elevator.L4_inMotorRotations / 2);
   }
 }

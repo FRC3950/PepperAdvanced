@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "sequential",
           "data": {
-            "pathName": "NSource_3L4 Max V"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NSource_3L4 Max V"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "HalfRaise"
+                }
+              }
+            ]
           }
         },
         {

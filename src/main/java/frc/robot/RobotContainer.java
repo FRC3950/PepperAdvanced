@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutoL4;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.HalfRaise;
 import frc.robot.commands.ScoreCommand;
 import frc.robot.commands.driveToIntakeCommand;
 import frc.robot.commands.driveToScoreCommand;
@@ -175,9 +176,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "SlowlyRaise",
         elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations, 200, 135, 0));
-    NamedCommands.registerCommand(
-        "HalfRaise",
-        elevator.setElevatorPositionCommand(elevator.L4_inMotorRotations / 2, 200, 135, 0));
+    NamedCommands.registerCommand("HalfRaise", new HalfRaise(elevator, mailbox));
     NamedCommands.registerCommand("AutoL4", new AutoL4(elevator, mailbox));
     NamedCommands.registerCommand("Rest", elevator.setElevatorToRestCommand());
 

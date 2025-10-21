@@ -161,7 +161,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SlowlyRaise"
+                  "name": "HalfRaise"
                 }
               },
               {
