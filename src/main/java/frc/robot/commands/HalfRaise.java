@@ -11,7 +11,7 @@ public class HalfRaise extends Command {
   public HalfRaise(Elevator elevator, MailBox mailbox) {
     this.elevator = elevator;
     this.mailbox = mailbox;
-    addRequirements(elevator, mailbox);
+    addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +23,7 @@ public class HalfRaise extends Command {
   public void execute() {
     boolean hasCoral = mailbox.somethingInIntake();
     if (hasCoral) {
-      elevator.setElevatorPosition(elevator.L4_inMotorRotations / 2, 120, 75, 0);
+      elevator.setElevatorPosition(elevator.L4_inMotorRotations / 2, 150, 100, 0);
     }
   }
 

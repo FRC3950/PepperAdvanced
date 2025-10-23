@@ -4,17 +4,15 @@
 
 package frc.robot.subsystems.elevator;
 
-import java.util.function.BooleanSupplier;
-
 import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.CANdi;
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import java.util.function.BooleanSupplier;
 
 public class Elevator extends SubsystemBase {
   private final CANdi myCANdi;

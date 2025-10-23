@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.145925882787318,
-        "y": 6.775326847782206
+        "x": 1.4662764096942653,
+        "y": 6.83160703548745
       },
       "isLocked": false,
       "linkedName": "NSourceCenter"
     },
     {
       "anchor": {
-        "x": 4.902192713850636,
-        "y": 5.878784593485169
+        "x": 1.5057102272727272,
+        "y": 6.762201704545455
       },
       "prevControl": {
-        "x": 4.892221122941545,
-        "y": 6.716398229848806
+        "x": 1.3057102272727306,
+        "y": 6.91220170454546
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.15,
-    "rotation": -98.53076560994815
+    "velocity": 0,
+    "rotation": -48.81407483429033
   },
   "reversed": false,
   "folder": "North",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -55.0
+    "rotation": -54.69266815216971
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
