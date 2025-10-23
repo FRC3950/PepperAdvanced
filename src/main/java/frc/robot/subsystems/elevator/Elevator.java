@@ -120,7 +120,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public Command elevatorBellowZeroCommand() {
-    return new RunCommand(() -> setElevatorPosition(-0.5), this);
+    return new RunCommand(() -> setElevatorPosition(-2), this);
   }
 
   public Command setElevatorToRestCommand() {
