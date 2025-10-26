@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.215456081081081,
+        "y": 1.041
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6206081081081083,
+        "y": 1.1197635135135136
+      },
+      "isLocked": false,
+      "linkedName": "SSource Center"
+    },
+    {
+      "anchor": {
+        "x": 3.4487331081081085,
+        "y": 2.4538006756756747
+      },
+      "prevControl": {
+        "x": 2.994172297297298,
+        "y": 1.7027871621621624
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 1.5,
+    "rotation": 59.99999999999999
+  },
+  "reversed": false,
+  "folder": "South",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 55.0
+  },
+  "useDefaultConstraints": true
+}
