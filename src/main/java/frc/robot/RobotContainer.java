@@ -81,6 +81,14 @@ public class RobotContainer {
   private final MailBox mailbox;
   private Trigger intakeIsAlwaysOnWhenAtRest;
 
+  // Pre-allocate ChassisSpeeds objects for fine control to avoid repeated allocations
+  private static final ChassisSpeeds FINE_CONTROL_LEFT = new ChassisSpeeds(0, 0.5, 0);
+  private static final ChassisSpeeds FINE_CONTROL_RIGHT = new ChassisSpeeds(0, -0.5, 0);
+  private static final ChassisSpeeds FINE_CONTROL_FORWARD = new ChassisSpeeds(0.5, 0, 0);
+  private static final ChassisSpeeds FINE_CONTROL_BACKWARD = new ChassisSpeeds(-0.5, 0, 0);
+  private static final ChassisSpeeds ROTATION_LEFT = new ChassisSpeeds(0, 0, 0.7);
+  private static final ChassisSpeeds ROTATION_RIGHT = new ChassisSpeeds(0, 0, -0.7);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     SmartDashboard.putNumber("seedAngle", 180);
@@ -292,23 +300,17 @@ public class RobotContainer {
         .whileTrue(new driveToIntakeCommand(drive, lightsSubsystem, () -> controller.getLeftY()));
 
     // Fine Tune Driving
-    controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, -0.5, 0))));
+    controller.pov(90).whileTrue(drive.run(() -> drive.runVelocity(FINE_CONTROL_RIGHT)));
 
-    controller.pov(270).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0.5, 0))));
+    controller.pov(270).whileTrue(drive.run(() -> drive.runVelocity(FINE_CONTROL_LEFT)));
 
-    controller.pov(0).whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0.5, 0, 0))));
+    controller.pov(0).whileTrue(drive.run(() -> drive.runVelocity(FINE_CONTROL_FORWARD)));
 
-    controller
-        .pov(180)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(-0.5, 0, 0))));
+    controller.pov(180).whileTrue(drive.run(() -> drive.runVelocity(FINE_CONTROL_BACKWARD)));
 
-    controller
-        .leftTrigger(0.5)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, 0.7))));
+    controller.leftTrigger(0.5).whileTrue(drive.run(() -> drive.runVelocity(ROTATION_LEFT)));
 
-    controller
-        .rightTrigger(0.5)
-        .whileTrue(drive.run(() -> drive.runVelocity(new ChassisSpeeds(0, 0, -0.7))));
+    controller.rightTrigger(0.5).whileTrue(drive.run(() -> drive.runVelocity(ROTATION_RIGHT)));
 
     // controller
     //     .start()
