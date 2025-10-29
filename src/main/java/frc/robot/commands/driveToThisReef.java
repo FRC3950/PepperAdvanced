@@ -23,18 +23,17 @@ public class driveToThisReef extends Command {
   private final String direction;
   private Pose2d targetPose;
   private Command pathCommand;
-  private Pose2d targetPoseToUseInAutoNavigate;
-  private int tagIdToDriveTo;
+  private final int tagIdToDriveTo;
 
-  public PathConstraints constraints =
+  private static final PathConstraints CONSTRAINTS =
       new PathConstraints(
           4.25, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(540)); // accell was 720
 
-  // AprilTag layout
-  public static AprilTagFieldLayout aprilTagLayoutForAutoDrive =
+  // AprilTag layout - loaded once and cached
+  private static final AprilTagFieldLayout APRIL_TAG_LAYOUT =
       AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-  Pose2d poseToPlanPathTo;
+  private final Pose2d poseToPlanPathTo;
 
   /** Creates a new driveToScoreCommand. */
   public driveToThisReef(Drive drive, String direction, int tagIdToDriveTo) {
@@ -45,7 +44,7 @@ public class driveToThisReef extends Command {
     addRequirements(drive);
 
     poseToPlanPathTo =
-        aprilTagLayoutForAutoDrive.getTagPose(tagIdToDriveTo).orElse(new Pose3d()).toPose2d();
+        APRIL_TAG_LAYOUT.getTagPose(tagIdToDriveTo).orElse(new Pose3d()).toPose2d();
   }
 
   // Called when the command is initially scheduled.
@@ -62,10 +61,11 @@ public class driveToThisReef extends Command {
           targetPose.transformBy(
               new Transform2d(.5, .1645, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
     }
-    // pathCommand = new DeferredCommand(() ->AutoBuilder.pathfindToPose(targetPose, constraints,
+    // pathCommand = new DeferredCommand(() ->AutoBuilder.pathfindToPose(targetPose, CONSTRAINTS,
     // 0.0), Set.of(drive));
     pathCommand =
-        AutoBuilder.pathfindToPose(targetPose, constraints, 0.0).andThen(new PrintCommand("weird"));
+        AutoBuilder.pathfindToPose(targetPose, CONSTRAINTS, 0.0)
+            .andThen(new PrintCommand("weird"));
     // .andThen(
     //     AutoBuilder.followPath(
     //         new PathPlannerPath(

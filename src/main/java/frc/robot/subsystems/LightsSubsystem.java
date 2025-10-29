@@ -164,10 +164,5 @@ public class LightsSubsystem extends SubsystemBase {
       wasSomethingInIntake = intakeState;
       wasElevatorActive = elevatorActive;
     }
-
-    // Instead of caching and reusing the animation instance, create a new one each tim
-
-    wasSomethingInIntake = intakeState;
-    wasElevatorActive = elevatorActive;
   }
 }

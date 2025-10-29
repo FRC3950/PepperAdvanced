@@ -27,16 +27,31 @@ public class driveToScoreCommand extends Command {
   private Command pathCommand;
   private Pose2d targetPoseToUseInAutoNavigate;
 
-  public PathConstraints constraints =
+  private static final PathConstraints CONSTRAINTS =
       new PathConstraints(
           3.0, 3.0, Units.degreesToRadians(540), Units.degreesToRadians(540)); // accell was 720
 
-  // AprilTag layout
-  public static AprilTagFieldLayout aprilTagLayoutForAutoDrive =
+  // AprilTag layout - loaded once and cached
+  private static final AprilTagFieldLayout APRIL_TAG_LAYOUT =
       AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-  int[] aprilTagIdsForScoring = new int[] {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};
-  Pose2d[] poseForScoringIDs;
+  private static final int[] APRIL_TAG_IDS_FOR_SCORING =
+      new int[] {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};
+
+  // Cache poses for scoring IDs to avoid repeated lookups
+  private static final Pose2d[] POSE_FOR_SCORING_IDS = initializeScoringPoses();
+
+  private static Pose2d[] initializeScoringPoses() {
+    Pose2d[] poses = new Pose2d[APRIL_TAG_IDS_FOR_SCORING.length];
+    for (int i = 0; i < APRIL_TAG_IDS_FOR_SCORING.length; i++) {
+      poses[i] =
+          APRIL_TAG_LAYOUT
+              .getTagPose(APRIL_TAG_IDS_FOR_SCORING[i])
+              .orElse(new Pose3d())
+              .toPose2d();
+    }
+    return poses;
+  }
 
   /** Creates a new driveToScoreCommand. */
   public driveToScoreCommand(Drive drive, LightsSubsystem lights, String direction) {
@@ -45,29 +60,18 @@ public class driveToScoreCommand extends Command {
     this.lights = lights;
     this.direction = direction;
     addRequirements(drive, lights);
-
-    poseForScoringIDs = new Pose2d[aprilTagIdsForScoring.length];
-
-    for (int i = 0; i < aprilTagIdsForScoring.length; i++) {
-      poseForScoringIDs[i] =
-          aprilTagLayoutForAutoDrive
-              .getTagPose(aprilTagIdsForScoring[i])
-              .orElse(new Pose3d())
-              .toPose2d();
-    }
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     // lights.setLEDOverride(true, AnimationType.Strobe);
-    // for each pose in poseForScoringIDs, find the closest one to the current pose
+    // for each pose in POSE_FOR_SCORING_IDS, find the closest one to the current pose
     Pose2d currentPose = drive.getPose();
-    double minDistance = 1000.0;
+    double minDistance = Double.MAX_VALUE;
     Pose2d closestPose = new Pose2d();
 
-    for (Pose2d pose : poseForScoringIDs) {
-
+    for (Pose2d pose : POSE_FOR_SCORING_IDS) {
       double distance = pose.getTranslation().getDistance(currentPose.getTranslation());
       if (distance < minDistance) {
         minDistance = distance;
@@ -85,10 +89,11 @@ public class driveToScoreCommand extends Command {
           targetPose.transformBy(
               new Transform2d(.5, .1645, new Rotation2d().rotateBy(new Rotation2d(Math.PI))));
     }
-    // pathCommand = new DeferredCommand(() ->AutoBuilder.pathfindToPose(targetPose, constraints,
+    // pathCommand = new DeferredCommand(() ->AutoBuilder.pathfindToPose(targetPose, CONSTRAINTS,
     // 0.0), Set.of(drive));
     pathCommand =
-        AutoBuilder.pathfindToPose(targetPose, constraints, 0.0).andThen(new PrintCommand("weird"));
+        AutoBuilder.pathfindToPose(targetPose, CONSTRAINTS, 0.0)
+            .andThen(new PrintCommand("weird"));
     // .andThen(
     //     AutoBuilder.followPath(
     //         new PathPlannerPath(

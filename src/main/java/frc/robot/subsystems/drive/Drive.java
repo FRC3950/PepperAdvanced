@@ -335,11 +335,11 @@ public class Drive extends SubsystemBase {
 
   /** Returns the average velocity of the modules in rotations/sec (Phoenix native units). */
   public double getFFCharacterizationVelocity() {
-    double output = 0.0;
+    double sum = 0.0;
     for (int i = 0; i < 4; i++) {
-      output += modules[i].getFFCharacterizationVelocity() / 4.0;
+      sum += modules[i].getFFCharacterizationVelocity();
     }
-    return output;
+    return sum / 4.0;
   }
 
   /** Returns the current odometry pose. */

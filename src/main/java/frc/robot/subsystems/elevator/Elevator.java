@@ -56,9 +56,9 @@ public class Elevator extends SubsystemBase {
 
   // Method to set the target position using Motion Magic
   public void setElevatorPosition(double targetPositionInMotorTicks) {
+    double currentPosition = elevatorLeadMotor.getPosition().getValueAsDouble();
 
-    if (targetPositionInMotorTicks > elevatorLeadMotor.getPosition().getValueAsDouble()) {
-
+    if (targetPositionInMotorTicks > currentPosition) {
       mm_request.Velocity = 20;
       mm_request.Acceleration = 35;
       mm_request.Jerk = 0;
@@ -70,9 +70,7 @@ public class Elevator extends SubsystemBase {
     if (targetPositionInMotorTicks == 0) {
       elevatorLeadMotor.setControl(
           mm_request.withPosition(targetPositionInMotorTicks).withFeedForward(-0.1));
-
     } else {
-
       elevatorLeadMotor.setControl(mm_request.withPosition(targetPositionInMotorTicks));
     }
   }

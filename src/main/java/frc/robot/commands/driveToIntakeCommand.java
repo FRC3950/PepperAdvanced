@@ -25,17 +25,30 @@ public class driveToIntakeCommand extends Command {
   private final DoubleSupplier driveStickMoved;
   private Pose2d targetPose;
   private Command pathCommand;
-  private Pose2d targetPoseToUseInAutoNavigate;
 
-  public PathConstraints constraints =
+  private static final PathConstraints CONSTRAINTS =
       new PathConstraints(3.0, 3.0, Units.degreesToRadians(540), Units.degreesToRadians(540));
 
-  // AprilTag layout
-  public static AprilTagFieldLayout aprilTagLayoutForAutoDrive =
+  // AprilTag layout - loaded once and cached
+  private static final AprilTagFieldLayout APRIL_TAG_LAYOUT =
       AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-  int[] aprilTagIdsForScoring = new int[] {1, 2, 12, 13};
-  Pose2d[] poseForScoringIDs;
+  private static final int[] APRIL_TAG_IDS_FOR_SCORING = new int[] {1, 2, 12, 13};
+
+  // Cache poses for scoring IDs to avoid repeated lookups
+  private static final Pose2d[] POSE_FOR_SCORING_IDS = initializeScoringPoses();
+
+  private static Pose2d[] initializeScoringPoses() {
+    Pose2d[] poses = new Pose2d[APRIL_TAG_IDS_FOR_SCORING.length];
+    for (int i = 0; i < APRIL_TAG_IDS_FOR_SCORING.length; i++) {
+      poses[i] =
+          APRIL_TAG_LAYOUT
+              .getTagPose(APRIL_TAG_IDS_FOR_SCORING[i])
+              .orElse(new Pose3d())
+              .toPose2d();
+    }
+    return poses;
+  }
 
   /** Creates a new driveToScoreCommand. */
   public driveToIntakeCommand(Drive drive, LightsSubsystem lights, DoubleSupplier driveStickMoved) {
@@ -44,29 +57,18 @@ public class driveToIntakeCommand extends Command {
     this.drive = drive;
     this.driveStickMoved = driveStickMoved;
     addRequirements(drive, lights);
-
-    poseForScoringIDs = new Pose2d[aprilTagIdsForScoring.length];
-
-    for (int i = 0; i < aprilTagIdsForScoring.length; i++) {
-      poseForScoringIDs[i] =
-          aprilTagLayoutForAutoDrive
-              .getTagPose(aprilTagIdsForScoring[i])
-              .orElse(new Pose3d())
-              .toPose2d();
-    }
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     // lights.setLEDOverride(true, AnimationType.Strobe);
-    // for each pose in poseForScoringIDs, find the closest one to the current pose
+    // for each pose in POSE_FOR_SCORING_IDS, find the closest one to the current pose
     Pose2d currentPose = drive.getPose();
-    double minDistance = 1000.0;
+    double minDistance = Double.MAX_VALUE;
     Pose2d closestPose = new Pose2d();
 
-    for (Pose2d pose : poseForScoringIDs) {
-
+    for (Pose2d pose : POSE_FOR_SCORING_IDS) {
       double distance = pose.getTranslation().getDistance(currentPose.getTranslation());
       if (distance < minDistance) {
         minDistance = distance;
@@ -78,7 +80,7 @@ public class driveToIntakeCommand extends Command {
 
     targetPose = targetPose.transformBy(new Transform2d(.5, .0, new Rotation2d(0)));
 
-    pathCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
+    pathCommand = AutoBuilder.pathfindToPose(targetPose, CONSTRAINTS, 0.0);
     pathCommand.schedule();
   }
 
